@@ -1,0 +1,58 @@
+[
+  {
+    "name": "NJ / NYC / Philly Tri-State",
+    "lat": 40.5,
+    "lon": -74.3,
+    "count": 64,
+    "desc": "By far the largest 2024–25 cluster. The Dec 2024–Jan 2025 \"New Jersey drone\" flap. Dense population + media virality + proximity to NYC airspace, military/naval installations (Picatinny Arsenal, Naval Weapons Station Earle, McGuire-Dix-Lakehurst) and major flight corridors into JFK/EWR/LGA/PHL."
+  },
+  {
+    "name": "United Kingdom",
+    "lat": 52.5,
+    "lon": -1.5,
+    "count": 57,
+    "desc": "Dense population, extensive CCTV/doorbell-cam culture, busy military and civil airspace (RAF bases, NATO exercises), and a media environment primed by the NJ drone story. London, Scotland, regional England all flagged."
+  },
+  {
+    "name": "California (LA / Bay Area / San Diego / Joshua Tree)",
+    "lat": 34.5,
+    "lon": -118.5,
+    "count": 38,
+    "desc": "Huge population base, dark-sky desert areas (Joshua Tree, Mojave) near military test ranges (Edwards AFB, China Lake), heavy air traffic, and a long cultural history of UAP interest. The Tic Tac encounter occurred off San Diego in this region."
+  },
+  {
+    "name": "Florida (Jacksonville / Tampa / Miami / Orlando)",
+    "lat": 27.5,
+    "lon": -82,
+    "count": 28,
+    "desc": "Proximity to Cape Canaveral / KSC rocket launches, busy coastal flight paths, and a high density of outdoor activity. Jacksonville and Tampa feature repeatedly."
+  },
+  {
+    "name": "Arizona (Phoenix / Tucson / Scottsdale)",
+    "lat": 33.4,
+    "lon": -112,
+    "count": 23,
+    "desc": "Clear desert skies, Luke AFB and Davis-Monthan AFB military flight testing. The Phoenix metro's history with the 1997 Phoenix Lights keeps residents primed to watch and report."
+  },
+  {
+    "name": "Louisiana (Lake Charles / Baton Rouge / Monroe)",
+    "lat": 30.5,
+    "lon": -92,
+    "count": 11,
+    "desc": "Proximity to Barksdale AFB and Fort Polk, plus offshore oil/gas helicopter and drone traffic over the Gulf. Barksdale is a nuclear bomber wing facility."
+  },
+  {
+    "name": "Ireland (County Meath / Kerry / Kildare)",
+    "lat": 53.3,
+    "lon": -7,
+    "count": 10,
+    "desc": "A recurring cluster in County Meath (multiple reports), plus general spillover from the UK drone-wave. County Meath reports are particularly concentrated."
+  },
+  {
+    "name": "Scotland (Aberdeenshire / Edinburgh)",
+    "lat": 57,
+    "lon": -3.5,
+    "count": 6,
+    "desc": "RAF Lossiemouth and North Sea oil/gas helicopter corridors. Edinburgh and Aberdeenshire feature in the Dec 2024 wave."
+  }
+]

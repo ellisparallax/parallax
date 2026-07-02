@@ -1,0 +1,1022 @@
+[
+  {
+    "id": 0,
+    "name": "Foo Fighters",
+    "year": 1944,
+    "lat": 48.5,
+    "lon": 2.3,
+    "location": "European Theater",
+    "country": "Europe",
+    "class": "B",
+    "cat": "military",
+    "sigs": [
+      "🔴",
+      "⚪",
+      "∷",
+      "💨",
+      "⊙"
+    ],
+    "summary": "Allied bomber crews report glowing orbs following aircraft. Both Axis and Allies investigated. Neither side could explain them.",
+    "what": "From late 1944, Allied B-17 and B-29 crews reported persistent glowing spheres tracking aircraft across two theaters. The objects matched aircraft speed, executed maneuvers no known aircraft could perform, and did not engage. The 415th Night Fighter Squadron logged 16 incidents. Axis pilots reported the same phenomenon — they thought they were Allied secret weapons.",
+    "why": "Both sides investigated and concluded the objects were not their own or the enemy's. This mutual confusion rules out misidentification of known aircraft and establishes the phenomenon predates modern UAP awareness.",
+    "witnesses": "Hundreds of Allied and Axis aircrew. Multiple formal military reports filed.",
+    "evidence": "Declassified mission debriefing reports from multiple squadrons. Consistent accounts from adversarial nations.",
+    "response": "Both Axis and Allied high commands investigated. No explanation was ever reached. Files classified after the war.",
+    "links": [],
+    "shape": "Orb"
+  },
+  {
+    "id": 1,
+    "name": "Roswell Incident",
+    "year": 1947,
+    "lat": 33.4,
+    "lon": -104.5,
+    "location": "Roswell, New Mexico",
+    "country": "USA",
+    "class": "A",
+    "cat": "military",
+    "sigs": [
+      "🛸",
+      "🚫",
+      "⚰️",
+      "⊞",
+      "⊕"
+    ],
+    "summary": "USAF issues press release confirming \"flying disc\" recovery. Retracted within 24 hours. Three cover stories follow across 47 years.",
+    "what": "On July 8, 1947, RAAF public information officer Walter Haut issued a press release stating the 509th Bomb Group had recovered a \"flying disc.\" Within 24 hours, General Roger Ramey held a press conference with a weather balloon — cover story 1. In 1994, the Air Force issued Project Mogul — cover story 2. A 1997 report said the \"alien bodies\" reports came from crash test dummies — cover story 3. Those dummies weren't used until 1953.",
+    "why": "Three contradictory official explanations over 47 years is the documented suppression signature. George Knapp testified to Congress in September 2025 that Bigelow negotiated with a Lockheed executive over material held at a California facility described as having composition \"suggesting it had been crafted in a zero-gravity environment.\"",
+    "witnesses": "Mac Brazel, multiple 509th personnel, Sheriff George Wilcox, Dr. Jesse Marcel Sr. Multiple deathbed testimonies from base personnel.",
+    "evidence": "Original RAAF press release (July 8, 1947). Three contradictory official explanations. Congressional testimony about Lockheed material. Multiple military deathbed affidavits.",
+    "response": "Cover story 1: weather balloon (1947). Cover story 2: Project Mogul classified balloon (1994). Cover story 3: crash test dummies (1997). Dummies not used until 1953.",
+    "links": [
+      {
+        "label": "George Knapp Congressional Testimony (Sept 2025)",
+        "url": "https://oversight.house.gov/wp-content/uploads/2025/09/George-Knapp-Written-Testimony.pdf"
+      },
+      {
+        "label": "FBI Vault — Roswell files",
+        "url": "https://vault.fbi.gov/Roswell%20UFO"
+      }
+    ],
+    "shape": "Disk"
+  },
+  {
+    "id": 2,
+    "name": "Lubbock Lights",
+    "year": 1951,
+    "lat": 33.57,
+    "lon": -101.85,
+    "location": "Lubbock, Texas",
+    "country": "USA",
+    "class": "B",
+    "cat": "mass",
+    "sigs": [
+      "∷",
+      "⚪",
+      "👥",
+      "📷",
+      "🚫"
+    ],
+    "summary": "V-formation photographed multiple times by engineering student. Thousands witness across city. Project Blue Book: Unknown.",
+    "what": "Between August and October 1951, residents of Lubbock Texas observed multiple formations of soft blue-green lights passing overhead at high speed. Texas Tech student Carl Hart Jr. photographed the formation on multiple occasions. Project Blue Book classified the case as \"unknown.\"",
+    "why": "One of Project Blue Book's highest-profile unresolved cases. Hart's photographs were analyzed by Air Force experts and found to be unaltered. No conventional explanation was ever proposed.",
+    "witnesses": "Thousands of residents. Texas Tech professors. Carl Hart Jr. (photographer).",
+    "evidence": "Multiple authenticated photographs. Project Blue Book \"unknown\" classification.",
+    "response": "Project Blue Book investigated and classified Unknown. No conventional explanation proposed.",
+    "links": [
+      {
+        "label": "Project Blue Book files",
+        "url": "https://www.fold3.com/page/261889498/project-blue-book"
+      }
+    ],
+    "shape": "Lights"
+  },
+  {
+    "id": 3,
+    "name": "Malmstrom Missiles",
+    "year": 1967,
+    "lat": 47.5,
+    "lon": -111.18,
+    "location": "Malmstrom AFB, Montana",
+    "country": "USA",
+    "class": "A",
+    "cat": "nuclear",
+    "sigs": [
+      "🛸",
+      "📡",
+      "☣️",
+      "🛡️",
+      "🚫",
+      "⚰️",
+      "⟁"
+    ],
+    "summary": "10 nuclear ICBMs go offline simultaneously during UAP overflight. USAF confirms deactivation but cannot explain mechanism.",
+    "what": "On March 16, 1967, Capt. Robert Salas was on duty in the underground launch control center when security personnel radioed to report a glowing red object over the front gate. As the conversation continued, all 10 Minuteman I ICBMs went offline simultaneously — a status that cannot happen through any known malfunction chain.",
+    "why": "Simultaneous shutdown of 10 ICBMs represents an operational failure mode Air Force engineers could not replicate. The USAF confirmed the missiles deactivated but disputes UAP causation — having never explained the actual mechanism. Peer-reviewed statistical analysis: p=0.00013.",
+    "witnesses": "Capt. Robert Salas. Multiple security personnel. Adjacent flight experienced the same event.",
+    "evidence": "USAF confirmation of deactivations. Air Force report cannot explain simultaneous shutdown. Multiple officer testimony under oath.",
+    "response": "USAF confirmed deactivations occurred. Disputed UAP causation. Never explained the mechanism. Witnesses instructed not to discuss.",
+    "links": [
+      {
+        "label": "Robert Salas full testimony",
+        "url": "https://www.youtube.com/watch?v=LNp7MHfWaUU"
+      }
+    ],
+    "shape": "Orb"
+  },
+  {
+    "id": 4,
+    "name": "Tehran F-4 Incident",
+    "year": 1976,
+    "lat": 35.69,
+    "lon": 51.39,
+    "location": "Tehran, Iran",
+    "country": "Iran",
+    "class": "B",
+    "cat": "military",
+    "sigs": [
+      "📡",
+      "⟁",
+      "🛸",
+      "🛡️",
+      "✦",
+      "⚡"
+    ],
+    "summary": "Two F-4 Phantoms scrambled. Weapons systems disabled on approach. DIA declassified the report.",
+    "what": "On September 19, 1976, two Imperial Iranian Air Force F-4s were scrambled to intercept a UAP over Tehran. As the first F-4 attempted to arm its weapons on radar lock, all weapons systems and communications failed simultaneously. The second F-4 experienced identical failures on its approach.",
+    "why": "The DIA declassified the report, making Tehran one of the few UAP cases with both a declassified intelligence report AND surviving military testimony. The weapons disablement pattern is consistent across Malmstrom, Usovo, and multiple other incidents — indicating deliberate interference, not malfunction.",
+    "witnesses": "IIAF pilots. Ground radar operators. DIA report documented all witness accounts.",
+    "evidence": "DIA declassified report. Iranian Air Force records. Multiple radar tracks.",
+    "response": "DIA classified the report. Released via FOIA decades later.",
+    "links": [
+      {
+        "label": "DIA report (FOIA)",
+        "url": "https://www.dia.mil/FOIA/FOIA-Electronic-Reading-Room/"
+      }
+    ],
+    "shape": "Lights"
+  },
+  {
+    "id": 5,
+    "name": "Shag Harbour",
+    "year": 1967,
+    "lat": 43.47,
+    "lon": -65.73,
+    "location": "Shag Harbour, Nova Scotia",
+    "country": "Canada",
+    "class": "A",
+    "cat": "transmedium",
+    "sigs": [
+      "🟠",
+      "⬇",
+      "🫧",
+      "🌊",
+      "∷",
+      "📻",
+      "🚫",
+      "🛡️",
+      "⚓",
+      "👥",
+      "⚪",
+      "≋"
+    ],
+    "summary": "Object crashes into harbor. Government officially classifies as unknown origin. Tracked 25 miles underwater to SOSUS array. Never reclassified in 57 years.",
+    "what": "On October 4, 1967, multiple witnesses including RCMP officers observed an object descend at 45° and enter Shag Harbour. An 80ft yellow foam slick appeared. The Royal Canadian Navy deployed HMCS Granby. Fleet Diving Unit Atlantic searched for 3 days. Sonar contacts indicated the object traveled approximately 25 miles underwater to Government Point — the site of a SOSUS submarine listening network.",
+    "why": "The best-documented transmedium event in history. The Canadian government has never changed its classification. An object that enters the ocean and strategically positions itself next to North America's most sensitive submarine-tracking network is not behaving randomly.",
+    "witnesses": "11+ confirmed witnesses including RCMP. Coast Guard crew.",
+    "evidence": "Royal Canadian Navy incident report. 80ft foam slick. Library and Archives Canada file — never reclassified. Swept-clean seafloor depressions found by civilian diver decades later.",
+    "response": "Navy deployed HMCS Granby. Fleet Diving Unit searched 3 days. Official classification: \"unknown origin.\" Never reclassified.",
+    "links": [
+      {
+        "label": "Library and Archives Canada UFO files",
+        "url": "https://www.collectionscanada.gc.ca/databases/ufo/"
+      },
+      {
+        "label": "CBC 1967 original broadcast",
+        "url": "https://www.youtube.com/watch?v=XHiJAp7TSNA"
+      }
+    ],
+    "shape": "Lights"
+  },
+  {
+    "id": 6,
+    "name": "Operation Prato",
+    "year": 1977,
+    "lat": -0.9,
+    "lon": -49.5,
+    "location": "Colares Island, Pará, Brazil",
+    "country": "Brazil",
+    "class": "A",
+    "cat": "biological",
+    "sigs": [
+      "🟠",
+      "🔴",
+      "↓",
+      "🩺",
+      "💉",
+      "👁️",
+      "🐕",
+      "⚰️",
+      "🚫",
+      "👥",
+      "🛸",
+      "🧠"
+    ],
+    "summary": "500+ photos. 16hrs footage. Hundreds of civilians injured by light beams. Captain sees beings inside craft. Dies 2 months after speaking.",
+    "what": "The Brazilian Air Force ran a classified operation from October 1977 to January 1978 investigating mass UAP incidents around Colares Island. Objects emitted directed light beams at civilians. Military physician Dr. Wellaide Carvalho documented hundreds of patients with two-point puncture wounds, anemia, and radiation-type burns. Captain Hollanda Lima saw beings inside the craft through transparent sections — gave one interview after his secrecy oath expired and died of a cardiac event at 45, two months later, with no cardiac history.",
+    "why": "Brazil is the only country with government-confirmed, medically documented biological attacks on civilians at scale. The two-point puncture marks and radiation symptoms were recorded by a military doctor across hundreds of independent cases.",
+    "witnesses": "Hundreds of civilian witnesses. Dr. Wellaide Carvalho (military physician). Capt. Hollanda Lima (died 2 months post-interview).",
+    "evidence": "500+ photographs. 16+ hours footage. 2,000-page classified investigation. Military medical records.",
+    "response": "Operation classified for 30 years. FAB partially released files 2010. 95% still unreleased.",
+    "links": [
+      {
+        "label": "Operation Prato documentary",
+        "url": "https://www.youtube.com/watch?v=5GKI3yYqT0E"
+      }
+    ],
+    "shape": "Orb"
+  },
+  {
+    "id": 7,
+    "name": "Rendlesham Forest",
+    "year": 1980,
+    "lat": 52.09,
+    "lon": 1.44,
+    "location": "Suffolk, UK (USAF Nuclear Base)",
+    "country": "UK",
+    "class": "A",
+    "cat": "nuclear",
+    "sigs": [
+      "☢️",
+      "🌱",
+      "▲",
+      "🌈",
+      "👥",
+      "🛡️",
+      "🚫",
+      "⚰️"
+    ],
+    "summary": "USAF nuclear base. 3 nights. Radiation confirmed on Lt Col Halt's real-time tape. UK paid VA settlement citing own UAP radiation study.",
+    "what": "Over three nights in December 1980, USAF personnel from RAF Bentwaters and Woodbridge — a nuclear weapons storage facility — observed craft in Rendlesham Forest. Deputy Base Commander Lt. Col. Charles Halt led a ground team with Geiger counters. His real-time audio recording documents elevated radiation readings and craft moving through the forest.",
+    "why": "The UK government paid a medical settlement to Airman John Burroughs in 2015, citing its own Project Condign study — a classified report confirming UAPs produce plasma radiation effects. You cannot compensate someone for UAP radiation injuries while simultaneously claiming nothing happened. The settlement is the admission.",
+    "witnesses": "Lt. Col. Charles Halt. Multiple USAF personnel over 3 nights. Halt's real-time audio is public record.",
+    "evidence": "Halt memo to UK MoD (declassified). Real-time audio recording. Radiation readings from military Geiger counter. Ground indentations. 2015 VA settlement.",
+    "response": "MoD: \"no defense significance.\" Internal Project Condign study confirmed radiation. 2015 VA medical settlement paid.",
+    "links": [
+      {
+        "label": "Halt audio recording",
+        "url": "https://www.youtube.com/watch?v=D6o2r7hiHGM"
+      },
+      {
+        "label": "UK National Archives UAP files",
+        "url": "https://www.nationalarchives.gov.uk/ufos/"
+      }
+    ],
+    "shape": "Triangle"
+  },
+  {
+    "id": 8,
+    "name": "Trans-en-Provence",
+    "year": 1981,
+    "lat": 43.63,
+    "lon": 6.2,
+    "location": "Var, Provence, France",
+    "country": "France",
+    "class": "A",
+    "cat": "physical",
+    "sigs": [
+      "🟠",
+      "🌱",
+      "☢️",
+      "🛸",
+      "💨",
+      "✦"
+    ],
+    "summary": "GEIPAN + INRA confirmed: 4-5 ton compression, 600°C heat, mineral deposits, plant cellular collapse. The gold standard of physical evidence.",
+    "what": "On January 8, 1981, Renato Niccolai observed a craft land briefly in his yard. GEIPAN investigated immediately. The INRA laboratory — France's national agricultural research institute — conducted full scientific analysis of soil and plant samples.",
+    "why": "The only UAP case where a government-funded national laboratory confirmed physical evidence with quantified results: 4-5 ton compression, 600°C heat signature, iron-phosphate mineral deposits inconsistent with surrounding soil, and plant root cellular collapse dateable to the incident. These findings cannot be explained by any conventional landing event.",
+    "witnesses": "Renato Niccolai — single witness, but GEIPAN classified D2 based on physical evidence alone.",
+    "evidence": "INRA laboratory analysis: 4-5 ton compression, 600°C heat, foreign mineral deposits, plant cellular collapse. GEIPAN D2 classification.",
+    "response": "GEIPAN classified D2 (genuinely unexplained). Case remains open. INRA findings never explained by any conventional hypothesis.",
+    "links": [
+      {
+        "label": "GEIPAN official case file",
+        "url": "https://www.cnes-geipan.fr"
+      },
+      {
+        "label": "COMETA Report (English)",
+        "url": "https://www.ufoevidence.org/documents/doc1521.htm"
+      }
+    ],
+    "shape": "Disk"
+  },
+  {
+    "id": 9,
+    "name": "Usovo Nuclear Activation",
+    "year": 1982,
+    "lat": 50.45,
+    "lon": 30.52,
+    "location": "Usovo, Ukraine, USSR",
+    "country": "USSR",
+    "class": "A",
+    "cat": "nuclear",
+    "sigs": [
+      "🛸",
+      "📡",
+      "☣️",
+      "🚫",
+      "⚰️",
+      "🛡️"
+    ],
+    "summary": "Soviet nuclear silos auto-activated for 15 seconds during UAP overflight. Moscow issued no command. SETKA program documented.",
+    "what": "On October 4, 1982, a UAP overflew the nuclear missile base at Usovo, Ukraine. During the overflight, silos entered a \"launch-ready\" state — a status that can only be commanded from Moscow. Moscow had issued no such command. The base lost control of its nuclear arsenal for 15 seconds before everything returned to normal.",
+    "why": "The Soviet mirror of Malmstrom AFB (1967) — an adversarial nuclear power experiencing autonomous activation of strategic nuclear weapons during a UAP overflight, 15 years apart, with no communication between the two events. Whatever is doing this isn't targeting one side of the Cold War.",
+    "witnesses": "Base personnel. Soviet military command records.",
+    "evidence": "Soviet SETKA program documentation. Military records of unauthorized launch readiness.",
+    "response": "Soviet military classified the incident. SETKA program documented it. Became known in the West only after Soviet collapse.",
+    "links": [
+      {
+        "label": "SETKA program overview",
+        "url": "https://www.nicap.org/docs/USSR_UFO_Study.pdf"
+      }
+    ],
+    "shape": "Disk"
+  },
+  {
+    "id": 10,
+    "name": "Belgian Wave",
+    "year": 1989,
+    "lat": 50.5,
+    "lon": 4.47,
+    "location": "Belgium",
+    "country": "Belgium",
+    "class": "B",
+    "cat": "mass",
+    "sigs": [
+      "▲",
+      "∷",
+      "⟁",
+      "⨯⨯",
+      "💨",
+      "⚡",
+      "🛡️"
+    ],
+    "summary": "F-16 achieved radar lock. Thousands of witnesses. Object accelerated from 280 to 1800 km/h instantaneously. Belgian AF officially acknowledged.",
+    "what": "From November 1989 to April 1990, massive triangular craft were observed across Belgium by thousands of civilians, police, and military. On March 30, 1990, an F-16 achieved radar lock. The object then accelerated from 280km/h to 1,800km/h instantaneously — physically impossible for any known aircraft.",
+    "why": "The Belgian Air Force's public acknowledgment — including release of radar data showing the impossible acceleration — makes this one of the most credibly documented military UAP events. Belgian Defense Minister Leo Delcroix held a press conference acknowledging the sightings.",
+    "witnesses": "Thousands of civilians. Gendarmerie officers. Belgian AF pilots. Multiple radar operators.",
+    "evidence": "F-16 radar tracking data released by Belgian AF. Multiple independent radar confirmations. Defense Minister press conference.",
+    "response": "Belgian AF publicly acknowledged. Released radar data. Defense Minister confirmed no Belgian, NATO, or known foreign aircraft matched.",
+    "links": [
+      {
+        "label": "Belgian AF radar data",
+        "url": "https://www.youtube.com/watch?v=A3KxTJ7TGaE"
+      }
+    ],
+    "shape": "Triangle"
+  },
+  {
+    "id": 11,
+    "name": "Phoenix Lights",
+    "year": 1997,
+    "lat": 33.45,
+    "lon": -112.07,
+    "location": "Phoenix, Arizona",
+    "country": "USA",
+    "class": "B",
+    "cat": "mass",
+    "sigs": [
+      "▲",
+      "∷",
+      "⨯⨯",
+      "💨",
+      "🚫",
+      "📷"
+    ],
+    "summary": "Thousands witness massive triangle across Arizona. Governor held mock press conference — then admitted he saw it too.",
+    "what": "On March 13, 1997, a massive V-shaped formation was observed from Nevada to Tucson by thousands. The formation appeared to be a single craft approximately 1 mile wide, moving silently. Governor Fife Symington held a press conference mocking the event — then publicly admitted he was one of the witnesses.",
+    "why": "Demonstrates the cover-up playbook in real time: immediate official ridicule from the highest state official, designed to embarrass witnesses into silence. Multiple independent video recordings confirmed a massive structured object.",
+    "witnesses": "Thousands across Arizona. Governor Fife Symington. Multiple police officers. Multiple video recordings.",
+    "evidence": "Multiple independent video recordings. Radar data. Thousands of witness reports. Governor's subsequent public admission.",
+    "response": "Air Force claimed military flares. Governor held mock press conference. Symington later: \"It was enormous and just hanging there silently. It was truly breathtaking.\"",
+    "links": [
+      {
+        "label": "Phoenix Lights documentary",
+        "url": "https://www.youtube.com/watch?v=exyp4Qr_IFg"
+      }
+    ],
+    "shape": "Triangle"
+  },
+  {
+    "id": 12,
+    "name": "USS Nimitz Tic Tac",
+    "year": 2004,
+    "lat": 30,
+    "lon": -117.5,
+    "location": "Pacific Ocean (off San Diego)",
+    "country": "USA",
+    "class": "A",
+    "cat": "military",
+    "sigs": [
+      "🏈",
+      "🌊",
+      "💨",
+      "⚡",
+      "↗️",
+      "⟁",
+      "🛡️",
+      "⚓"
+    ],
+    "summary": "Pentagon authenticated footage. 28,000ft to sea level in 0.78 seconds. USS Princeton tracked anomalous contacts for 2 weeks prior.",
+    "what": "On November 14, 2004, Cmdr. David Fravor and Lt. Cmdr. Jim Slaight were vectored toward an anomalous contact off San Diego. They observed a white, smooth, 40ft Tic Tac-shaped object that descended from 80,000ft to sea level in seconds and departed at extreme speed. USS Princeton had tracked unexplained contacts for two weeks prior.",
+    "why": "Pentagon-authenticated video, FLIR imagery, multiple trained observer accounts, and radar data from a carrier battle group. The kinematics — 28,000ft to sea level in 0.78 seconds — require thousands of Gs and materials science that does not exist.",
+    "witnesses": "Cmdr. David Fravor, Lt. Cmdr. Jim Slaight, and backseaters. USS Princeton CIC crew. Multiple radar operators.",
+    "evidence": "FLIR footage (Pentagon-authenticated 2020). SPY-1B radar tracks from USS Princeton. E-2 Hawkeye tracking data. Multiple officer testimony.",
+    "response": "FLIR footage reportedly removed from ship by unknown personnel within hours. Pentagon authenticated the footage 16 years later.",
+    "links": [
+      {
+        "label": "Pentagon-authenticated FLIR footage",
+        "url": "https://www.youtube.com/watch?v=nuBrbBn3V2M"
+      },
+      {
+        "label": "David Fravor — Lex Fridman interview",
+        "url": "https://www.youtube.com/watch?v=aB8zcAttP1E"
+      }
+    ],
+    "shape": "Tic-Tac"
+  },
+  {
+    "id": 13,
+    "name": "Chilean Navy IR",
+    "year": 2014,
+    "lat": -28,
+    "lon": -71,
+    "location": "Pacific Coast, Chile",
+    "country": "Chile",
+    "class": "B",
+    "cat": "physical",
+    "sigs": [
+      "🟠",
+      "📻",
+      "💨",
+      "⬡"
+    ],
+    "summary": "9 minutes of FLIR footage. No radar return on any system. Object ejects unknown substance visible only in infrared.",
+    "what": "On November 11, 2014, a Chilean Navy helicopter filmed an object for 9 minutes with a WESCAM MX-15 HD infrared camera. No radar return on multiple systems. The object ejected an unknown substance twice — visible only in infrared. CEFAA conducted an 8-meeting investigation with experts from the Air Force, civilian aviation authority, and academia.",
+    "why": "General Ricardo Bermúdez: \"We do not know what it was, but we do know what it was not.\" One of the most transparent official UAP acknowledgments in history.",
+    "witnesses": "Chilean Navy pilot and infrared technician. Air traffic controllers.",
+    "evidence": "9-minute FLIR footage. No radar return. Unknown substance discharged twice (IR only). CEFAA official investigation report.",
+    "response": "CEFAA conducted full investigation. Publicly acknowledged inability to explain.",
+    "links": [
+      {
+        "label": "Chilean Navy IR footage",
+        "url": "https://www.youtube.com/watch?v=BmpCIOvgXSY"
+      },
+      {
+        "label": "CEFAA official site",
+        "url": "https://www.cefaa.gob.cl"
+      }
+    ],
+    "shape": "Unknown"
+  },
+  {
+    "id": 14,
+    "name": "USS Omaha",
+    "year": 2019,
+    "lat": 30,
+    "lon": -120,
+    "location": "Pacific Ocean",
+    "country": "USA",
+    "class": "A",
+    "cat": "transmedium",
+    "sigs": [
+      "🌊",
+      "⬇",
+      "⚪",
+      "⟁",
+      "🛡️",
+      "⚓",
+      "∷"
+    ],
+    "summary": "Combat ship tracks multiple spherical craft entering/exiting Pacific Ocean. Navy-authenticated video. Transmedium capability confirmed.",
+    "what": "In July 2019, USS Omaha tracked multiple unidentified spherical craft on radar and thermal sensors. Video footage released by Jeremy Corbell and confirmed by the Navy shows one craft descending into the ocean. No debris was found. Admiral Gallaudet later testified to Congress that transmedium UAPs \"have been observed to outperform our best submarines underwater.\"",
+    "why": "Provides authenticated video evidence of transmedium capability — a craft entering ocean water without slowing or breaking apart. Directly corroborates Shag Harbour (1967).",
+    "witnesses": "USS Omaha crew. Multiple radar operators and sensor platform operators.",
+    "evidence": "Navy-authenticated video. Multi-platform sensor data. Admiral Gallaudet's congressional testimony on transmedium capability.",
+    "response": "Navy authenticated footage in 2020. Admiral Gallaudet briefed Congress on transmedium UAP capability.",
+    "links": [
+      {
+        "label": "USS Omaha footage",
+        "url": "https://www.youtube.com/watch?v=xs1ooaEwM7c"
+      }
+    ],
+    "shape": "Sphere"
+  },
+  {
+    "id": 15,
+    "name": "Pentagon PURSUE Release",
+    "year": 2026,
+    "lat": 38.87,
+    "lon": -77.05,
+    "location": "Washington DC, USA",
+    "country": "USA",
+    "class": "H",
+    "cat": "disclosure",
+    "sigs": [
+      "🚫",
+      "⊕",
+      "⟁",
+      "🛡️",
+      "☣️",
+      "🌐"
+    ],
+    "summary": "162 classified UAP files released May 8, 2026 at war.gov/UFO. Transmedium craft, 90° turns at hypersonic speeds, football-shape near Japan, embassy diplomatic cables from 6 nations spanning 40 years.",
+    "what": "On May 8, 2026, the U.S. Department of Defense published 162 previously classified UAP investigation files at war.gov/UFO. Contents include: craft performing 90-degree turns at hypersonic speeds, objects entering/exiting oceans, a bronze metallic ellipsoid hovering over restricted U.S. airspace, a football-shaped object near Japan (INDOPACOM report), FBI federal officer reports of orange mother orbs deploying red sub-orbs, and diplomatic cables from U.S. embassies in Papua New Guinea, Kazakhstan, Turkmenistan, Georgia, and Mexico dating back to 1985.",
+    "why": "The most significant official UAP disclosure in U.S. history. 162 files published openly — including materials corroborating every major behavioral pattern previously documented only through whistleblowers and FOIA. Every UAP behavioral category in the wiki now has official government documentation attached to it.",
+    "witnesses": "U.S. military personnel across multiple branches. Federal law enforcement. Diplomatic staff in multiple countries.",
+    "evidence": "162 declassified files. Authenticated video and sensor data. Embassy diplomatic cables from 6 nations spanning 40 years.",
+    "response": "Official government release. The most significant public disclosure in UAP history.",
+    "links": [
+      {
+        "label": "war.gov/UFO — official Pentagon release",
+        "url": "https://www.war.gov/UFO"
+      }
+    ],
+    "isPursue": true,
+    "shape": "Unknown"
+  },
+  {
+    "id": 16,
+    "name": "FBI Western Orbs",
+    "year": 2025,
+    "lat": 37,
+    "lon": -115,
+    "location": "Western United States",
+    "country": "USA",
+    "class": "H",
+    "cat": "disclosure",
+    "sigs": [
+      "🟠",
+      "🔴",
+      "⚪",
+      "∷",
+      "⊙"
+    ],
+    "summary": "Pentagon PURSUE release: federal officers observed orange mother orb deploying red sub-orbs over 2 days. Pattern matches Colares, Brazil (1977) and multiple global cases.",
+    "what": "From the May 2026 Pentagon PURSUE release: federal law enforcement officers in the Western United States observed an orange spherical \"mother orb\" that released multiple smaller red sub-orbs over a two-day period. The behavior — a larger craft deploying smaller reconnaissance objects — matches documented patterns from Colares, Brazil (1977) and multiple historical cases globally.",
+    "why": "The orange/red color pattern appears consistently across documented encounter cases globally across six decades. The \"mother craft + sub-orbs\" deployment pattern has been reported by credentialed military and law enforcement observers across multiple decades and nations. Now officially documented.",
+    "witnesses": "Federal law enforcement officers. Multiple independent reports over 2 days.",
+    "evidence": "Pentagon May 2026 official document release (war.gov/UFO).",
+    "response": "Included in May 2026 PURSUE release. No further official comment.",
+    "links": [
+      {
+        "label": "war.gov/UFO",
+        "url": "https://www.war.gov/UFO"
+      }
+    ],
+    "isPursue": true,
+    "shape": "Orb"
+  },
+  {
+    "id": 17,
+    "name": "Harvard / IM1 Spherules",
+    "year": 2023,
+    "lat": 1.3,
+    "lon": 147.6,
+    "location": "Pacific Ocean (IM1 impact site)",
+    "country": "International",
+    "class": "B",
+    "cat": "physical",
+    "sigs": [
+      "⬇",
+      "☢️",
+      "≋"
+    ],
+    "summary": "Harvard recovers 850 spherules from Pacific floor. Non-solar-system isotopic composition. Interstellar origin confirmed by U.S. Space Command declassified memo.",
+    "what": "In 2023, Harvard Prof. Avi Loeb led the Galileo Project expedition to the Pacific Ocean site where interstellar object IM1 impacted in 2014. The U.S. Space Command had previously confirmed IM1's interstellar origin (declassified memo, 2022). The team recovered 850 microscopic spherules with Beryllium-Lanthanum-Uranium ratios matching no known solar system material, human alloy, or volcanic source.",
+    "why": "First physical recovery of material with confirmed interstellar origin. The U.S. Space Command memo is a declassified government document confirming the object came from outside the solar system. The recovered material's anomalous composition has no conventional explanation.",
+    "witnesses": "Harvard Galileo Project research team. Published peer-reviewed results.",
+    "evidence": "850 spherules with non-solar-system BeLaU isotopic ratios. U.S. Space Command declassified memo (2022). Peer-reviewed publication.",
+    "response": "Published in academic journal. Harvard Galileo Project continues recovery and analysis.",
+    "links": [
+      {
+        "label": "Loeb et al. IM1 paper (arXiv)",
+        "url": "https://arxiv.org/abs/2308.15623"
+      },
+      {
+        "label": "Harvard Galileo Project",
+        "url": "https://projects.iq.harvard.edu/galileo"
+      }
+    ],
+    "shape": "Sphere"
+  },
+  {
+    "id": 18,
+    "name": "Hessdalen Lights",
+    "year": 1981,
+    "lat": 62.83,
+    "lon": 11.18,
+    "location": "Hessdalen Valley, Norway",
+    "country": "Norway",
+    "class": "B",
+    "cat": "physical",
+    "sigs": [
+      "✦",
+      "⊙",
+      "🌈",
+      "⚪",
+      "∿"
+    ],
+    "summary": "Persistent unexplained lights since 1981. Continuously monitored by university scientists. Multiple peer-reviewed papers. Still unexplained.",
+    "what": "Since 1981, the Hessdalen Valley in Norway has experienced persistent unexplained light phenomena captured repeatedly on calibrated sensors. Project Hessdalen is a scientific monitoring station operated by the University of Østfold.",
+    "why": "A continuous, scientifically monitored location where the phenomenon recurs predictably. Cannot be dismissed as misidentification when the same phenomena are captured repeatedly by automated sensor arrays.",
+    "witnesses": "Hundreds of valley residents. Scientific monitoring team.",
+    "evidence": "Automated camera systems. Spectroscopic analysis. Magnetic field sensors. Multiple peer-reviewed papers published.",
+    "response": "Norwegian and Italian universities established monitoring stations. Multiple scientific expeditions. Phenomenon continues, remains unexplained.",
+    "links": [
+      {
+        "label": "Project Hessdalen official site",
+        "url": "https://www.hessdalen.org"
+      }
+    ],
+    "shape": "Lights"
+  },
+  {
+    "id": 19,
+    "name": "Westall School",
+    "year": 1966,
+    "lat": -37.9,
+    "lon": 145.06,
+    "location": "Melbourne, Australia",
+    "country": "Australia",
+    "class": "B",
+    "cat": "mass",
+    "sigs": [
+      "🛸",
+      "🌱",
+      "⨯⨯",
+      "🚫",
+      "⚰️",
+      "∷"
+    ],
+    "summary": "200+ students and teachers at Westall High. Craft lands at school. Witnesses officially threatened. Files sealed.",
+    "what": "On April 6, 1966, at approximately 11am, 200+ students and teachers at Westall High School in Clayton South observed multiple craft. One descended and landed briefly in an adjoining field, leaving a circular depression. Men in suits arrived alongside emergency services and warned witnesses — including teachers — not to discuss what they had seen.",
+    "why": "Demonstrates the suppression apparatus reaching into a school environment, in daylight, with 200+ witnesses. You do not send men in suits to threaten schoolchildren over a weather balloon.",
+    "witnesses": "200+ students and teachers. Multiple accounts remain consistent 60 years later.",
+    "evidence": "Circular depression in field. Multiple witness photographs (some reportedly confiscated). Ground traces.",
+    "response": "Witnesses officially threatened. Teachers warned of job consequences. School records disappeared.",
+    "links": [
+      {
+        "label": "Westall 1966 documentary",
+        "url": "https://www.youtube.com/watch?v=d1Xpe1BKONE"
+      }
+    ],
+    "shape": "Disk"
+  },
+  {
+    "id": 20,
+    "name": "Bahía Blanca",
+    "year": 2023,
+    "lat": -38.72,
+    "lon": -62.27,
+    "location": "Bahía Blanca Naval Base, Argentina",
+    "country": "Argentina",
+    "class": "A",
+    "cat": "military",
+    "sigs": [
+      "🛸",
+      "🛡️",
+      "🚫",
+      "⚰️",
+      "🩺",
+      "📡"
+    ],
+    "summary": "Commander orders shoot-down. Craft fires back. Soldier hospitalized. Two cover stories both collapsed against base records.",
+    "what": "In September 2023, personnel at Argentina's Bahía Blanca naval base observed a UAP hovering above the base during nighttime exercises. The commanding general ordered engagement. Military personnel opened fire. The object responded with a targeted action — at least one soldier was hospitalized for one week. Two contradictory cover stories both collapsed against internal base records.",
+    "why": "Sequential collapse of two cover stories is the documented signature of active suppression. Also establishes defensive capability — a craft that can analyze incoming fire and respond in a targeted, non-lethal way is demonstrating restraint, not aggression.",
+    "witnesses": "Multiple naval base personnel. Commanding general.",
+    "evidence": "Cover story 1 (army training exercise) contradicted by navy records. Cover story 2 (helicopter) contradicted by base logs. Soldier hospitalization records.",
+    "response": "Cover story 1: army training exercise. Cover story 2: navy helicopter. Both contradicted by internal records. Specific injuries classified.",
+    "links": [],
+    "shape": "Unknown"
+  },
+  {
+    "id": 21,
+    "name": "NJ Drone Wave",
+    "year": 2024,
+    "lat": 40.7,
+    "lon": -74.2,
+    "location": "New Jersey / NYC Tri-State",
+    "country": "USA",
+    "class": "B",
+    "cat": "mass",
+    "sigs": [
+      "∷",
+      "🛸",
+      "🚫",
+      "📡",
+      "🛡️"
+    ],
+    "summary": "64 documented sightings in the #1 hotspot. Dec 2024–Jan 2025 flap near Picatinny Arsenal, Naval Weapons Station Earle, and McGuire-Dix-Lakehurst.",
+    "what": "The December 2024–January 2025 \"New Jersey drone\" wave generated the highest concentration of documented sightings in the current dataset — 64 reports in the NYC/NJ/Philadelphia tri-state region. Proximity to Picatinny Arsenal (munitions research), Naval Weapons Station Earle (largest weapons storage east of the Mississippi), and McGuire-Dix-Lakehurst (joint military installation) raises strategic questions about the targets of surveillance.",
+    "why": "The density of sightings around military infrastructure in New Jersey — particularly naval weapons storage and a major joint military base — follows the established pattern of UAP interest in strategic military assets documented across decades of global incidents.",
+    "witnesses": "Hundreds of civilian witnesses. Multiple law enforcement agencies. State officials.",
+    "evidence": "64 documented sightings in the Project Parallax database. Multiple video recordings. Official acknowledgment that sightings were occurring.",
+    "response": "Initial dismissal as hobbyist drones. No aircraft matches found. Pentagon did not confirm source.",
+    "links": [],
+    "shape": "Lights"
+  },
+  {
+    "id": 22,
+    "name": "Pascagoula Abduction",
+    "year": 1973,
+    "lat": 30.37,
+    "lon": -88.55,
+    "location": "Pascagoula, Mississippi",
+    "country": "USA",
+    "class": "B",
+    "cat": "biological",
+    "sigs": [
+      "👁️",
+      "⌛",
+      "🧠",
+      "◉",
+      "👥",
+      "⚪"
+    ],
+    "summary": "Two fishermen. Sheriff secretly recorded their private conversation — confirmed authenticity of distress. Parker maintained account until his death.",
+    "what": "On October 11, 1973, Charles Hickson (42) and Calvin Parker (19) reported being levitated into a craft by floating entities while fishing from a pier. Sheriff Fred Diamond, skeptical, left the two men alone in a room with a hidden tape recorder. Expecting conspiracy, he instead recorded Hickson and Parker in genuine distress, continuing to describe the experience when they believed no one was listening.",
+    "why": "The inadvertent authentication via hidden recording is among the most compelling evidence of sincerity in any UAP report. Parker maintained the account until his death.",
+    "witnesses": "Charles Hickson, Calvin Parker. Multiple corroborating witnesses reported unusual lights in the area that evening.",
+    "evidence": "Sheriff's hidden tape recording of genuine distress. Physiological examination reports. Multiple corroborating light sightings.",
+    "response": "Sheriff's hidden recording failed to disprove account. Air Force declined to investigate.",
+    "links": [],
+    "shape": "Tic-Tac"
+  },
+  {
+    "id": 23,
+    "name": "Bass Strait / Valentich",
+    "year": 1978,
+    "lat": -39.5,
+    "lon": 146.2,
+    "location": "Bass Strait, Australia",
+    "country": "Australia",
+    "class": "B",
+    "cat": "transmedium",
+    "sigs": [
+      "🛸",
+      "🌊",
+      "≋",
+      "📻"
+    ],
+    "summary": "Pilot vanishes mid-flight. Last transmission: craft above him. Radio ends with 17 seconds of metallic scraping sound. Neither pilot nor aircraft ever found.",
+    "what": "On October 21, 1978, pilot Frederick Valentich radioed Melbourne ATC to report an unidentified craft above him. His final words described the object hovering on top of him. After 17 seconds of metallic scraping sound, transmission ceased. Neither Valentich nor the aircraft was ever found.",
+    "why": "The 17 seconds of metallic scraping on the ATC recording has never been explained. The disappearance is total — no wreckage, no body, no debris. A trained pilot, describing a UAP in real time, who then vanished without trace over open ocean.",
+    "witnesses": "Valentich via ATC. Multiple reports of UAPs in Bass Strait that evening.",
+    "evidence": "ATC transcript and recording (public). 17 seconds of unexplained metallic sound. Total disappearance — no wreckage or debris ever found.",
+    "response": "Australian DoT investigated. Officially listed as \"missing, presumed fatal accident.\" Never reclassified.",
+    "links": [
+      {
+        "label": "ATC recording (Valentich last transmission)",
+        "url": "https://www.youtube.com/watch?v=Q5mV34KKOSQ"
+      }
+    ],
+    "shape": "Lights"
+  },
+  {
+    "id": 24,
+    "name": "Cash-Landrum",
+    "year": 1980,
+    "lat": 30.14,
+    "lon": -95.12,
+    "location": "Huffman, Texas",
+    "country": "USA",
+    "class": "A",
+    "cat": "biological",
+    "sigs": [
+      "☢️",
+      "🩺",
+      "🛸",
+      "🛡️",
+      "✦",
+      "🚫",
+      "⚰️"
+    ],
+    "summary": "2 women + child. Severe radiation burns from diamond-shaped craft escorted by military helicopters. Medical evidence documented. Both women died of radiation-related conditions.",
+    "what": "On December 29, 1980, Betty Cash, Vicki Landrum, and Vicki's grandson encountered a massive diamond-shaped craft near Huffman, Texas. The craft was surrounded by approximately 23 military helicopters, including CH-47 Chinooks. All three suffered radiation burns, nausea, hair loss. Betty Cash nearly died. Both women eventually died from radiation-related conditions.",
+    "why": "The presence of military helicopter escorts establishes government knowledge of the craft. The victims' injuries were documented by multiple physicians consistent with acute radiation exposure.",
+    "witnesses": "Betty Cash, Vicki Landrum, Colby Landrum (7). Multiple other witnesses confirmed the helicopters.",
+    "evidence": "Medical documentation of radiation burns. Multiple physician reports. Independent witnesses confirmed helicopter presence. Victims sued U.S. government.",
+    "response": "Government denied any military helicopters were in the area. Lawsuit dismissed on jurisdictional grounds.",
+    "links": [],
+    "shape": "Unknown"
+  },
+  {
+    "id": 25,
+    "name": "North West Cape",
+    "year": 1991,
+    "lat": -21.8,
+    "lon": 114.15,
+    "location": "Western Australia",
+    "country": "Australia",
+    "class": "B",
+    "cat": "nuclear",
+    "sigs": [
+      "⊙",
+      "⚓",
+      "🚫",
+      "⚰️",
+      "⚪"
+    ],
+    "summary": "Persistent UAP at submarine nuclear communication base. U.S. military pressured Australian witnesses to recant. Australian National Archives declassified.",
+    "what": "Over decades, multiple sightings of UAPs have been reported at the Harold E. Holt Naval Communication Station at North West Cape, Western Australia — one of the world's most strategically critical naval communication bases, used to communicate with U.S. nuclear submarines in the Indian Ocean. Declassified National Archives files reveal that U.S. military personnel actively tried to suppress at least one Australian witness's sighting.",
+    "why": "The base communicates with nuclear submarines — putting it in the same strategic position as the SOSUS array at Shag Harbour. UAP interest in nuclear submarine communication infrastructure is a recurring pattern.",
+    "witnesses": "Soldiers, tourists, senior American officers at the base, local civilians.",
+    "evidence": "Australian National Archives declassified files. Records of U.S. military pressure on Australian witnesses.",
+    "response": "U.S. military personnel pressured Australian witnesses to recant. Files declassified by National Archives.",
+    "links": [],
+    "shape": "Sphere"
+  },
+  {
+    "id": 26,
+    "name": "3I/ATLAS Object",
+    "year": 2025,
+    "lat": -30,
+    "lon": 45,
+    "location": "Inbound trajectory / Southern Hemisphere",
+    "country": "International",
+    "class": "B",
+    "cat": "physical",
+    "sigs": [
+      "⬇",
+      "⚪",
+      "⊙",
+      "≋"
+    ],
+    "summary": "Third confirmed interstellar object. Avi Loeb documents anomalies. ESA JANUS mission mobilized. Non-gravitational acceleration detected. Seligman counter-position noted.",
+    "what": "Interstellar object 3I/ATLAS was confirmed in 2025 as the third known interstellar object to enter the solar system. Prof. Avi Loeb documented anomalies in its trajectory suggesting non-gravitational acceleration. The ESA JANUS mission was mobilized for intercept analysis. Daryl Seligman has offered conventional explanations (outgassing); Loeb maintains the anomalies require additional scrutiny.",
+    "why": "Following IM1 (confirmed interstellar by U.S. Space Command) and 'Oumuamua (Loeb's prior anomaly case), 3I/ATLAS represents the third interstellar object in a decade — a statistical clustering that has prompted serious scientific debate about the frequency and nature of interstellar visitors.",
+    "witnesses": "ESA JANUS mission team. Multiple international observatories.",
+    "evidence": "ESA JANUS mission data. Trajectory anomalies consistent with non-gravitational acceleration. Spectrum analysis ongoing.",
+    "response": "International scientific community monitoring. Competing explanations from Loeb and Seligman. ESA mission continues.",
+    "links": [],
+    "shape": "Unknown"
+  },
+  {
+    "id": 27,
+    "name": "INDOPACOM Football Object",
+    "year": 2026,
+    "lat": 24,
+    "lon": 135,
+    "location": "Western Pacific / Near Japan",
+    "country": "USA",
+    "class": "H",
+    "cat": "disclosure",
+    "sigs": [
+      "🛸",
+      "🛡️",
+      "⟁",
+      "⊙"
+    ],
+    "summary": "Included in May 2026 PURSUE release. U.S. Indo-Pacific Command reported football-shaped object near Japan. No conventional aircraft match.",
+    "what": "Included in the May 8, 2026 Pentagon PURSUE release: the U.S. Indo-Pacific Command filed an incident report describing a football-shaped (prolate spheroid) object observed near Japan by U.S. military assets. The object's shape, behavior, and lack of propulsion signature matched no conventional aircraft or known adversary platform.",
+    "why": "Extends documented UAP behavior into the Western Pacific theater, near Japan — which has itself officially confirmed UAP footage from Japan Self-Defense Forces. The INDOPACOM filing establishes U.S. military awareness of UAP activity in the same region where Japan's government has independently documented the phenomenon.",
+    "witnesses": "U.S. INDOPACOM military personnel. Corroborating Japan JSDF reporting from separate channels.",
+    "evidence": "Included in May 2026 Pentagon PURSUE release (war.gov/UFO). INDOPACOM official filing.",
+    "response": "Official government release May 8, 2026.",
+    "links": [
+      {
+        "label": "war.gov/UFO",
+        "url": "https://www.war.gov/UFO"
+      }
+    ],
+    "isPursue": true,
+    "shape": "Tic-Tac"
+  },
+  {
+    "id": 28,
+    "name": "Kazakhstan 747 Encounter",
+    "year": 1994,
+    "lat": 45,
+    "lon": 55,
+    "location": "Western Kazakhstan (41,000 ft)",
+    "country": "Kazakhstan",
+    "class": "A",
+    "cat": "military",
+    "sigs": [
+      "⚪",
+      "⟁",
+      "💨",
+      "📷",
+      "∷"
+    ],
+    "summary": "Ex-PanAm 747 crew tracks object making 90° turns at extreme G for 40 minutes. Overfly its contrails at ~100,000 ft. Cable routed to CIA and DIA. Photos vanish.",
+    "what": "On January 27, 1994, Tajik Air chief pilot Ed Rhodes and two American colleagues, at 41,000 ft in a Boeing 747SP over Kazakhstan (45N 55E), watched an intensely bright object approach from the east at higher altitude and greater speed. For 40 minutes it maneuvered in circles, corkscrews, and 90-degree turns at very high G. Its light showed a bow wave like a bullet in flight. 45 minutes later, at sunrise, the 747 flew under the object's persistent contrails, which Rhodes estimated at ~100,000 ft — an altitude where conventional propulsion cannot form contrails. The paths of the contrails traced the object's circles and corkscrews.",
+    "why": "A Tier 1 diplomatic document (US Embassy Dushanbe cable, Jan 31, 1994) preserving a professional aircrew observation with a physical trace element. The cable was routed to CIA and DIA — documentary evidence of a standing IC monitoring channel decades before AARO. The 90° turn signature matches Brazil 1986 and Greece 2023 official reports.",
+    "witnesses": "Capt. Ed Rhodes (ex-PanAm) + two American pilots. All rejected the meteor hypothesis from thousands of hours of night-flight experience.",
+    "evidence": "State Dept cable 94 DUSHANBE 259, released in full via PURSUE May 8, 2026. Rhodes stated on diplomatic record the object was extraterrestrial and under intelligent control. Olympus photos taken — whereabouts unknown (active FOIA target). Full verbatim text preserved in Parallax Primary Document Vault (DOC-001).",
+    "response": "Embassy transmitted to State, CIA, DIA, and six regional embassies with comment: we have no opinion and report the above for what it may be worth.",
+    "links": [
+      {
+        "label": "Original cable PDF (war.gov)",
+        "url": "https://www.war.gov/medialink/ufo/release_1/dos-uap-d2-cable-2-kazakhstan-january-1994.pdf"
+      }
+    ],
+    "isPursue": true,
+    "shape": "Lights"
+  },
+  {
+    "id": 29,
+    "name": "Harare Airport Incident",
+    "year": 2008,
+    "lat": -17.93,
+    "lon": 31.09,
+    "location": "Harare International Airport, Zimbabwe",
+    "country": "Zimbabwe",
+    "class": "B",
+    "cat": "military",
+    "sigs": [
+      "📡",
+      "👁️",
+      "✦",
+      "🛸"
+    ],
+    "summary": "UAP over Harare airport recorded on radar AND optical. Hovers at undetermined altitude with beams emanating. Released in PURSUE Tranche 3.",
+    "what": "In July 2008, a UAP was recorded over Harare International Airport via both radar and optical systems. The object was reported to hover at an undetermined altitude with beams emanating from it. The case surfaced in a CIA/FBI-stream document released in PURSUE Tranche 3 (June 12, 2026).",
+    "why": "Dual-sensor (radar + optical) attestation from an African capital — a region nearly absent from official corpora until 2026. Beam emission matches Colares 1977 phenomenology. Zimbabwe now appears twice in the record via independent channels: the 1994 Ariel School mass child-witness case (Ruwa) and this 2008 instrumented case, 14 years apart.",
+    "witnesses": "Airport radar operators and optical observers (identities redacted in release).",
+    "evidence": "PURSUE Tranche 3 document (CIA/FBI stream), June 12, 2026. Radar + optical dual-sensor record.",
+    "response": "No known Zimbabwean government investigation disclosed. US IC filed and retained the report; declassified 18 years later.",
+    "links": [
+      {
+        "label": "PURSUE portal",
+        "url": "https://www.war.gov/ufo/"
+      }
+    ],
+    "isPursue": true,
+    "shape": "Unknown"
+  },
+  {
+    "id": 30,
+    "name": "Genkai Nuclear Plant Lights",
+    "year": 2025,
+    "lat": 33.516,
+    "lon": 129.837,
+    "location": "Genkai Nuclear Power Plant, Saga, Japan",
+    "country": "Japan",
+    "class": "B",
+    "cat": "nuclear",
+    "sigs": [
+      "☢️",
+      "∷",
+      "⚪",
+      "🚫",
+      "👥"
+    ],
+    "summary": "Three lights hover 2+ hours over operating nuclear plant. Regulator retracts drone ID next day: only lights that appeared to be drones. Closed Diet hearings follow.",
+    "what": "On July 26, 2025, four security guards and a stationed police officer witnessed three lights resembling drones hovering for over two hours above Kyushu Electric's Genkai Nuclear Power Plant (No. 3 reactor operational). The lights vanished by early morning. No drone was recovered and no operator identified. Japan's Nuclear Regulation Authority initially announced three drones, then corrected itself the next day: only lights that appeared to be drones — it could not be said with certainty they were drones.",
+    "why": "A fresh 2025 data point in the nuclear-facility pattern (Malmstrom, Usovo, Rendlesham, PANTEX) — multi-witness, multi-hour, with an official regulatory retraction from identification to non-identification. On August 7, 2025, Japan's Parliamentary UAP League held closed-door hearings taking testimony from the NRA, Defense Ministry, and Land Ministry.",
+    "witnesses": "4 security guards + 1 police officer. Multi-hour continuous observation.",
+    "evidence": "NRA public correction (July 27, 2025). Kyushu Electric report to regulator. Asahi Shimbun reporting on closed hearings (Sept 4, 2025).",
+    "response": "NRA correction issued. Closed Diet hearings Aug 7, 2025. Feeds the March 2026 proposal for a UAP body under the Deputy Chief Cabinet Secretary.",
+    "links": [
+      {
+        "label": "Japan Times coverage",
+        "url": "https://www.japantimes.co.jp/"
+      }
+    ],
+    "isPursue": false,
+    "shape": "Lights"
+  },
+  {
+    "id": 31,
+    "name": "Lake Huron Shootdown",
+    "year": 2023,
+    "lat": 44.5,
+    "lon": -82.4,
+    "location": "Lake Huron, Michigan",
+    "country": "USA",
+    "class": "B",
+    "cat": "military",
+    "sigs": [
+      "💥",
+      "🎯",
+      "⊞",
+      "📹"
+    ],
+    "summary": "First-ever released footage of US military kinetic engagement against a UAP-designated object. AIM-9X strike fragments object in radial high-energy pattern. Debris fate undisclosed.",
+    "what": "On February 12, 2023 — one week after the Chinese balloon shootdown — an Air National Guard F-16C engaged an unidentified object over Lake Huron with an AIM-9X Sidewinder. The 46-second Advanced Targeting Pod infrared video, released in PURSUE Tranche 2 (May 22, 2026), shows the object struck and fragmenting in a radial displacement pattern DoW language calls suggestive of a high-energy event. Fragments visibly fall.",
+    "why": "Historic as the first visual record of a US kinetic UAP engagement, regardless of the object's ultimate identity. November 2024 documents point to hobbyist/weather-balloon debris; the government has not disclosed what fell or whether recovery was attempted. Released only after congressional pressure routed through AARO.",
+    "witnesses": "F-16 pilots (callsigns redacted). NORAD radar operators.",
+    "evidence": "Official DoW ATP infrared video (PURSUE Tranche 2). Prior NORAD statements. 2024 debris-vendor documents (balloon hypothesis).",
+    "response": "Object engaged and destroyed. Recovery status undisclosed. Footage classified 3 years, released May 22, 2026.",
+    "links": [
+      {
+        "label": "PURSUE portal",
+        "url": "https://www.war.gov/ufo/"
+      }
+    ],
+    "isPursue": true,
+    "shape": "Unknown"
+  }
+]
