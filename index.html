@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>PROJECT PARALLAX // GLOBAL TRACKING</title>
 
 <!-- PWA / installable app -->
@@ -35,7 +35,7 @@
 *{box-sizing:border-box}
 html,body{margin:0;height:100%;background:var(--void);overflow:hidden}
 body{font-family:'DM Mono',ui-monospace,monospace;color:var(--ice);-webkit-font-smoothing:antialiased}
-#app{display:flex;height:100vh;width:100vw}
+#app{display:flex;height:100vh;height:100dvh;width:100vw}
 
 /* ---------- Sidebar ---------- */
 #sidebar{
@@ -175,7 +175,7 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;
 .zone .zx:hover{opacity:1}
 
 /* Report modal */
-.modal{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;
+.modal{position:fixed;inset:0;z-index:70;display:none;align-items:center;justify-content:center;
   background:rgba(3,6,8,0.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
 .modal.on{display:flex}
 .modal-card{width:min(460px,92vw);max-height:88vh;overflow-y:auto;
@@ -223,11 +223,48 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;
 #tooltip .ty{opacity:0.65;font-size:10px}
 
 .foot{font-size:8.5px;letter-spacing:0.12em;opacity:0.4;line-height:1.5}
+
+/* ---------- Mobile: full-screen globe + slide-in control drawer ---------- */
+#navToggle,#scrim,#drawerClose{display:none}
+@media (max-width:760px){
+  #sidebar{
+    position:fixed; top:0; left:0; z-index:60; height:100%;
+    width:88%; max-width:380px; min-width:0;
+    transform:translateX(-100%); transition:transform .28s ease;
+    padding-top:calc(16px + env(safe-area-inset-top));
+    padding-bottom:calc(26px + env(safe-area-inset-bottom));
+    padding-left:calc(18px + env(safe-area-inset-left));
+  }
+  body.nav-open #sidebar{transform:translateX(0)}
+  #globe{width:100vw}
+  #navToggle{
+    display:flex; align-items:center; justify-content:center; position:fixed; z-index:45;
+    top:calc(10px + env(safe-area-inset-top)); left:calc(10px + env(safe-area-inset-left));
+    width:44px; height:44px; border-radius:9px; cursor:pointer;
+    background:rgba(10,15,30,0.82); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
+    border:1px solid rgba(0,200,255,0.35); color:var(--teal); font-size:20px;
+    box-shadow:0 0 16px rgba(0,200,255,0.2);
+  }
+  #scrim{display:block; position:fixed; inset:0; z-index:55; background:rgba(3,6,8,0);
+    pointer-events:none; transition:background .28s}
+  body.nav-open #scrim{background:rgba(3,6,8,0.5); pointer-events:auto}
+  #drawerClose{
+    display:flex; align-items:center; justify-content:center; position:absolute; z-index:2;
+    top:calc(12px + env(safe-area-inset-top)); right:14px; width:32px; height:32px; border-radius:8px;
+    background:rgba(0,200,255,0.08); border:1px solid rgba(0,200,255,0.3); color:var(--ice);
+    font-size:18px; cursor:pointer;
+  }
+  .fld input,.fld textarea,.fld select{font-size:16px}   /* prevent iOS zoom-on-focus */
+  .modal-card{max-height:calc(86vh - env(safe-area-inset-bottom))}
+}
 </style>
 </head>
 <body>
 <div id="app">
+  <button id="navToggle" aria-label="Toggle controls">☰</button>
+  <div id="scrim"></div>
   <aside id="sidebar">
+    <button id="drawerClose" aria-label="Close controls">×</button>
 
     <!-- 1. Header -->
     <div class="mod hdr">
@@ -838,6 +875,7 @@ function populateCard(inc){
   }else{ lk.innerHTML=`<span class="nolinks">No public source links on file.</span>`; }
   renderMedia(MEDIA[inc.id]);
   card.classList.add('on');
+  if(typeof isMobile==='function' && isMobile()) setNav(true);
   card.scrollIntoView({behavior:'smooth', block:'nearest'});
 }
 document.getElementById('c-close').addEventListener('click',()=>card.classList.remove('on'));
@@ -903,7 +941,8 @@ function populateReportCard(r){
   $('c-what').textContent = r.desc || '—';
   $('kv-resp').style.display='none'; $('kv-sigs').style.display='none'; $('kv-links').style.display='none';
   renderMedia(r.photo ? [{type:'image', dataUrl:r.photo, caption:'Your submitted photo'}] : null);
-  card.classList.add('on'); card.scrollIntoView({behavior:'smooth', block:'nearest'});
+  card.classList.add('on'); if(typeof isMobile==='function' && isMobile()) setNav(true);
+  card.scrollIntoView({behavior:'smooth', block:'nearest'});
 }
 
 /* form wiring */
@@ -922,7 +961,7 @@ $('rm-photo').addEventListener('change', e=>{
 });
 $('rm-pick').addEventListener('click', ()=>{
   pendingPick={ fill:(la,lo)=>{ $('rm-lat').value=la.toFixed(4); $('rm-lon').value=lo.toFixed(4); }, reopen:reportModal };
-  closeReport(); $('pickBanner').classList.add('on');
+  closeReport(); document.body.classList.remove('nav-open'); $('pickBanner').classList.add('on');
 });
 
 $('rm-submit').addEventListener('click', ()=>{
@@ -1165,7 +1204,7 @@ $('zm-rad').addEventListener('input', ()=>{ $('zm-radlbl').textContent=$('zm-rad
 $('zm-geo').addEventListener('click', ()=>{ getMyLocation((lat,lon)=>{ $('zm-lat').value=lat.toFixed(4); $('zm-lon').value=lon.toFixed(4); updateZoneCount(); }, msg=>{ $('zm-count').textContent=msg; }); });
 $('zm-pick').addEventListener('click', ()=>{
   pendingPick={ fill:(la,lo)=>{ $('zm-lat').value=la.toFixed(4); $('zm-lon').value=lo.toFixed(4); updateZoneCount(); }, reopen:zoneModal };
-  zoneModal.classList.remove('on'); $('pickBanner').classList.add('on');
+  zoneModal.classList.remove('on'); document.body.classList.remove('nav-open'); $('pickBanner').classList.add('on');
 });
 $('zm-save').addEventListener('click', ()=>{
   const name=$('zm-name').value.trim(), lat=parseFloat($('zm-lat').value), lon=parseFloat($('zm-lon').value), rad=+$('zm-rad').value;
@@ -1240,6 +1279,20 @@ function tick(ts){
   if(need) scene.requestRender();
 }
 requestAnimationFrame(tick);
+
+/* ============ Responsive drawer (mobile) + orientation handling ============ */
+const isMobile = ()=>window.matchMedia('(max-width:760px)').matches;
+function setNav(open){ document.body.classList.toggle('nav-open', open); }
+{
+  const nt=document.getElementById('navToggle'), sc=document.getElementById('scrim'), dc=document.getElementById('drawerClose');
+  nt && nt.addEventListener('click', ()=>setNav(!document.body.classList.contains('nav-open')));
+  sc && sc.addEventListener('click', ()=>setNav(false));
+  dc && dc.addEventListener('click', ()=>setNav(false));
+}
+// keep the Cesium canvas correct across rotation / resize
+function onResize(){ try{ viewer.resize(); }catch(e){} scene.requestRender(); }
+window.addEventListener('resize', onResize);
+window.addEventListener('orientationchange', ()=>setTimeout(onResize, 250));
 
 /* ============ Live UTC clock ============ */
 const clockEl=document.getElementById('clock');
