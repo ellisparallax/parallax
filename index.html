@@ -898,6 +898,11 @@ let pendingPick = null;    // {fill(lat,lon), reopen} — captures the next glob
 let lastReport = null;     // most recent submission, for export
 const $ = id => document.getElementById(id);
 
+/* Backend (Supabase) — set submitUrl to your submit-sighting Edge Function and
+   flip enabled:true to send reports to the shared moderation queue. When off,
+   the app stays fully local (saves + export-for-review). See supabase/BACKEND.md. */
+const API = { enabled:false, submitUrl:'' };
+
 function addReportEntity(r){
   const ent = reportsDS.entities.add({
     position: Cesium.Cartesian3.fromDegrees(r.lon, r.lat, 6000),
@@ -977,6 +982,12 @@ $('rm-submit').addEventListener('click', ()=>{
   myReports.push(r); saveReports(); addReportEntity(r); updateRepCount(); lastReport=r;
   const _hz=zonesContaining(r.lat, r.lon);
   if(alertsOn && _hz.length) showNotify('New sighting near '+_hz[0].name, `${r.location} — ${r.shape}`, {id:r.id, lat:r.lat, lon:r.lon});
+  if(API.enabled && API.submitUrl){
+    fetch(API.submitUrl,{ method:'POST', headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({ location:r.location, lat:r.lat, lon:r.lon, year:r.year, shape:r.shape, description:r.desc, heading:r.heading, tilt:r.tilt, photo:r.photo }) })
+      .then(res=>res.json()).then(d=>{ if(d&&d.ok) console.log('[PARALLAX] sent to review queue:', d.id); })
+      .catch(err=>console.warn('[PARALLAX] backend submit failed (kept locally):', err));
+  }
   reportsDS.show = $('ly-rep').checked = true;
   camera.flyTo({ destination:Cesium.Cartesian3.fromDegrees(r.lon, r.lat, 900000), duration:1.6 });
   scene.requestRender();

@@ -88,8 +88,8 @@ same watch-zone model, native delivery.
 
 This is the "limited but legit" v1 — a real installable app using real device features. The path to a native iPhone app:
 
-- **Now (this repo):** PWA, GPS, camera, compass, offline. ✅
-- **Next (backend):** a real shared database + moderation queue for submissions (e.g. Supabase), user accounts (Sign in with Apple), corroboration/voting, comments. Swap the report form's export step for an API call.
+- **Now (this repo):** PWA, GPS, camera, compass, offline, watch-zone alerts. ✅
+- **Next (backend — scaffolded in [`supabase/`](supabase/BACKEND.md)):** a real shared database + moderation queue, PostGIS radius matching, and the push sender that fires watch-zone alerts. Schema + Edge Functions are written and deploy-ready; flip `API.enabled` / `PUSH.enabled` in `index.html` once deployed. Then layer on accounts (Sign in with Apple), corroboration/voting, and comments.
 - **Then (native):** wrap with Capacitor for the App Store, add push notifications and an AR sky mode, licensed map tiles, and the required content-moderation / privacy / EULA pieces.
 
 See `docs`-style detail in `SPEC.md` and `CLAUDE.md`.
