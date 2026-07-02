@@ -165,6 +165,14 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;
 .nearbtn:hover{background:rgba(200,169,110,0.14)}
 .geostat{font-size:10px;letter-spacing:0.04em;opacity:0.75;margin-top:7px;line-height:1.5;color:var(--teal);min-height:0}
 .geostat.err{color:var(--ember)}
+.reportbtn.on{background:rgba(200,169,110,0.14);border-color:var(--gold);color:var(--gold);box-shadow:0 0 16px rgba(200,169,110,0.25)}
+.zonelist{margin-top:9px;display:flex;flex-direction:column;gap:6px}
+.zone{display:flex;align-items:center;justify-content:space-between;gap:8px;
+  background:rgba(200,169,110,0.05);border:1px solid rgba(200,169,110,0.2);border-radius:4px;padding:6px 9px}
+.zone .zn{color:var(--gold);letter-spacing:0.03em;font-size:11px}
+.zone .zr{opacity:0.6;font-size:9.5px;letter-spacing:0.03em}
+.zone .zx{background:none;border:none;color:var(--ember);cursor:pointer;font-size:13px;opacity:0.7;padding:0 2px}
+.zone .zx:hover{opacity:1}
 
 /* Report modal */
 .modal{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;
@@ -270,6 +278,15 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;
       <div class="geostat" id="geoStat"></div>
     </div>
 
+    <!-- Sighting Alerts -->
+    <div class="mod">
+      <div class="mod-title">Sighting Alerts</div>
+      <button class="reportbtn" id="alertsBtn">🔔 Enable sighting alerts</button>
+      <button class="nearbtn" id="addZoneBtn">＋ Watch an area</button>
+      <div class="geostat" id="alertStat"></div>
+      <div class="zonelist" id="zoneList"></div>
+    </div>
+
     <!-- 4. Time slider -->
     <div class="mod">
       <div class="mod-title">Time-Series // 1944 → 2026</div>
@@ -353,6 +370,28 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;
       <p class="rm-note">The email opens a pre-filled message — attach the downloaded file (it contains your photo).</p>
       <div class="modal-actions"><button id="rm-again">Report another</button><button id="rm-done">Done</button></div>
     </div>
+  </div>
+</div>
+
+<!-- ============ Watch an area (alerts) modal ============ -->
+<div id="zoneModal" class="modal">
+  <div class="modal-card">
+    <div class="modal-top">
+      <div class="modal-title">WATCH AN AREA</div>
+      <button class="closebtn" id="zm-close">×</button>
+    </div>
+    <label class="fld"><span>Area name *</span><input id="zm-name" placeholder="e.g. Home — Phoenix, AZ"></label>
+    <div class="fld-row">
+      <label class="fld"><span>Center latitude *</span><input id="zm-lat" type="number" step="0.0001"></label>
+      <label class="fld"><span>Center longitude *</span><input id="zm-lon" type="number" step="0.0001"></label>
+    </div>
+    <button class="pickbtn" id="zm-geo">📡 Use my current location</button>
+    <button class="pickbtn" id="zm-pick">📍 Or pick the center on the globe</button>
+    <label class="fld"><span>Alert radius: <b id="zm-radlbl">80 km</b></span>
+      <input id="zm-rad" type="range" min="10" max="500" step="10" value="80"></label>
+    <div class="geostat" id="zm-count"></div>
+    <div class="modal-actions"><button class="primary" id="zm-save">Save watch area</button></div>
+    <p class="rm-note">You'll be alerted when a new sighting is reported inside this area. Background push (when the app is closed) needs the hosted version with a backend — see README; until then, alerts appear while Parallax is open.</p>
   </div>
 </div>
 
@@ -734,14 +773,13 @@ handler.setInputAction(mv=>{
 /* ============ Click → fly + inspection card ============ */
 handler.setInputAction(clk=>{
   // Pick-location mode for the report form: capture coordinates instead of opening a card.
-  if(pickMode){
+  if(pendingPick){
     const cart=camera.pickEllipsoid(clk.position, scene.globe.ellipsoid);
     if(cart){ const c=Cesium.Cartographic.fromCartesian(cart);
-      document.getElementById('rm-lat').value=Cesium.Math.toDegrees(c.latitude).toFixed(4);
-      document.getElementById('rm-lon').value=Cesium.Math.toDegrees(c.longitude).toFixed(4);
-    }
-    pickMode=false; document.getElementById('pickBanner').classList.remove('on');
-    document.getElementById('reportModal').classList.add('on');
+      pendingPick.fill(Cesium.Math.toDegrees(c.latitude), Cesium.Math.toDegrees(c.longitude)); }
+    const reopen=pendingPick.reopen; pendingPick=null;
+    document.getElementById('pickBanner').classList.remove('on');
+    if(reopen) reopen.classList.add('on');
     return;
   }
   const picked = scene.pick(clk.position);
@@ -816,7 +854,7 @@ const reportsDS = new Cesium.CustomDataSource('reports');
 viewer.dataSources.add(reportsDS);
 let myReports = [];
 let pendingPhoto = null;   // dataURL of the photo being submitted
-let pickMode = false;      // when true, a globe click sets the report coordinates
+let pendingPick = null;    // {fill(lat,lon), reopen} — captures the next globe click
 let lastReport = null;     // most recent submission, for export
 const $ = id => document.getElementById(id);
 
@@ -882,7 +920,10 @@ $('rm-photo').addEventListener('change', e=>{
   if(!f){ pendingPhoto=null; $('rm-preview').innerHTML=''; return; }
   downscaleImage(f, 900, d=>{ pendingPhoto=d; $('rm-preview').innerHTML = d?`<img src="${d}" alt="preview">`:''; });
 });
-$('rm-pick').addEventListener('click', ()=>{ pickMode=true; closeReport(); $('pickBanner').classList.add('on'); });
+$('rm-pick').addEventListener('click', ()=>{
+  pendingPick={ fill:(la,lo)=>{ $('rm-lat').value=la.toFixed(4); $('rm-lon').value=lo.toFixed(4); }, reopen:reportModal };
+  closeReport(); $('pickBanner').classList.add('on');
+});
 
 $('rm-submit').addEventListener('click', ()=>{
   const loc=$('rm-loc').value.trim(), lat=parseFloat($('rm-lat').value), lon=parseFloat($('rm-lon').value), desc=$('rm-desc').value.trim();
@@ -893,6 +934,8 @@ $('rm-submit').addEventListener('click', ()=>{
     heading: pendingHeading?pendingHeading.heading:null, tilt: pendingHeading?pendingHeading.tilt:null,
     createdAt: new Date().toISOString() };
   myReports.push(r); saveReports(); addReportEntity(r); updateRepCount(); lastReport=r;
+  const _hz=zonesContaining(r.lat, r.lon);
+  if(alertsOn && _hz.length) showNotify('New sighting near '+_hz[0].name, `${r.location} — ${r.shape}`, {id:r.id, lat:r.lat, lon:r.lon});
   reportsDS.show = $('ly-rep').checked = true;
   camera.flyTo({ destination:Cesium.Cartesian3.fromDegrees(r.lon, r.lat, 900000), duration:1.6 });
   scene.requestRender();
@@ -1004,6 +1047,155 @@ $('rm-heading').addEventListener('click', ()=>{
       .catch(()=>{ out.textContent='Motion access unavailable.'; out.classList.add('err'); });
   } else go();
 });
+
+/* ============ Sighting alerts: watch zones + notifications ============ */
+/* Flip PUSH.enabled and set a VAPID public key + subscribe endpoint once a
+   backend is live to get true background push (delivered even when the app is
+   closed). Until then, alerts fire in-app while Parallax is open. On iOS, web
+   push requires the app be installed to the home screen. See README. */
+const PUSH = { enabled:false, vapidPublicKey:'', subscribeUrl:'' };
+const ZKEY = 'parallax_watchzones';
+const zonesDS = new Cesium.CustomDataSource('zones');
+viewer.dataSources.add(zonesDS);
+let zones = [];
+let alertsOn = false;
+
+function saveZones(){ try{ localStorage.setItem(ZKEY, JSON.stringify(zones)); }catch(e){} }
+function drawZones(){
+  zonesDS.entities.removeAll();
+  zones.forEach(z=>{
+    const r=z.radiusKm*1000;
+    zonesDS.entities.add({
+      position:Cesium.Cartesian3.fromDegrees(z.lon, z.lat),
+      ellipse:{ semiMajorAxis:r, semiMinorAxis:r, height:0,
+        material:Cesium.Color.fromCssColorString('#c8a96e').withAlpha(0.07),
+        outline:true, outlineColor:Cesium.Color.fromCssColorString('#c8a96e').withAlpha(0.65), outlineWidth:2 },
+      label:{ text:'🔔 '+z.name, font:'600 11px "DM Mono", monospace',
+        fillColor:Cesium.Color.fromCssColorString('#c8a96e'), showBackground:true,
+        backgroundColor:Cesium.Color.fromCssColorString('#030608').withAlpha(0.6),
+        backgroundPadding:new Cesium.Cartesian2(6,3), verticalOrigin:Cesium.VerticalOrigin.BOTTOM,
+        pixelOffset:new Cesium.Cartesian2(0,-8),
+        translucencyByDistance:new Cesium.NearFarScalar(2.0e6,1.0,3.0e7,0.0) }
+    });
+  });
+  scene.requestRender();
+}
+function renderZoneList(){
+  const el=$('zoneList'); if(!el) return;
+  el.innerHTML = zones.length ? zones.map(z=>
+    `<div class="zone"><span><span class="zn">${esc(z.name)}</span><br><span class="zr">${z.radiusKm} km · ${z.lat.toFixed(2)}, ${z.lon.toFixed(2)}</span></span><button class="zx" data-id="${z.id}" title="Remove">✕</button></div>`
+  ).join('') : '';
+  el.querySelectorAll('.zx').forEach(b=>b.addEventListener('click',()=>{
+    zones=zones.filter(z=>z.id!==b.dataset.id); saveZones(); drawZones(); renderZoneList();
+    if(alertsOn) $('alertStat').textContent='Alerts on. Watching '+zones.length+' area(s).';
+  }));
+}
+function countInArea(lat,lon,radiusKm){
+  let n=0;
+  incidents.forEach(i=>{ if(haversineKm(lat,lon,i.lat,i.lon)<=radiusKm) n++; });
+  window.SIGHTINGS.forEach(s=>{ if(haversineKm(lat,lon,s.lat,s.lon)<=radiusKm) n++; });
+  return n;
+}
+function zonesContaining(lat,lon){ return zones.filter(z=>haversineKm(z.lat,z.lon,lat,lon)<=z.radiusKm); }
+
+/* notifications */
+function canNotify(){ return 'Notification' in window; }
+function showNotify(title, body, data){
+  if(!canNotify() || Notification.permission!=='granted') return;
+  const opts={ body, icon:'icons/icon-192.png', badge:'icons/favicon-32.png', data, tag:data&&data.id, vibrate:[80,40,80] };
+  if(navigator.serviceWorker && navigator.serviceWorker.ready){
+    navigator.serviceWorker.ready.then(reg=>reg.showNotification(title,opts)).catch(()=>{ try{ new Notification(title,opts); }catch(e){} });
+  } else { try{ new Notification(title,opts); }catch(e){} }
+}
+function setAlertsUI(){
+  const b=$('alertsBtn'); if(!b) return;
+  if(alertsOn){ b.textContent='🔔 Alerts on'; b.classList.add('on'); }
+  else { b.textContent='🔔 Enable sighting alerts'; b.classList.remove('on'); }
+}
+function enableAlerts(){
+  alertsOn=true; setAlertsUI();
+  $('alertStat').classList.remove('err');
+  $('alertStat').textContent='Alerts on. Watching '+zones.length+' area(s).';
+  showNotify('Parallax alerts enabled', 'You’ll be notified about new sightings in your watched areas.', {id:'welcome'});
+  maybeSubscribePush();
+}
+$('alertsBtn').addEventListener('click', ()=>{
+  if(!canNotify()){ $('alertStat').textContent='Notifications aren’t supported by this browser.'; $('alertStat').classList.add('err'); return; }
+  if(Notification.permission==='granted'){
+    if(alertsOn){ alertsOn=false; setAlertsUI(); $('alertStat').textContent='Alerts paused.'; }
+    else enableAlerts();
+    return;
+  }
+  if(Notification.permission==='denied'){ $('alertStat').textContent='Notifications are blocked in your browser settings.'; $('alertStat').classList.add('err'); return; }
+  Notification.requestPermission().then(p=>{
+    if(p==='granted') enableAlerts();
+    else { $('alertStat').textContent='Notification permission '+p+'.'; $('alertStat').classList.add('err'); }
+  });
+});
+
+/* web push subscription — only runs when a backend is configured (PUSH.enabled) */
+function urlB64ToUint8(b64){ const pad='='.repeat((4-b64.length%4)%4); const s=(b64+pad).replace(/-/g,'+').replace(/_/g,'/');
+  const raw=atob(s); return Uint8Array.from([...raw].map(c=>c.charCodeAt(0))); }
+function maybeSubscribePush(){
+  if(!PUSH.enabled || !PUSH.vapidPublicKey || !('serviceWorker' in navigator) || !('PushManager' in window)) return;
+  navigator.serviceWorker.ready
+    .then(reg=>reg.pushManager.subscribe({ userVisibleOnly:true, applicationServerKey:urlB64ToUint8(PUSH.vapidPublicKey) }))
+    .then(sub=>{ if(PUSH.subscribeUrl) return fetch(PUSH.subscribeUrl,{ method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ subscription:sub, zones }) }); })
+    .catch(err=>console.warn('[PARALLAX] push subscribe failed:', err));
+}
+
+/* zone modal */
+const zoneModal=$('zoneModal');
+function updateZoneCount(){
+  const lat=parseFloat($('zm-lat').value), lon=parseFloat($('zm-lon').value), rad=+$('zm-rad').value;
+  $('zm-count').textContent = (isFinite(lat)&&isFinite(lon)) ? countInArea(lat,lon,rad)+' sighting(s) already on record in this area.' : '';
+}
+function openZone(){
+  const v=camera.positionCartographic;
+  $('zm-lat').value=Cesium.Math.toDegrees(v.latitude).toFixed(4);
+  $('zm-lon').value=Cesium.Math.toDegrees(v.longitude).toFixed(4);
+  $('zm-rad').value=80; $('zm-radlbl').textContent='80 km'; $('zm-name').value='';
+  updateZoneCount(); zoneModal.classList.add('on');
+}
+$('addZoneBtn').addEventListener('click', openZone);
+$('zm-close').addEventListener('click', ()=>zoneModal.classList.remove('on'));
+zoneModal.addEventListener('click', e=>{ if(e.target===zoneModal) zoneModal.classList.remove('on'); });
+$('zm-rad').addEventListener('input', ()=>{ $('zm-radlbl').textContent=$('zm-rad').value+' km'; updateZoneCount(); });
+['zm-lat','zm-lon'].forEach(id=>$(id).addEventListener('input', updateZoneCount));
+$('zm-geo').addEventListener('click', ()=>{ getMyLocation((lat,lon)=>{ $('zm-lat').value=lat.toFixed(4); $('zm-lon').value=lon.toFixed(4); updateZoneCount(); }, msg=>{ $('zm-count').textContent=msg; }); });
+$('zm-pick').addEventListener('click', ()=>{
+  pendingPick={ fill:(la,lo)=>{ $('zm-lat').value=la.toFixed(4); $('zm-lon').value=lo.toFixed(4); updateZoneCount(); }, reopen:zoneModal };
+  zoneModal.classList.remove('on'); $('pickBanner').classList.add('on');
+});
+$('zm-save').addEventListener('click', ()=>{
+  const name=$('zm-name').value.trim(), lat=parseFloat($('zm-lat').value), lon=parseFloat($('zm-lon').value), rad=+$('zm-rad').value;
+  if(!name || isNaN(lat) || isNaN(lon)){ alert('Please give the area a name and a center (GPS, pick on globe, or type coordinates).'); return; }
+  zones.push({ id:'zone-'+Date.now(), name, lat, lon, radiusKm:rad, createdAt:new Date().toISOString() });
+  saveZones(); drawZones(); renderZoneList(); zoneModal.classList.remove('on');
+  camera.flyTo({ destination:Cesium.Cartesian3.fromDegrees(lon, lat, Math.max(4e5, rad*1000*3.2)), duration:1.6 });
+  if(alertsOn) $('alertStat').textContent='Alerts on. Watching '+zones.length+' area(s).';
+  else if(canNotify() && Notification.permission!=='denied') $('alertStat').textContent='Area saved — tap “Enable sighting alerts” to get notified.';
+});
+
+/* fly to a sighting when a push notification is clicked (SW → page message) */
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.addEventListener('message', ev=>{
+    const d=ev.data||{};
+    if(d.type==='flyTo' && isFinite(d.lat) && isFinite(d.lon))
+      camera.flyTo({ destination:Cesium.Cartesian3.fromDegrees(d.lon, d.lat, 600000), duration:2.0 });
+  });
+}
+/* deep link: index.html#@lat,lon */
+(function(){ const m=(location.hash||'').match(/@(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)/);
+  if(m) camera.flyTo({ destination:Cesium.Cartesian3.fromDegrees(+m[2], +m[1], 600000), duration:0 }); })();
+
+function loadZones(){
+  let raw=null; try{ raw=localStorage.getItem(ZKEY); }catch(e){}
+  if(raw){ try{ zones=JSON.parse(raw)||[]; }catch(e){ zones=[]; } }
+  alertsOn = canNotify() && Notification.permission==='granted';
+  setAlertsUI(); drawZones(); renderZoneList();
+}
+loadZones();
 
 loadReports();
 

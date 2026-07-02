@@ -1,7 +1,7 @@
 /* Project Parallax — service worker
    Offline app-shell + runtime caching for the CesiumJS CDN, fonts, and map tiles,
    so previously-viewed areas keep working with no signal (rural sky-watching). */
-const VERSION = 'parallax-v1';
+const VERSION = 'parallax-v2';
 const SHELL = `${VERSION}-shell`;
 const RUNTIME = `${VERSION}-runtime`;
 const TILES = `${VERSION}-tiles`;
@@ -90,4 +90,35 @@ self.addEventListener('fetch', event => {
   if (url.origin === self.location.origin) {
     event.respondWith(cacheFirst(req, SHELL));
   }
+});
+
+/* ===== Web Push (activates once a backend sends pushes; harmless otherwise) ===== */
+self.addEventListener('push', event => {
+  let d = {};
+  try { d = event.data ? event.data.json() : {}; }
+  catch (e) { d = { title: 'New UAP sighting nearby', body: event.data ? event.data.text() : '' }; }
+  const title = d.title || 'New UAP sighting nearby';
+  event.waitUntil(self.registration.showNotification(title, {
+    body: d.body || '',
+    icon: 'icons/icon-192.png',
+    badge: 'icons/favicon-32.png',
+    tag: d.id || undefined,
+    vibrate: [80, 40, 80],
+    data: d
+  }));
+});
+
+self.addEventListener('notificationclick', event => {
+  event.notification.close();
+  const d = event.notification.data || {};
+  const target = (typeof d.lat === 'number' && typeof d.lon === 'number')
+    ? `./index.html#@${d.lat},${d.lon}` : './index.html';
+  event.waitUntil(
+    self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(list => {
+      for (const c of list) {
+        if ('focus' in c) { c.postMessage({ type: 'flyTo', lat: d.lat, lon: d.lon }); return c.focus(); }
+      }
+      return self.clients.openWindow(target);
+    })
+  );
 });

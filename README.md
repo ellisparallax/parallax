@@ -12,6 +12,7 @@ An interactive 3D globe of verified UAP incidents, live sightings, and citizen r
 - **Filters** by object shape and source category, a **1944→2026 time slider** with playback, and a **live metrics dashboard**.
 - **Citizen reporting** — submit a sighting with a photo; it drops onto your map instantly and can be sent to the project for review.
 - **Field tools** — report from your GPS location, capture the compass **heading & tilt** you were looking at (for triangulation), and a **"Near me"** view with distance-to-incident.
+- **Sighting alerts** — "watch an area" (draw a radius on the map or use your GPS) and get **notified when a new sighting is reported inside it** (Watch-Duty style). Works in-app today; add a backend for true background push (see below).
 - **Installable + offline** — add to your home screen; the app shell, map tiles you've viewed, and data are cached for no-signal use.
 
 ## Run it
@@ -58,6 +59,29 @@ HANDOFF.md              Original build handoff notes
 - **Submission intake:** the "Email for review" button uses a placeholder address. Set `REVIEW_EMAIL` near the top of the report code in `index.html` to your real intake address.
 - **No API keys, no Cesium Ion token.** Map tiles are CARTO's free dark basemap.
 - **Media** loads from Wikimedia's stable `Special:FilePath` endpoint; broken links hide themselves.
+
+### Sighting alerts / push notifications
+
+Watch zones, geofence matching, notification permission, and the service-worker push
+handlers are all built in. Out of the box, alerts fire **in-app while Parallax is open**.
+
+To enable **true background push** (delivered when the app is closed), add a backend:
+
+1. Generate VAPID keys (e.g. `npx web-push generate-vapid-keys`).
+2. In `index.html`, set the `PUSH` config near the top of the alerts section:
+   ```js
+   const PUSH = { enabled: true, vapidPublicKey: '<your VAPID public key>', subscribeUrl: '<your /subscribe endpoint>' };
+   ```
+   The client will subscribe via `PushManager` and POST the subscription (+ the user's
+   watch zones) to your endpoint.
+3. On your server (e.g. a Supabase Edge Function), store subscriptions, and when a new
+   sighting is **approved through moderation**, find subscribers whose watch zone contains
+   it and send a Web Push. `sw.js` already handles the `push` and `notificationclick`
+   events (clicking an alert flies the globe to the sighting).
+
+**iOS note:** web push requires the app be **installed to the home screen** (iOS 16.4+).
+For a polished always-on experience, the App Store build uses native APNs push instead —
+same watch-zone model, native delivery.
 
 ## Roadmap to the App Store
 
