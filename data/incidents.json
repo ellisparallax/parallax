@@ -1018,5 +1018,155 @@
     ],
     "isPursue": true,
     "shape": "Unknown"
+  },
+  {
+    "id": 32,
+    "name": "Petrozavodsk Phenomenon",
+    "year": 1977,
+    "lat": 61.7849,
+    "lon": 34.3469,
+    "location": "Petrozavodsk, Karelia",
+    "country": "Russia",
+    "class": "B",
+    "cat": "mass",
+    "shape": "Lights",
+    "sigs": [
+      "🔴",
+      "✨",
+      "🌫️",
+      "👁️",
+      "∴"
+    ],
+    "summary": "A vast glowing 'jellyfish' hung over Petrozavodsk before dawn on 20 Sept 1977, raining shafts of light. Rare for the era, Soviet state news (TASS) reported it.",
+    "what": "Before dawn on 20 September 1977, a large luminous body appeared over Petrozavodsk in Soviet Karelia, spread like a jellyfish, and showered fine shafts of light onto the city. Observers described windows and pavements pierced by beams. The display was seen across northwestern USSR and reported as far as Helsinki and Copenhagen.",
+    "why": "The event is significant less for its cause than for its reach and for the unusual Soviet-era public acknowledgement — a rare TASS dispatch — plus simultaneous multinational observation, which rules out a purely local misperception.",
+    "witnesses": "Thousands across Karelia — harbour workers, police, and residents — with corroborating reports from Finland and Scandinavia.",
+    "evidence": "Contemporary TASS dispatch; simultaneous cross-border observations logged in several countries.",
+    "response": "Later widely attributed to the launch of Kosmos-955 from Plesetsk Cosmodrome that morning; the duration, morphology and window-piercing beams are still debated by some observers.",
+    "links": [
+      {
+        "label": "Wikipedia — Petrozavodsk phenomenon",
+        "url": "https://en.wikipedia.org/wiki/Petrozavodsk_phenomenon"
+      }
+    ]
+  },
+  {
+    "id": 33,
+    "name": "Dalnegorsk — Height 611",
+    "year": 1986,
+    "lat": 44.5522,
+    "lon": 135.5686,
+    "location": "Dalnegorsk, Primorsky Krai",
+    "country": "Russia",
+    "class": "A",
+    "cat": "physical",
+    "shape": "Sphere",
+    "sigs": [
+      "🔴",
+      "⬤",
+      "🔥",
+      "🧪",
+      "⊕"
+    ],
+    "summary": "On 29 Jan 1986 a reddish sphere flew level and struck the hill 'Height 611' near Dalnegorsk. Recovered site material was studied by Soviet Academy of Sciences labs.",
+    "what": "On 29 January 1986 a dull-red spherical object, roughly the size of a small car, flew in level, non-ballistic flight and struck a rocky hilltop (Height 611) near Dalnegorsk in the Soviet Far East. It burned on the hill in a series of flashes for close to an hour. Investigators later recovered scorched rock, tiny woven 'mesh' nets, and small glass and metallic spherules from the impact zone.",
+    "why": "One of the best-documented physical-trace UAP cases from the Soviet Union: controlled non-ballistic flight, an energetic impact, and residue that underwent laboratory analysis — a rare combination of eyewitness and material evidence from a closed-archive country.",
+    "witnesses": "Numerous Dalnegorsk townspeople watched the object and the hilltop glow; a formal investigation team examined the site over following weeks.",
+    "evidence": "Physical residue — fine metallic mesh and glass/gold-bearing spherules — analysed by researchers linked to the USSR Academy of Sciences' Far-Eastern branch; scorched impact area.",
+    "response": "Studied by Soviet scientists; no conventional explanation was established for the trajectory or the recovered material. Samples and findings remain debated.",
+    "links": []
+  },
+  {
+    "id": 34,
+    "name": "Voronezh Park Landing",
+    "year": 1989,
+    "lat": 51.672,
+    "lon": 39.1843,
+    "location": "Voronezh, Western District",
+    "country": "Russia",
+    "class": "B",
+    "cat": "mass",
+    "shape": "Sphere",
+    "sigs": [
+      "⬤",
+      "👣",
+      "👁️",
+      "🌫️",
+      "∴"
+    ],
+    "summary": "In autumn 1989 residents and children in a Voronezh park reported a large sphere landing with tall occupants. TASS carried the story worldwide, drawing Western skepticism.",
+    "what": "Over several weeks in September–October 1989, groups of residents — many of them children — in a park in Voronezh's Western District reported a large hovering sphere that touched down, leaving ground impressions, with accounts of tall figures nearby. The Soviet news agency TASS reported it as fact, and it was carried by international press.",
+    "why": "Notable for the number and consistency of ordinary witnesses and, again, for open Soviet state reporting — a data point from a region and era that produced very little public UAP documentation.",
+    "witnesses": "Multiple children and adults in the Western District; interviewed by local scientists and journalists.",
+    "evidence": "TASS state dispatch (Oct 1989) carried by Reuters, AP and others; reported ground indentations at the park site.",
+    "response": "Soviet researchers recorded witness testimony; Western outlets covered it with heavy skepticism. No agreed explanation.",
+    "links": [
+      {
+        "label": "Wikipedia — Voronezh UFO incident",
+        "url": "https://en.wikipedia.org/wiki/Voronezh_UFO_incident"
+      }
+    ]
+  },
+  {
+    "id": 35,
+    "name": "Hangzhou Xiaoshan Airport Incident",
+    "year": 2010,
+    "lat": 30.2295,
+    "lon": 120.4349,
+    "location": "Hangzhou, Zhejiang",
+    "country": "China",
+    "class": "B",
+    "cat": "physical",
+    "shape": "Lights",
+    "sigs": [
+      "✈️",
+      "🚫",
+      "💡",
+      "📷",
+      "∷"
+    ],
+    "summary": "On 7 July 2010 an unidentified object over Hangzhou forced Xiaoshan International Airport to halt operations; flights were grounded and diverted for about four hours.",
+    "what": "On the evening of 7 July 2010, an unidentified luminous object was seen and photographed over Hangzhou in eastern China. Xiaoshan International Airport suspended operations for roughly four hours, grounding and diverting flights while the object was tracked. Multiple residents captured photographs of a bright, streaking form.",
+    "why": "A modern, aviation-disrupting case from China — a country almost entirely absent from Western UAP datasets — with hard operational consequences (an airport shutdown) and civilian imagery, making it unusually well-attested for the region.",
+    "witnesses": "Airport staff, flight crews, and Hangzhou residents; several photographs entered the public record.",
+    "evidence": "Airport closure and flight-diversion records; multiple civilian photographs; Xinhua and international news coverage.",
+    "response": "Authorities indicated part of the airspace activity had a 'military-related' cause but released no specifics; the photographed object itself was never publicly explained.",
+    "links": [
+      {
+        "label": "Wikipedia — UFO sightings in China",
+        "url": "https://en.wikipedia.org/wiki/UFO_sightings_in_China"
+      }
+    ]
+  },
+  {
+    "id": 36,
+    "name": "China Airport UFO Wave",
+    "year": 2011,
+    "lat": 39.9042,
+    "lon": 116.4074,
+    "location": "Beijing / multiple cities",
+    "country": "China",
+    "class": "B",
+    "cat": "mass",
+    "shape": "Lights",
+    "sigs": [
+      "✈️",
+      "🚫",
+      "💡",
+      "🌐",
+      "∴"
+    ],
+    "summary": "Across 2010–2011 a series of unidentified objects disrupted Chinese airports (Xiaoshan, Baotou, Chongqing), grounding or diverting flights on several occasions.",
+    "what": "Following the July 2010 Hangzhou event, China saw a run of similar airport-disrupting sightings into 2011, affecting airports including Baotou (Inner Mongolia) and Chongqing among others. Flights were grounded or rerouted while glowing objects were observed. Chinese and international media tracked the recurring pattern.",
+    "why": "Aggregated, the wave shows the phenomenon repeatedly interacting with controlled airspace in China — a systemic signal from a closed-information environment, comparable in structure to the NJ drone wave or the Belgian wave elsewhere in this dataset.",
+    "witnesses": "Airport personnel, pilots and passengers across several Chinese cities; extensive domestic (Xinhua) and foreign (Reuters, BBC) reporting.",
+    "evidence": "Repeated airport closure/diversion records over ~a year; sustained state and international press coverage.",
+    "response": "Authorities acknowledged the disruptions; explanations offered for individual events (e.g. test-flight debris) were not extended to the wave as a whole.",
+    "links": [
+      {
+        "label": "Wikipedia — UFO sightings in China",
+        "url": "https://en.wikipedia.org/wiki/UFO_sightings_in_China"
+      }
+    ]
   }
 ]

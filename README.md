@@ -7,7 +7,8 @@ An interactive 3D globe of verified UAP incidents, live sightings, and citizen r
 ## What it does
 
 - **3D globe** (CesiumJS) with dark cartography — spin, zoom, fly-to.
-- **32 verified incidents** (1944–2026) with full intel briefings and, where available, **public-domain photos and official government video** (Roswell newspaper, the U.S. Navy FLIR1/GIMBAL footage, the JWST image of interstellar comet 3I/ATLAS, and more).
+- **37 verified incidents** (1944–2026) with full intel briefings and, where available, **public-domain photos and official government video** (Roswell newspaper, the U.S. Navy FLIR1/GIMBAL footage, the JWST image of interstellar comet 3I/ATLAS, and more).
+- A **data-coverage note** is shown in-app: records skew heavily toward Western/English-language open sources, so China, Russia, and other closed-archive regions are under-represented (a few canonical cases from those regions are included — Dalnegorsk, Petrozavodsk, Voronezh, Hangzhou).
 - **565 live sightings** with zoom-aware clustering, and **8 activity hotspots** sized by report count.
 - **Filters** by object shape and source category, a **1944→2026 time slider** with playback, and a **live metrics dashboard**.
 - **Citizen reporting** — submit a sighting with a photo; it drops onto your map instantly and can be sent to the project for review.
