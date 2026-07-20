@@ -1,0 +1,33 @@
+id,name,year,cls,VIS,PHOTO,IR,RADAR,SYS,TRACE,note
+0,Foo Fighters,1944,B,DET,NP,NP,FAIL,DET,NP,Gun-laying radar often no return; no weapon effect reported
+1,Roswell Incident,1947,A,DET,NP,NP,NP,NP,CUST,Debris recovered then custody-controlled
+2,Lubbock Lights,1951,B,DET,DET,NP,NP,NP,NP,Hart photos analyzed unaltered by USAF
+3,Malmstrom Missiles,1967,A,DET,NP,NP,NP,INTF,NP,10 ICBMs offline during observation
+4,Tehran F-4 Incident,1976,B,DET,NP,NP,DET,INTF,NP,"Radar tracked; weapons panel+comms died AT firing attempt, recovered on breakaway"
+5,Shag Harbour,1967,A,DET,NP,NP,NP,NP,CUST,Foam/site searched; nothing retained openly
+6,Operation Prato,1977,A,DET,DET,NP,NP,NP,CUST,Military photos taken; ~95% archive unreleased
+7,Rendlesham Forest,1980,A,DET,FAIL,NP,DET,INTF,DET,"Radios erratic, lightall failures claimed; radiation readings; photos fogged/failed"
+8,Trans-en-Provence,1981,A,DET,NP,NP,NP,NP,DET,GEPAN soil/plant analysis — best trace case
+9,Usovo Nuclear Activation,1982,A,DET,NP,NP,NP,INTF,NP,Launch systems reportedly self-activated during event
+10,Belgian Wave,1989,B,DET,NP,NP,INTF,NP,NP,F-16 achieved lock 3x; lock broken 3x with parameter shifts
+11,Phoenix Lights,1997,B,DET,DET,NP,FAIL,NP,NP,No radar corroboration of V-craft passage
+12,USS Nimitz Tic Tac,2004,A,DET,NP,DET,DET,NP,NP,SPY-1 tracked; FLIR captured; intermittent track anomalies reported
+13,Chilean Navy IR,2014,B,DET,NP,DET,FAIL,NP,NP,"IR imaged; no transponder, no primary radar return"
+14,USS Omaha,2019,A,DET,NP,DET,DET,NP,NP,"Multi-sensor; object entered water, not recovered"
+15,Pentagon PURSUE Release,2026,H,NP,NP,NP,NP,NP,NP,Meta-entry — excluded from stats
+16,FBI Western Orbs,2025,H,DET,CUST,NP,NP,NP,NP,"Federal agents observed; originals unreleased, renderings only"
+17,Harvard / IM1 Spherules,2023,B,NP,NP,DET,NP,NP,DET,DoD satellite sensors detected; spherules recovered (site contested)
+18,Hessdalen Lights,1981,B,DET,DET,NP,DET,NP,NP,Automated station: optical+radar concordant — the clean multi-sensor SUCCESS
+19,Westall School,1966,B,DET,CUST,NP,NP,NP,CUST,Photos reportedly confiscated; ground traces cordoned
+21,NJ Drone Wave,2024,B,DET,DET,DET,FAIL,NP,NP,Mass optical; systematic radar/RF evasion per DHS-FBI statements
+22,Pascagoula Abduction,1973,B,DET,NP,NP,NP,NP,NP,Witness-only + later corroborators
+23,Bass Strait / Valentich,1978,B,DET,NP,NP,FAIL,INTF,NP,Engine rough-running reported in final transmission; no radar confirm; aircraft lost
+24,Cash-Landrum,1980,A,DET,NP,NP,NP,NP,DET,Physiological injuries = biological trace
+25,North West Cape,1991,B,DET,NP,NP,NP,NP,NP,Two-witness base case
+26,3I/ATLAS Object,2025,B,NP,DET,DET,NP,NP,NP,Telescopic; fully instrumented success
+27,INDOPACOM Football Object,2026,H,DET,NP,NP,FAIL,DET,NP,Gun-laying radar often no return; no weapon effect reported
+28,Kazakhstan 747 Encounter,1994,A,DET,CUST,NP,NP,NP,DET,Photos taken THEN lost in custody; contrail trace overflown
+29,Harare Airport Incident,2008,B,DET,NP,NP,DET,NP,NP,Dual-sensor radar+optical success
+30,Genkai Nuclear Plant Lights,2025,B,DET,FAIL,NP,FAIL,NP,NP,2+hrs multi-witness; no usable imagery/ID; nothing recovered
+31,Lake Huron Shootdown,2023,B,DET,NP,DET,DET,DET,CUST,Full kill chain worked (1st missile missed); debris fate undisclosed
+37,Yellow Sea Sensor-Degradation UAP,2023,A,NP,NP,INTF,NP,NP,NP,Official DoW description: UAP 'appears to degrade electro-optical and infrared sensor footage' progressively over 4:57 (DOW-UAP-PR104/105 family). First official release describing degradation-during-observation. CAVEAT: compression/atmospheric artifacts not yet excluded.

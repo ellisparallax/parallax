@@ -1,0 +1,51 @@
+{
+ "model": "two-regime custody half-life (legacy median 30y; PURSUE-era 1-5y)",
+ "computed": "2026-07-08",
+ "overdue": [
+  {
+   "item": "Rhodes Olympus photos (Kazakhstan 1994)",
+   "retained": 1994,
+   "due": 2024,
+   "status": "OVERDUE \u2014 FOIA priority"
+  },
+  {
+   "item": "IUSS/SOSUS UAP-relevant acoustics",
+   "retained": 1990,
+   "due": 2020,
+   "status": "OVERDUE \u2014 FOIA priority"
+  }
+ ],
+ "watch": [
+  {
+   "item": "Mother-orb original imagery",
+   "retained": 2023,
+   "legacy_due": 2053,
+   "pursue_due": 2028
+  },
+  {
+   "item": "FBI Western Orbs originals",
+   "retained": 2023,
+   "legacy_due": 2053,
+   "pursue_due": 2028
+  },
+  {
+   "item": "DIA BAASS Thread-3 analysis",
+   "retained": 2010,
+   "legacy_due": 2040,
+   "pursue_due": 2027
+  },
+  {
+   "item": "DOW-UAP-D081 (mother-orb agent account)",
+   "retained": 2023,
+   "legacy_due": 2053,
+   "pursue_due": 2027
+  }
+ ],
+ "resolved": [
+  {
+   "item": "1949 Los Alamos conference transcript",
+   "surfaced": 2026,
+   "note": "Released as DOE-UAP-D004 Tranche 4; vault-transcribed as DOC-004 \u2014 77-year hold, longest resolved item in the model"
+  }
+ ]
+}

@@ -23,7 +23,16 @@
     "evidence": "Declassified mission debriefing reports from multiple squadrons. Consistent accounts from adversarial nations.",
     "response": "Both Axis and Allied high commands investigated. No explanation was ever reached. Files classified after the war.",
     "links": [],
-    "shape": "Orb"
+    "shape": "Orb",
+    "sensors": {
+      "VIS": "DET",
+      "PHOTO": "NP",
+      "IR": "NP",
+      "RADAR": "FAIL",
+      "SYS": "DET",
+      "TRACE": "NP",
+      "note": "Gun-laying radar often no return; no weapon effect reported"
+    }
   },
   {
     "id": 1,
@@ -58,7 +67,16 @@
         "url": "https://vault.fbi.gov/Roswell%20UFO"
       }
     ],
-    "shape": "Disk"
+    "shape": "Disk",
+    "sensors": {
+      "VIS": "DET",
+      "PHOTO": "NP",
+      "IR": "NP",
+      "RADAR": "NP",
+      "SYS": "NP",
+      "TRACE": "CUST",
+      "note": "Debris recovered then custody-controlled"
+    }
   },
   {
     "id": 2,
@@ -89,7 +107,16 @@
         "url": "https://www.fold3.com/page/261889498/project-blue-book"
       }
     ],
-    "shape": "Lights"
+    "shape": "Lights",
+    "sensors": {
+      "VIS": "DET",
+      "PHOTO": "DET",
+      "IR": "NP",
+      "RADAR": "NP",
+      "SYS": "NP",
+      "TRACE": "NP",
+      "note": "Hart photos analyzed unaltered by USAF"
+    }
   },
   {
     "id": 3,
@@ -122,7 +149,16 @@
         "url": "https://www.youtube.com/watch?v=LNp7MHfWaUU"
       }
     ],
-    "shape": "Orb"
+    "shape": "Orb",
+    "sensors": {
+      "VIS": "DET",
+      "PHOTO": "NP",
+      "IR": "NP",
+      "RADAR": "NP",
+      "SYS": "INTF",
+      "TRACE": "NP",
+      "note": "10 ICBMs offline during observation"
+    }
   },
   {
     "id": 4,
@@ -154,7 +190,17 @@
         "url": "https://www.dia.mil/FOIA/FOIA-Electronic-Reading-Room/"
       }
     ],
-    "shape": "Lights"
+    "shape": "Lights",
+    "skycheck_audit": "SKYCHECK retro-audit 2026-07-08: Venus DOWN; Jupiter 57°alt ESE — prosaic candidate PRESENT for visual-light component (Klass hypothesis footing confirmed by independent ephemeris). Instrumented core (radar track, weapons-panel failure at firing) unaffected — planets do not defeat fire-control systems.",
+    "sensors": {
+      "VIS": "DET",
+      "PHOTO": "NP",
+      "IR": "NP",
+      "RADAR": "DET",
+      "SYS": "INTF",
+      "TRACE": "NP",
+      "note": "Radar tracked; weapons panel+comms died AT firing attempt, recovered on breakaway"
+    }
   },
   {
     "id": 5,
@@ -196,7 +242,16 @@
         "url": "https://www.youtube.com/watch?v=XHiJAp7TSNA"
       }
     ],
-    "shape": "Lights"
+    "shape": "Lights",
+    "sensors": {
+      "VIS": "DET",
+      "PHOTO": "NP",
+      "IR": "NP",
+      "RADAR": "NP",
+      "SYS": "NP",
+      "TRACE": "CUST",
+      "note": "Foam/site searched; nothing retained openly"
+    }
   },
   {
     "id": 6,
@@ -234,7 +289,16 @@
         "url": "https://www.youtube.com/watch?v=5GKI3yYqT0E"
       }
     ],
-    "shape": "Orb"
+    "shape": "Orb",
+    "sensors": {
+      "VIS": "DET",
+      "PHOTO": "DET",
+      "IR": "NP",
+      "RADAR": "NP",
+      "SYS": "NP",
+      "TRACE": "CUST",
+      "note": "Military photos taken; ~95% archive unreleased"
+    }
   },
   {
     "id": 7,
@@ -272,7 +336,16 @@
         "url": "https://www.nationalarchives.gov.uk/ufos/"
       }
     ],
-    "shape": "Triangle"
+    "shape": "Triangle",
+    "sensors": {
+      "VIS": "DET",
+      "PHOTO": "FAIL",
+      "IR": "NP",
+      "RADAR": "DET",
+      "SYS": "INTF",
+      "TRACE": "DET",
+      "note": "Radios erratic, lightall failures claimed; radiation readings; photos fogged/failed"
+    }
   },
   {
     "id": 8,
@@ -308,7 +381,16 @@
         "url": "https://www.ufoevidence.org/documents/doc1521.htm"
       }
     ],
-    "shape": "Disk"
+    "shape": "Disk",
+    "sensors": {
+      "VIS": "DET",
+      "PHOTO": "NP",
+      "IR": "NP",
+      "RADAR": "NP",
+      "SYS": "NP",
+      "TRACE": "DET",
+      "note": "GEPAN soil/plant analysis — best trace case"
+    }
   },
   {
     "id": 9,
@@ -340,7 +422,16 @@
         "url": "https://www.nicap.org/docs/USSR_UFO_Study.pdf"
       }
     ],
-    "shape": "Disk"
+    "shape": "Disk",
+    "sensors": {
+      "VIS": "DET",
+      "PHOTO": "NP",
+      "IR": "NP",
+      "RADAR": "NP",
+      "SYS": "INTF",
+      "TRACE": "NP",
+      "note": "Launch systems reportedly self-activated during event"
+    }
   },
   {
     "id": 10,
@@ -373,7 +464,17 @@
         "url": "https://www.youtube.com/watch?v=A3KxTJ7TGaE"
       }
     ],
-    "shape": "Triangle"
+    "shape": "Triangle",
+    "skycheck_audit": "SKYCHECK retro-audit 2026-07-08: Venus DOWN; Jupiter 21° WNW noted for visual reports; F-16 radar-lock events unaffected by planetary candidates.",
+    "sensors": {
+      "VIS": "DET",
+      "PHOTO": "NP",
+      "IR": "NP",
+      "RADAR": "INTF",
+      "SYS": "NP",
+      "TRACE": "NP",
+      "note": "F-16 achieved lock 3x; lock broken 3x with parameter shifts"
+    }
   },
   {
     "id": 11,
@@ -405,7 +506,17 @@
         "url": "https://www.youtube.com/watch?v=exyp4Qr_IFg"
       }
     ],
-    "shape": "Triangle"
+    "shape": "Triangle",
+    "skycheck_audit": "SKYCHECK retro-audit 2026-07-08: Venus AND Jupiter below horizon at 20:30 passage — planetary impostors formally EXCLUDED; strengthens unexplained status of early-evening event (flare explanation applies to 22:00 event only).",
+    "sensors": {
+      "VIS": "DET",
+      "PHOTO": "DET",
+      "IR": "NP",
+      "RADAR": "FAIL",
+      "SYS": "NP",
+      "TRACE": "NP",
+      "note": "No radar corroboration of V-craft passage"
+    }
   },
   {
     "id": 12,
@@ -443,7 +554,16 @@
         "url": "https://www.youtube.com/watch?v=aB8zcAttP1E"
       }
     ],
-    "shape": "Tic-Tac"
+    "shape": "Tic-Tac",
+    "sensors": {
+      "VIS": "DET",
+      "PHOTO": "NP",
+      "IR": "DET",
+      "RADAR": "DET",
+      "SYS": "NP",
+      "TRACE": "NP",
+      "note": "SPY-1 tracked; FLIR captured; intermittent track anomalies reported"
+    }
   },
   {
     "id": 13,
@@ -477,7 +597,16 @@
         "url": "https://www.cefaa.gob.cl"
       }
     ],
-    "shape": "Unknown"
+    "shape": "Unknown",
+    "sensors": {
+      "VIS": "DET",
+      "PHOTO": "NP",
+      "IR": "DET",
+      "RADAR": "FAIL",
+      "SYS": "NP",
+      "TRACE": "NP",
+      "note": "IR imaged; no transponder, no primary radar return"
+    }
   },
   {
     "id": 14,
@@ -510,7 +639,16 @@
         "url": "https://www.youtube.com/watch?v=xs1ooaEwM7c"
       }
     ],
-    "shape": "Sphere"
+    "shape": "Sphere",
+    "sensors": {
+      "VIS": "DET",
+      "PHOTO": "NP",
+      "IR": "DET",
+      "RADAR": "DET",
+      "SYS": "NP",
+      "TRACE": "NP",
+      "note": "Multi-sensor; object entered water, not recovered"
+    }
   },
   {
     "id": 15,
@@ -543,7 +681,16 @@
       }
     ],
     "isPursue": true,
-    "shape": "Unknown"
+    "shape": "Unknown",
+    "sensors": {
+      "VIS": "NP",
+      "PHOTO": "NP",
+      "IR": "NP",
+      "RADAR": "NP",
+      "SYS": "NP",
+      "TRACE": "NP",
+      "note": "Meta-entry — excluded from stats"
+    }
   },
   {
     "id": 16,
@@ -575,7 +722,16 @@
       }
     ],
     "isPursue": true,
-    "shape": "Orb"
+    "shape": "Orb",
+    "sensors": {
+      "VIS": "DET",
+      "PHOTO": "CUST",
+      "IR": "NP",
+      "RADAR": "NP",
+      "SYS": "NP",
+      "TRACE": "NP",
+      "note": "Federal agents observed; originals unreleased, renderings only"
+    }
   },
   {
     "id": 17,
@@ -608,7 +764,16 @@
         "url": "https://projects.iq.harvard.edu/galileo"
       }
     ],
-    "shape": "Sphere"
+    "shape": "Sphere",
+    "sensors": {
+      "VIS": "NP",
+      "PHOTO": "NP",
+      "IR": "DET",
+      "RADAR": "NP",
+      "SYS": "NP",
+      "TRACE": "DET",
+      "note": "DoD satellite sensors detected; spherules recovered (site contested)"
+    }
   },
   {
     "id": 18,
@@ -639,7 +804,16 @@
         "url": "https://www.hessdalen.org"
       }
     ],
-    "shape": "Lights"
+    "shape": "Lights",
+    "sensors": {
+      "VIS": "DET",
+      "PHOTO": "DET",
+      "IR": "NP",
+      "RADAR": "DET",
+      "SYS": "NP",
+      "TRACE": "NP",
+      "note": "Automated station: optical+radar concordant — the clean multi-sensor SUCCESS"
+    }
   },
   {
     "id": 19,
@@ -671,7 +845,16 @@
         "url": "https://www.youtube.com/watch?v=d1Xpe1BKONE"
       }
     ],
-    "shape": "Disk"
+    "shape": "Disk",
+    "sensors": {
+      "VIS": "DET",
+      "PHOTO": "CUST",
+      "IR": "NP",
+      "RADAR": "NP",
+      "SYS": "NP",
+      "TRACE": "CUST",
+      "note": "Photos reportedly confiscated; ground traces cordoned"
+    }
   },
   {
     "id": 20,
@@ -724,7 +907,16 @@
     "evidence": "64 documented sightings in the Project Parallax database. Multiple video recordings. Official acknowledgment that sightings were occurring.",
     "response": "Initial dismissal as hobbyist drones. No aircraft matches found. Pentagon did not confirm source.",
     "links": [],
-    "shape": "Lights"
+    "shape": "Lights",
+    "sensors": {
+      "VIS": "DET",
+      "PHOTO": "DET",
+      "IR": "DET",
+      "RADAR": "FAIL",
+      "SYS": "NP",
+      "TRACE": "NP",
+      "note": "Mass optical; systematic radar/RF evasion per DHS-FBI statements"
+    }
   },
   {
     "id": 22,
@@ -751,7 +943,16 @@
     "evidence": "Sheriff's hidden tape recording of genuine distress. Physiological examination reports. Multiple corroborating light sightings.",
     "response": "Sheriff's hidden recording failed to disprove account. Air Force declined to investigate.",
     "links": [],
-    "shape": "Tic-Tac"
+    "shape": "Tic-Tac",
+    "sensors": {
+      "VIS": "DET",
+      "PHOTO": "NP",
+      "IR": "NP",
+      "RADAR": "NP",
+      "SYS": "NP",
+      "TRACE": "NP",
+      "note": "Witness-only + later corroborators"
+    }
   },
   {
     "id": 23,
@@ -781,7 +982,16 @@
         "url": "https://www.youtube.com/watch?v=Q5mV34KKOSQ"
       }
     ],
-    "shape": "Lights"
+    "shape": "Lights",
+    "sensors": {
+      "VIS": "DET",
+      "PHOTO": "NP",
+      "IR": "NP",
+      "RADAR": "FAIL",
+      "SYS": "INTF",
+      "TRACE": "NP",
+      "note": "Engine rough-running reported in final transmission; no radar confirm; aircraft lost"
+    }
   },
   {
     "id": 24,
@@ -809,7 +1019,16 @@
     "evidence": "Medical documentation of radiation burns. Multiple physician reports. Independent witnesses confirmed helicopter presence. Victims sued U.S. government.",
     "response": "Government denied any military helicopters were in the area. Lawsuit dismissed on jurisdictional grounds.",
     "links": [],
-    "shape": "Unknown"
+    "shape": "Unknown",
+    "sensors": {
+      "VIS": "DET",
+      "PHOTO": "NP",
+      "IR": "NP",
+      "RADAR": "NP",
+      "SYS": "NP",
+      "TRACE": "DET",
+      "note": "Physiological injuries = biological trace"
+    }
   },
   {
     "id": 25,
@@ -835,7 +1054,16 @@
     "evidence": "Australian National Archives declassified files. Records of U.S. military pressure on Australian witnesses.",
     "response": "U.S. military personnel pressured Australian witnesses to recant. Files declassified by National Archives.",
     "links": [],
-    "shape": "Sphere"
+    "shape": "Sphere",
+    "sensors": {
+      "VIS": "DET",
+      "PHOTO": "NP",
+      "IR": "NP",
+      "RADAR": "NP",
+      "SYS": "NP",
+      "TRACE": "NP",
+      "note": "Two-witness base case"
+    }
   },
   {
     "id": 26,
@@ -860,7 +1088,16 @@
     "evidence": "ESA JANUS mission data. Trajectory anomalies consistent with non-gravitational acceleration. Spectrum analysis ongoing.",
     "response": "International scientific community monitoring. Competing explanations from Loeb and Seligman. ESA mission continues.",
     "links": [],
-    "shape": "Unknown"
+    "shape": "Unknown",
+    "sensors": {
+      "VIS": "NP",
+      "PHOTO": "DET",
+      "IR": "DET",
+      "RADAR": "NP",
+      "SYS": "NP",
+      "TRACE": "NP",
+      "note": "Telescopic; fully instrumented success"
+    }
   },
   {
     "id": 27,
@@ -891,7 +1128,16 @@
       }
     ],
     "isPursue": true,
-    "shape": "Tic-Tac"
+    "shape": "Tic-Tac",
+    "sensors": {
+      "VIS": "DET",
+      "PHOTO": "NP",
+      "IR": "NP",
+      "RADAR": "FAIL",
+      "SYS": "DET",
+      "TRACE": "NP",
+      "note": "Gun-laying radar often no return; no weapon effect reported"
+    }
   },
   {
     "id": 28,
@@ -923,7 +1169,17 @@
       }
     ],
     "isPursue": true,
-    "shape": "Lights"
+    "shape": "Lights",
+    "skycheck_audit": "SKYCHECK retro-audit 2026-07-08: Venus DOWN; Jupiter 28° SSE present-but-inconsistent — 40 minutes of tracked maneuvers and physically overflown ~100,000 ft contrails are planet-proof.",
+    "sensors": {
+      "VIS": "DET",
+      "PHOTO": "CUST",
+      "IR": "NP",
+      "RADAR": "NP",
+      "SYS": "NP",
+      "TRACE": "DET",
+      "note": "Photos taken THEN lost in custody; contrail trace overflown"
+    }
   },
   {
     "id": 29,
@@ -954,7 +1210,16 @@
       }
     ],
     "isPursue": true,
-    "shape": "Unknown"
+    "shape": "Unknown",
+    "sensors": {
+      "VIS": "DET",
+      "PHOTO": "NP",
+      "IR": "NP",
+      "RADAR": "DET",
+      "SYS": "NP",
+      "TRACE": "NP",
+      "note": "Dual-sensor radar+optical success"
+    }
   },
   {
     "id": 30,
@@ -986,7 +1251,16 @@
       }
     ],
     "isPursue": false,
-    "shape": "Lights"
+    "shape": "Lights",
+    "sensors": {
+      "VIS": "DET",
+      "PHOTO": "FAIL",
+      "IR": "NP",
+      "RADAR": "FAIL",
+      "SYS": "NP",
+      "TRACE": "NP",
+      "note": "2+hrs multi-witness; no usable imagery/ID; nothing recovered"
+    }
   },
   {
     "id": 31,
@@ -1017,41 +1291,208 @@
       }
     ],
     "isPursue": true,
-    "shape": "Unknown"
+    "shape": "Unknown",
+    "sensors": {
+      "VIS": "DET",
+      "PHOTO": "NP",
+      "IR": "DET",
+      "RADAR": "DET",
+      "SYS": "DET",
+      "TRACE": "CUST",
+      "note": "Full kill chain worked (1st missile missed); debris fate undisclosed"
+    }
   },
   {
     "id": 32,
-    "name": "Petrozavodsk Phenomenon",
-    "year": 1977,
-    "lat": 61.7849,
-    "lon": 34.3469,
-    "location": "Petrozavodsk, Karelia",
-    "country": "Russia",
-    "class": "B",
-    "cat": "mass",
+    "name": "Ladakh Luminous Objects",
+    "year": 2012,
+    "lat": 33.76,
+    "lon": 78.66,
+    "location": "Pangong Tso / Thakung, Ladakh",
+    "country": "India",
+    "cat": "military",
     "shape": "Lights",
     "sigs": [
-      "🔴",
-      "✨",
-      "🌫️",
       "👁️",
-      "∴"
+      "∷",
+      "🚫",
+      "⛰️"
     ],
-    "summary": "A vast glowing 'jellyfish' hung over Petrozavodsk before dawn on 20 Sept 1977, raining shafts of light. Rare for the era, Soviet state news (TASS) reported it.",
-    "what": "Before dawn on 20 September 1977, a large luminous body appeared over Petrozavodsk in Soviet Karelia, spread like a jellyfish, and showered fine shafts of light onto the city. Observers described windows and pavements pierced by beams. The display was seen across northwestern USSR and reported as far as Helsinki and Copenhagen.",
-    "why": "The event is significant less for its cause than for its reach and for the unusual Soviet-era public acknowledgement — a rare TASS dispatch — plus simultaneous multinational observation, which rules out a purely local misperception.",
-    "witnesses": "Thousands across Karelia — harbour workers, police, and residents — with corroborating reports from Finland and Scandinavia.",
-    "evidence": "Contemporary TASS dispatch; simultaneous cross-border observations logged in several countries.",
-    "response": "Later widely attributed to the launch of Kosmos-955 from Plesetsk Cosmodrome that morning; the duration, morphology and window-piercing beams are still debated by some observers.",
+    "summary": "100+ Unidentified Luminous Objects logged by ITBP and Army over 2.5 months at the India-China line. ISRO, DRDO, NTRO all investigated — all failed to identify. Drones and satellites formally ruled out.",
+    "what": "Between August 1 and October 15, 2012, the ITBP unit at Thakung near Pangong Tso reported over 100 sightings of yellowish luminous spheres rising from the horizon on the Chinese side, gliding across the sky for three to four hours before vanishing. The Army documented 99 sightings January–August across Ladakh sectors. A drone was sent up and a radar deployed; the objects were not identified. Army, ISRO, DRDO and NTRO investigations all failed; UAVs, Chinese drones and low-orbit satellites were formally excluded.",
+    "why": "The largest documented multi-agency identification failure in the world, at a nuclear-armed contested border, sustained over months — anchor case of the contested-border luminous-orb pattern. A 1968 declassified CIA document records six sightings over the same terrain, a five-decade thread.",
+    "witnesses": "ITBP border police units, Indian Army 14 Corps personnel; multi-observer, multi-week.",
+    "evidence": "ITBP photographs studied at Army HQ; 14 Corps detailed report; press documentation (India Today, The Hindu). No public sensor data released.",
+    "response": "File sent to Army HQ; investigations closed without identification; no public policy response; no Indian UAP body exists.",
     "links": [
       {
-        "label": "Wikipedia — Petrozavodsk phenomenon",
-        "url": "https://en.wikipedia.org/wiki/Petrozavodsk_phenomenon"
+        "label": "India Today coverage",
+        "url": "https://www.indiatoday.in/"
       }
-    ]
+    ],
+    "isPursue": false,
+    "class": "B"
   },
   {
     "id": 33,
+    "name": "La Joya AFB Engagement",
+    "year": 1980,
+    "lat": -17.19,
+    "lon": -70.93,
+    "location": "La Joya Air Base, Arequipa, Peru",
+    "country": "Peru",
+    "cat": "military",
+    "shape": "Sphere",
+    "sigs": [
+      "💥",
+      "🎯",
+      "⟁",
+      "📄"
+    ],
+    "summary": "FAP pilot Oscar Santa María Huertas fired ~64 rounds of 30mm cannon at a balloon-like object that then outran his Su-22 to 19 km altitude. Documented in a declassified US DoD record.",
+    "what": "On April 11, 1980, ordered to intercept a stationary object over La Joya's restricted airspace, Lt. Santa María fired a burst of 30mm shells at close range with no visible effect. The object then ascended and outmaneuvered the Su-22 through a 22-minute pursuit to ~63,000 ft, repeatedly stopping and evading firing solutions. Up close he described a ~10m dome with a wide silver base, no engines, no exhaust.",
+    "why": "One of very few documented cases of a military pilot firing on a UAP — recorded in a June 1980 US Department of Defense document ('UFO Sighted in Peru') and testified publicly by the pilot in 2013. Anchors Peru's OIFAA institutional file.",
+    "witnesses": "Lt. Oscar Santa María Huertas (pilot, on-record to present day); base personnel (~1,800 on the ground).",
+    "evidence": "Declassified US DoD document, June 1980; pilot testimony, Citizen Hearing 2013.",
+    "response": "Peru later created/reactivated OIFAA under FAP aerospace directorate (2001/2013).",
+    "links": [
+      {
+        "label": "US DoD record (declassified)",
+        "url": "https://www.theblackvault.com/"
+      }
+    ],
+    "isPursue": false,
+    "class": "A"
+  },
+  {
+    "id": 34,
+    "name": "Aguadilla Transmedium Object",
+    "year": 2013,
+    "lat": 18.47,
+    "lon": -67.13,
+    "location": "Rafael Hernández Airport, Aguadilla, Puerto Rico",
+    "country": "USA",
+    "cat": "transmedium",
+    "shape": "Unknown",
+    "sigs": [
+      "🌊",
+      "🎥",
+      "👻",
+      "➗"
+    ],
+    "summary": "DHS/CBP aircraft thermal video: object crosses the airfield, repeatedly enters and exits the ocean without deceleration, appears to split in two. Subject of a 161-page SCU analysis.",
+    "what": "On April 25, 2013 (~21:20 local), a DHS Customs and Border Protection DHC-8's thermal imager tracked a small fast object over the airport and coastline; the footage shows repeated ocean entry and exit with no deceleration signature and an apparent split into two objects near the end of the track. Airport radar had a correlating intermittent primary return; commercial departure was delayed during the event.",
+    "why": "The Caribbean anchor of the transmedium ledger and among the strongest sensor-video transmedium records in open circulation — a federal law-enforcement platform, chain-of-custody known, analyzed at length by the Scientific Coalition for UAP Studies.",
+    "witnesses": "CBP aircrew; tower personnel.",
+    "evidence": "CBP thermal video (leaked, authenticity undisputed); SCU 161-page technical analysis; radar correlation.",
+    "response": "No official DHS analysis released; case remains formally unresolved.",
+    "links": [
+      {
+        "label": "SCU analysis",
+        "url": "https://www.explorescu.org/"
+      }
+    ],
+    "isPursue": false,
+    "class": "A"
+  },
+  {
+    "id": 35,
+    "name": "Petrozavodsk Phenomenon",
+    "year": 1977,
+    "lat": 61.79,
+    "lon": 34.36,
+    "location": "Petrozavodsk, Karelia, USSR",
+    "country": "USSR",
+    "cat": "mass",
+    "shape": "Lights",
+    "sigs": [
+      "🪼",
+      "👥",
+      "📰",
+      "🏛️"
+    ],
+    "summary": "A vast 'jellyfish' of light over northwest USSR, mass-witnessed and reported in Pravda — the event that forced the Soviet state to create the 13-year SETKA program.",
+    "what": "Early on September 20, 1977, a brilliant expanding luminous 'jellyfish' display was observed across Karelia and neighboring regions, showering ray-like filaments; reported by TASS and covered in Pravda/Izvestiya, generating 1,500+ citizen letters to the Academy of Sciences.",
+    "why": "The institutional trigger case of the Eastern bloc: within a year the Military-Industrial Commission ordered SETKA-MO and SETKA-AN into the state plan. Retrospective analyses associate the display with the Kosmos-955 launch from Plesetsk — a substantially explained case retained for its institutional consequence and as a calibration exhibit.",
+    "witnesses": "Mass civilian + officials across multiple cities.",
+    "evidence": "Contemporary Soviet press; Academy correspondence; program documents sold post-1991.",
+    "response": "Creation of SETKA (1978–1990), the largest systematic sky-watch ever ordered.",
+    "links": [
+      {
+        "label": "SETKA program history",
+        "url": "https://en.wikipedia.org/"
+      }
+    ],
+    "isPursue": false,
+    "class": "B"
+  },
+  {
+    "id": 36,
+    "name": "Pantex Plant Lockdown Pursuit",
+    "year": 2015,
+    "lat": 35.32,
+    "lon": -101.56,
+    "location": "Pantex Nuclear Weapons Plant, Amarillo, Texas",
+    "country": "USA",
+    "cat": "nuclear",
+    "shape": "Diamond",
+    "sigs": [
+      "☢️",
+      "🔇",
+      "🚫",
+      "🚓"
+    ],
+    "summary": "Sept 1, 2015: America's nuclear weapons assembly plant went into LOCKDOWN as security officers pursued a completely silent, slow-moving diamond-shaped object with no visible propulsion. Released as DOE-UAP-D005, PURSUE Tranche 4.",
+    "what": "Security personnel observed a diamond-shaped object — rounded at top, roughly four feet tall and two feet wide at the base, described variously as black or silver/red/blue — traveling at only 10–15 mph over the facility. The plant was placed on lockdown; two officers pursued by vehicle, then exited and assessed the object through binoculars: no sound whatsoever, no identifiable propulsion system. After 1–2 minutes of observation it continued north offsite.",
+    "why": "Second Pantex file in the official record (with the Tranche 2 DOE file) and the modern bookend of the nuclear-facility thread the vault now anchors at both ends: the 1949 Los Alamos conference (DOC-004) to Pantex 2015 — 66 years. Slow, silent, propulsion-less flight over the most sensitive weapons facility in America, officially unresolved.",
+    "witnesses": "Multiple Pantex security officers (binocular assessment on record).",
+    "evidence": "DOE incident report DOE-UAP-D005 (war.gov Tranche 4, July 10, 2026). No sensor imagery released.",
+    "response": "Facility lockdown; pursuit; report filed to DOE; released under PURSUE July 2026.",
+    "links": [
+      {
+        "label": "war.gov/UFO Release 04",
+        "url": "https://www.war.gov/UFO"
+      }
+    ],
+    "isPursue": true
+  },
+  {
+    "id": 37,
+    "name": "Yellow Sea Sensor-Degradation UAP",
+    "year": 2023,
+    "lat": 35.5,
+    "lon": 123.5,
+    "location": "Yellow Sea (international waters)",
+    "country": "International",
+    "class": "A",
+    "cat": "military",
+    "shape": "Unknown",
+    "sigs": [
+      "📡",
+      "🌀",
+      "🔴",
+      "⊘",
+      "⁉"
+    ],
+    "summary": "Official Department of War release describing a UAP that progressively degraded electro-optical and infrared sensor footage over 4 minutes 57 seconds — the first official case to describe degradation occurring during observation.",
+    "what": "Across a 4:57 engagement, an unidentified object over the Yellow Sea appeared to progressively degrade the capturing platform's electro-optical and infrared sensor footage. The effect worsened as the observation continued rather than resolving, which is atypical of ordinary lock-loss or range effects. Released in the DOW-UAP-PR104/105 family.",
+    "why": "If the degradation is a property of the object or its interaction with the sensor (rather than an artifact), it would be a rare instance of an observation-time counter-sensor effect on record in official material — the kind of signature that separates a genuine unknown from a mundane misidentification.",
+    "witnesses": "Sensor-operator crew of the capturing platform; footage reviewed by the Department of War / AARO-successor office.",
+    "evidence": "Official DoW release (DOW-UAP-PR104/105 family): 4:57 of IR footage showing progressive degradation during observation.",
+    "response": "First official release describing sensor degradation during observation. CAVEAT: compression and atmospheric artifacts have not yet been excluded as alternative explanations.",
+    "links": [],
+    "sensors": {
+      "VIS": "NP",
+      "PHOTO": "NP",
+      "IR": "INTF",
+      "RADAR": "NP",
+      "SYS": "NP",
+      "TRACE": "NP",
+      "note": "Official DoW description: UAP 'appears to degrade electro-optical and infrared sensor footage' progressively over 4:57 (DOW-UAP-PR104/105 family). First official release describing degradation-during-observation. CAVEAT: compression/atmospheric artifacts not yet excluded."
+    }
+  },
+  {
+    "id": 38,
     "name": "Dalnegorsk — Height 611",
     "year": 1986,
     "lat": 44.5522,
@@ -1077,7 +1518,7 @@
     "links": []
   },
   {
-    "id": 34,
+    "id": 39,
     "name": "Voronezh Park Landing",
     "year": 1989,
     "lat": 51.672,
@@ -1108,7 +1549,7 @@
     ]
   },
   {
-    "id": 35,
+    "id": 40,
     "name": "Hangzhou Xiaoshan Airport Incident",
     "year": 2010,
     "lat": 30.2295,
@@ -1139,7 +1580,7 @@
     ]
   },
   {
-    "id": 36,
+    "id": 41,
     "name": "China Airport UFO Wave",
     "year": 2011,
     "lat": 39.9042,

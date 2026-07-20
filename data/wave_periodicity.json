@@ -1,0 +1,40 @@
+{
+ "waves": [
+  1896.9,
+  1909.3,
+  1913.1,
+  1946.6,
+  1947.5,
+  1952.5,
+  1954.8,
+  1957.9,
+  1966.5,
+  1973.8,
+  1978.5,
+  1989.9,
+  1997.2,
+  2019.5,
+  2024.9
+ ],
+ "gaps": [
+  12.4,
+  3.8,
+  33.5,
+  0.9,
+  5.0,
+  2.3,
+  3.1,
+  8.6,
+  7.3,
+  4.7,
+  11.4,
+  7.3,
+  22.3,
+  5.4
+ ],
+ "mean": 9.1,
+ "cv": 0.97,
+ "verdict": "CONSISTENT WITH RANDOM ARRIVAL",
+ "caveats": "n small; wave selection curated; media feedback confound; pilot result only",
+ "note": "densest cluster 1946-1957, the nuclear-dawn decade"
+}
