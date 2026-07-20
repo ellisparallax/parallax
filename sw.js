@@ -1,7 +1,7 @@
 /* Project Parallax — service worker
    Offline app-shell + runtime caching for the CesiumJS CDN, fonts, and map tiles,
    so previously-viewed areas keep working with no signal (rural sky-watching). */
-const VERSION = 'parallax-v2';
+const VERSION = 'parallax-v3';
 const SHELL = `${VERSION}-shell`;
 const RUNTIME = `${VERSION}-runtime`;
 const TILES = `${VERSION}-tiles`;
@@ -70,8 +70,10 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Map tiles → cache-first with a size cap.
-  if (url.hostname.endsWith('basemaps.cartocdn.com')) {
+  // Map tiles (CARTO dark, Esri satellite, NASA GIBS night) → cache-first with a size cap.
+  if (url.hostname.endsWith('basemaps.cartocdn.com') ||
+      url.hostname.endsWith('arcgisonline.com') ||
+      url.hostname.endsWith('earthdata.nasa.gov')) {
     event.respondWith(cacheFirst(req, TILES, TILE_LIMIT));
     return;
   }

@@ -277,6 +277,46 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;
   .fld input,.fld textarea,.fld select{font-size:16px}   /* prevent iOS zoom-on-focus */
   .modal-card{max-height:calc(86vh - env(safe-area-inset-bottom))}
 }
+
+/* ---------- On-globe HUD ---------- */
+#hud{position:absolute;inset:0;pointer-events:none;z-index:40}
+.hud-metrics{position:absolute;top:14px;right:14px;display:flex;gap:7px}
+.hm{background:rgba(8,12,24,0.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border:1px solid rgba(0,200,255,0.22);border-radius:6px;padding:6px 11px;text-align:center;
+  box-shadow:0 0 14px rgba(0,200,255,0.08)}
+.hm b{display:block;font-family:'Bebas Neue';font-size:19px;letter-spacing:0.05em;color:var(--ice);
+  font-weight:400;line-height:1}
+.hm span{display:block;font-size:6.5px;letter-spacing:0.22em;color:var(--gold);opacity:0.8;margin-top:3px}
+.hud-bar{position:absolute;left:50%;transform:translateX(-50%);bottom:16px;display:flex;gap:6px;
+  flex-wrap:wrap;justify-content:center;max-width:94%;pointer-events:auto}
+.hb{font-family:'DM Mono';font-size:9px;letter-spacing:0.12em;padding:8px 11px;border-radius:5px;
+  cursor:pointer;color:var(--ice);opacity:0.55;background:rgba(8,12,24,0.72);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border:1px solid rgba(168,216,240,0.25);transition:.15s}
+.hb.on{opacity:1;color:var(--teal);border-color:rgba(0,200,255,0.55);box-shadow:0 0 12px rgba(0,200,255,0.18)}
+.hb.alt{opacity:1;color:var(--gold);border-color:rgba(200,169,110,0.5)}
+.hb:active{transform:scale(0.96)}
+
+/* ---------- Mobile bottom sheet for the inspection card ---------- */
+#sheetHost{display:none}
+body.sheet-open #sheetHost{display:block;position:fixed;left:0;right:0;bottom:0;z-index:66;
+  max-height:62vh;overflow-y:auto;background:rgba(8,12,24,0.96);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-top:1px solid rgba(0,200,255,0.3);border-radius:14px 14px 0 0;
+  box-shadow:0 -10px 34px rgba(0,0,0,0.55);
+  padding:8px 18px calc(16px + env(safe-area-inset-bottom));
+  animation:sheetup .28s ease}
+@keyframes sheetup{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+body.sheet-open #sheetHost::before{content:'';display:block;width:38px;height:4px;border-radius:2px;
+  background:rgba(168,216,240,0.3);margin:4px auto 10px}
+body.sheet-open #sheetHost #card{border-bottom:none;margin-bottom:0;padding-bottom:6px}
+body.sheet-open .hud-bar{display:none}
+@media (max-width:760px){
+  .hud-metrics{top:calc(10px + env(safe-area-inset-top));right:calc(10px + env(safe-area-inset-right))}
+  .hm{padding:5px 8px}
+  .hm b{font-size:16px}
+  .hud-bar{bottom:calc(12px + env(safe-area-inset-bottom))}
+}
 </style>
 </head>
 <body>
@@ -376,10 +416,12 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;
       <div class="kv" id="kv-links"><div class="k">Sources</div><div class="links" id="c-links"></div></div>
     </div>
 
+    <div id="cardAnchor" style="display:none"></div>
+
     <!-- footer / attribution -->
     <div class="mod foot">
       <div class="coverage">⚠ Coverage note: records are drawn largely from Western / English-language open sources. China, Russia and other closed-archive regions are under-represented — absence of data here is not absence of events.</div>
-      © OpenStreetMap / CARTO · CesiumJS<br>
+      Imagery: Esri / Maxar · NASA GIBS · © OpenStreetMap / CARTO · CesiumJS<br>
       PROJECT PARALLAX — UAP OSINT · No Ion token · Self-contained
     </div>
   </aside>
@@ -387,8 +429,27 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;
   <div id="globe">
     <div id="tooltip"></div>
     <div id="pickBanner">◎ Click the globe to drop your sighting location</div>
+
+    <!-- On-globe HUD: live metrics + quick controls, no drawer needed -->
+    <div id="hud">
+      <div class="hud-metrics">
+        <div class="hm"><b id="h-total">—</b><span>CASES</span></div>
+        <div class="hm"><b id="h-shape">—</b><span>TOP SHAPE</span></div>
+        <div class="hm"><b id="h-hot">—</b><span>HOTSPOT</span></div>
+      </div>
+      <div class="hud-bar">
+        <button class="hb on" id="hud-inc" title="Verified Incidents">◆ CASES</button>
+        <button class="hb on" id="hud-sig" title="Live Sightings">· SIGHTINGS</button>
+        <button class="hb on" id="hud-hot" title="Activity Hotspots">◎ HOTSPOTS</button>
+        <button class="hb on" id="hud-rep" title="My Reports">⌖ MINE</button>
+        <button class="hb alt" id="hud-base" title="Switch basemap">◐ SAT</button>
+      </div>
+    </div>
   </div>
 </div>
+
+<!-- Mobile bottom sheet: hosts the inspection card so the globe stays visible -->
+<div id="sheetHost"></div>
 
 <!-- ============ Report a Sighting modal ============ -->
 <div id="reportModal" class="modal">
@@ -542,32 +603,61 @@ function hexCanvas(count){
 /* ============ Cesium viewer (token-free, dark CARTO) ============ */
 Cesium.Ion.defaultAccessToken = '';
 
-const cartoLayer = new Cesium.ImageryLayer(
-  new Cesium.UrlTemplateImageryProvider({
-    url:'https://basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',
-    credit:'© OSM/CARTO', maximumLevel:19
-  })
-);
+/* ---------- Basemaps (all token-free) ---------- */
+const BASEMAPS = {
+  sat:  { label:'SAT',   credit:'Esri, Maxar, Earthstar Geographics',
+          url:'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', max:19 },
+  night:{ label:'NIGHT', credit:'NASA GIBS (VIIRS Black Marble)',
+          url:'https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/VIIRS_Black_Marble/default/2016-01-01/GoogleMapsCompatible_Level8/{z}/{y}/{x}.png', max:8 },
+  dark: { label:'DARK',  credit:'© OSM/CARTO',
+          url:'https://basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', max:19 }
+};
+const BASEMAP_ORDER = ['sat','night','dark'];
+let currentBasemap = (function(){ try{ return localStorage.getItem('parallax_basemap')||'sat'; }catch(e){ return 'sat'; } })();
+if(!BASEMAPS[currentBasemap]) currentBasemap='sat';
 
 const viewer = new Cesium.Viewer('globe',{
-  baseLayer: cartoLayer,
+  baseLayer: false,
   baseLayerPicker:false, geocoder:false, timeline:false, animation:false,
   homeButton:false, sceneModePicker:false, navigationHelpButton:false,
   fullscreenButton:false, infoBox:false, selectionIndicator:false,
   requestRenderMode:true, maximumRenderTimeChange:Infinity,
+  useBrowserRecommendedResolution:false,
   creditContainer: document.getElementById('credits')
 });
 
 const scene = viewer.scene, camera = viewer.camera;
+
+/* Crisp rendering: render at device-pixel resolution + anti-aliasing */
+viewer.resolutionScale = Math.min(window.devicePixelRatio || 1, 2);
+scene.postProcessStages.fxaa.enabled = true;
+if (scene.msaaSupported) scene.msaaSamples = 4;
+
+/* Depth: real atmosphere glow around the limb + on the ground */
 scene.globe.baseColor = Cesium.Color.fromCssColorString('#050a12');
-scene.globe.showGroundAtmosphere = false;
-scene.skyAtmosphere.show = false;
+scene.globe.showGroundAtmosphere = true;
+scene.skyAtmosphere.show = true;
 scene.backgroundColor = Cesium.Color.fromCssColorString('#030608');
 scene.globe.enableLighting = false;
 scene.fog.enabled = false;
 scene.highDynamicRange = false;
 viewer.scene.globe.maximumScreenSpaceError = 2;
 camera.setView({ destination: Cesium.Cartesian3.fromDegrees(-30, 22, 24000000) });
+
+function setBasemap(key){
+  if(!BASEMAPS[key]) return;
+  currentBasemap = key;
+  try{ localStorage.setItem('parallax_basemap', key); }catch(e){}
+  viewer.imageryLayers.removeAll();
+  const b = BASEMAPS[key];
+  viewer.imageryLayers.addImageryProvider(new Cesium.UrlTemplateImageryProvider({
+    url:b.url, credit:b.credit, maximumLevel:b.max
+  }));
+  const btn=document.getElementById('hud-base');
+  if(btn) btn.textContent='◐ '+b.label;
+  scene.requestRender();
+}
+setBasemap(currentBasemap);
 
 /* ============ Incidents layer ============ */
 const incState = new Map(); // id -> {inc, ent, active, scale}
@@ -731,6 +821,12 @@ function updateMetrics(){
     hot = hot.split(/[\/(]/)[0].trim(); // trim long names to lead region
   }
   document.getElementById('m-hot').textContent = hot;
+
+  // mirror into the on-globe HUD
+  const hT=document.getElementById('h-total');
+  if(hT){ hT.textContent=visible.length;
+    document.getElementById('h-shape').textContent=mode;
+    document.getElementById('h-hot').textContent=hot; }
 }
 
 /* ============ Build filter UI ============ */
@@ -768,6 +864,7 @@ document.getElementById('ly-hot').addEventListener('change',e=>{
 document.getElementById('resetBtn').addEventListener('click',()=>{
   document.querySelectorAll('#shapeFilters input,#catFilters input').forEach(cb=>cb.checked=true);
   document.getElementById('ly-inc').checked=document.getElementById('ly-sig').checked=document.getElementById('ly-hot').checked=true;
+  ['ly-inc','ly-sig','ly-hot'].forEach(id=>document.getElementById(id).dispatchEvent(new Event('change'))); // keep HUD in sync
   SHAPES.forEach(s=>activeShapes.add(s)); Object.keys(CAT_LABEL).forEach(k=>activeCats.add(k));
   layers.inc=layers.sig=layers.hot=true; sightingsDS.show=true;
   hotEntities.forEach(en=>en.show=true);
@@ -910,11 +1007,29 @@ function populateCard(inc){
   }else{ lk.innerHTML=`<span class="nolinks">No public source links on file.</span>`; }
   renderSensors(inc.sensors);
   renderMedia(MEDIA[inc.id]);
-  card.classList.add('on');
-  if(typeof isMobile==='function' && isMobile()) setNav(true);
-  card.scrollIntoView({behavior:'smooth', block:'nearest'});
+  openCardUI();
 }
-document.getElementById('c-close').addEventListener('click',()=>card.classList.remove('on'));
+/* Card presentation: bottom sheet over the globe on mobile, sidebar module on desktop */
+function openCardUI(){
+  card.classList.add('on');
+  if(typeof isMobile==='function' && isMobile()){
+    document.getElementById('sheetHost').appendChild(card);
+    document.body.classList.add('sheet-open');
+    setNav(false); // globe stays visible behind the sheet
+  }else{
+    closeSheet();
+    card.scrollIntoView({behavior:'smooth', block:'nearest'});
+  }
+}
+function closeSheet(){
+  document.body.classList.remove('sheet-open');
+  const anchor=document.getElementById('cardAnchor');
+  if(anchor && card.parentElement!==anchor.parentElement) anchor.parentElement.insertBefore(card, anchor);
+}
+function closeCardUI(){ card.classList.remove('on'); closeSheet(); }
+document.getElementById('c-close').addEventListener('click', closeCardUI);
+window.addEventListener('resize', ()=>{ if(!isMobile() && document.body.classList.contains('sheet-open')) closeSheet(); });
+matchMedia('(max-width:760px)').addEventListener('change', e=>{ if(!e.matches) closeSheet(); }); // rotation to landscape/desktop
 function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 
 /* ============ User-submitted sightings ("Report a Sighting") ============ */
@@ -983,8 +1098,7 @@ function populateReportCard(r){
   $('kv-resp').style.display='none'; $('kv-sigs').style.display='none'; $('kv-links').style.display='none';
   renderSensors(null);
   renderMedia(r.photo ? [{type:'image', dataUrl:r.photo, caption:'Your submitted photo'}] : null);
-  card.classList.add('on'); if(typeof isMobile==='function' && isMobile()) setNav(true);
-  card.scrollIntoView({behavior:'smooth', block:'nearest'});
+  openCardUI();
 }
 
 /* form wiring */
@@ -1207,7 +1321,14 @@ function enableAlerts(){
   maybeSubscribePush();
 }
 $('alertsBtn').addEventListener('click', ()=>{
-  if(!canNotify()){ $('alertStat').textContent='Notifications aren’t supported by this browser.'; $('alertStat').classList.add('err'); return; }
+  if(!canNotify()){
+    const isIOS=/iPhone|iPad|iPod/.test(navigator.userAgent);
+    const installed=(navigator.standalone===true)||matchMedia('(display-mode: standalone)').matches;
+    $('alertStat').textContent = (isIOS && !installed)
+      ? 'iPhone: first install the app — Share → Add to Home Screen — then enable alerts from the installed app.'
+      : 'Notifications aren’t supported by this browser.';
+    $('alertStat').classList.add('err'); return;
+  }
   if(Notification.permission==='granted'){
     if(alertsOn){ alertsOn=false; setAlertsUI(); $('alertStat').textContent='Alerts paused.'; }
     else enableAlerts();
@@ -1341,6 +1462,26 @@ function setNav(open){ document.body.classList.toggle('nav-open', open); }
 function onResize(){ try{ viewer.resize(); }catch(e){} scene.requestRender(); }
 window.addEventListener('resize', onResize);
 window.addEventListener('orientationchange', ()=>setTimeout(onResize, 250));
+
+/* ============ HUD quick controls ============ */
+{
+  const pairs=[['hud-inc','ly-inc'],['hud-sig','ly-sig'],['hud-hot','ly-hot'],['hud-rep','ly-rep']];
+  pairs.forEach(([hb,cb])=>{
+    const b=document.getElementById(hb), c=document.getElementById(cb);
+    if(!b||!c) return;
+    const sync=()=>b.classList.toggle('on', c.checked);
+    b.addEventListener('click', ()=>{ c.click(); sync(); });   // .click() toggles + fires change
+    c.addEventListener('change', sync);
+    sync();
+  });
+  const bb=document.getElementById('hud-base');
+  if(bb) bb.addEventListener('click', ()=>{
+    const next=BASEMAP_ORDER[(BASEMAP_ORDER.indexOf(currentBasemap)+1)%BASEMAP_ORDER.length];
+    setBasemap(next);
+  });
+  const b0=document.getElementById('hud-base');
+  if(b0 && BASEMAPS[currentBasemap]) b0.textContent='◐ '+BASEMAPS[currentBasemap].label;
+}
 
 /* ============ Live UTC clock ============ */
 const clockEl=document.getElementById('clock');
