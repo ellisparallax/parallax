@@ -41,7 +41,7 @@ body{font-family:'DM Mono',ui-monospace,monospace;color:var(--ice);-webkit-font-
 #sidebar{
   width:34%; min-width:360px; max-width:480px; height:100%;
   overflow-y:auto; overflow-x:hidden;
-  background:var(--glass); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+  background:var(--glass); backdrop-filter:blur(22px) saturate(160%); -webkit-backdrop-filter:blur(22px) saturate(160%);
   border-right:1px solid rgba(200,169,110,0.22);
   box-shadow:0 0 30px rgba(0,200,255,0.06);
   padding:18px 20px 26px; position:relative; z-index:5;
@@ -198,8 +198,11 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;
   background:rgba(3,6,8,0.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
 .modal.on{display:flex}
 .modal-card{width:min(460px,92vw);max-height:88vh;overflow-y:auto;
-  background:rgba(10,15,30,0.97);border:1px solid rgba(0,200,255,0.3);border-radius:8px;
-  box-shadow:0 0 40px rgba(0,200,255,0.15);padding:20px}
+  background:linear-gradient(160deg,rgba(255,255,255,0.09),rgba(255,255,255,0.02) 30%,rgba(10,15,30,0.6));
+  backdrop-filter:blur(28px) saturate(170%);-webkit-backdrop-filter:blur(28px) saturate(170%);
+  border:1px solid rgba(255,255,255,0.16);border-radius:22px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.22), 0 18px 50px rgba(0,0,0,0.5), 0 0 40px rgba(0,200,255,0.08);
+  padding:20px}
 .modal-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
 .modal-title{font-family:'Bebas Neue';font-size:24px;letter-spacing:0.06em;color:var(--gold)}
 .fld{display:block;margin-bottom:11px}
@@ -229,8 +232,11 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;
 
 /* Pick-mode banner */
 #pickBanner{position:absolute;top:14px;left:50%;transform:translateX(-50%);z-index:30;display:none;
-  background:rgba(3,6,8,0.9);border:1px solid var(--gold);border-radius:5px;padding:9px 16px;
-  font-size:11px;letter-spacing:0.1em;color:var(--gold);box-shadow:0 0 18px rgba(200,169,110,0.3)}
+  background:linear-gradient(135deg,rgba(255,255,255,0.12),rgba(255,255,255,0.03) 45%,rgba(20,18,10,0.45));
+  backdrop-filter:blur(22px) saturate(170%);-webkit-backdrop-filter:blur(22px) saturate(170%);
+  border:1px solid rgba(255,255,255,0.2);border-radius:999px;padding:10px 18px;
+  font-size:11px;letter-spacing:0.1em;color:var(--gold);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.25), 0 8px 24px rgba(0,0,0,0.4), 0 0 18px rgba(200,169,110,0.2)}
 #pickBanner.on{display:block}
 
 /* Tooltip */
@@ -260,11 +266,13 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;
   #navToggle{
     display:flex; align-items:center; justify-content:center; position:fixed; z-index:45;
     top:calc(10px + env(safe-area-inset-top)); left:calc(10px + env(safe-area-inset-left));
-    width:44px; height:44px; border-radius:9px; cursor:pointer;
-    background:rgba(10,15,30,0.82); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
-    border:1px solid rgba(0,200,255,0.35); color:var(--teal); font-size:20px;
-    box-shadow:0 0 16px rgba(0,200,255,0.2);
+    width:46px; height:46px; border-radius:50%; cursor:pointer;
+    background:linear-gradient(135deg,rgba(255,255,255,0.14),rgba(255,255,255,0.03) 45%,rgba(10,16,32,0.42));
+    -webkit-backdrop-filter:blur(22px) saturate(180%); backdrop-filter:blur(22px) saturate(180%);
+    border:1px solid rgba(255,255,255,0.2); color:var(--teal); font-size:19px;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,0.3), inset 0 -1px 0 rgba(0,0,0,0.2), 0 8px 24px rgba(0,0,0,0.4);
   }
+  #navToggle:active{transform:scale(0.94)}
   #scrim{display:block; position:fixed; inset:0; z-index:55; background:rgba(3,6,8,0);
     pointer-events:none; transition:background .28s}
   body.nav-open #scrim{background:rgba(3,6,8,0.5); pointer-events:auto}
@@ -278,32 +286,57 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;
   .modal-card{max-height:calc(86vh - env(safe-area-inset-bottom))}
 }
 
-/* ---------- On-globe HUD ---------- */
+/* ---------- On-globe HUD (Liquid Glass) ---------- */
 #hud{position:absolute;inset:0;pointer-events:none;z-index:40}
-.hud-metrics{position:absolute;top:14px;right:14px;display:flex;gap:7px}
-.hm{background:rgba(8,12,24,0.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-  border:1px solid rgba(0,200,255,0.22);border-radius:6px;padding:6px 11px;text-align:center;
-  box-shadow:0 0 14px rgba(0,200,255,0.08)}
+.hud-metrics{position:absolute;top:14px;right:14px;display:flex;gap:8px}
+.hm{min-width:58px;padding:8px 13px;text-align:center;border-radius:18px;
+  background:linear-gradient(135deg,rgba(255,255,255,0.12),rgba(255,255,255,0.03) 45%,rgba(10,16,32,0.4));
+  backdrop-filter:blur(22px) saturate(180%);-webkit-backdrop-filter:blur(22px) saturate(180%);
+  border:1px solid rgba(255,255,255,0.18);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.28), inset 0 -1px 0 rgba(0,0,0,0.2), 0 8px 26px rgba(0,0,0,0.38)}
 .hm b{display:block;font-family:'Bebas Neue';font-size:19px;letter-spacing:0.05em;color:var(--ice);
-  font-weight:400;line-height:1}
-.hm span{display:block;font-size:6.5px;letter-spacing:0.22em;color:var(--gold);opacity:0.8;margin-top:3px}
-.hud-bar{position:absolute;left:50%;transform:translateX(-50%);bottom:16px;display:flex;gap:6px;
-  flex-wrap:wrap;justify-content:center;max-width:94%;pointer-events:auto}
-.hb{font-family:'DM Mono';font-size:9px;letter-spacing:0.12em;padding:8px 11px;border-radius:5px;
-  cursor:pointer;color:var(--ice);opacity:0.55;background:rgba(8,12,24,0.72);
-  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-  border:1px solid rgba(168,216,240,0.25);transition:.15s}
-.hb.on{opacity:1;color:var(--teal);border-color:rgba(0,200,255,0.55);box-shadow:0 0 12px rgba(0,200,255,0.18)}
-.hb.alt{opacity:1;color:var(--gold);border-color:rgba(200,169,110,0.5)}
-.hb:active{transform:scale(0.96)}
+  font-weight:400;line-height:1;text-shadow:0 1px 2px rgba(0,0,0,0.4)}
+.hm span{display:block;font-size:6.5px;letter-spacing:0.22em;color:var(--gold);opacity:0.85;margin-top:3px}
+.hud-bar{position:absolute;left:50%;transform:translateX(-50%);bottom:16px;
+  display:flex;gap:3px;align-items:center;pointer-events:auto;
+  max-width:94%;overflow-x:auto;scrollbar-width:none;
+  padding:5px;border-radius:999px;
+  background:linear-gradient(135deg,rgba(255,255,255,0.11),rgba(255,255,255,0.03) 45%,rgba(10,16,32,0.42));
+  backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);
+  border:1px solid rgba(255,255,255,0.18);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.26), inset 0 -1px 0 rgba(0,0,0,0.22), 0 10px 30px rgba(0,0,0,0.42)}
+.hud-bar::-webkit-scrollbar{display:none}
+.hb{font-family:'DM Mono';font-size:9px;letter-spacing:0.12em;padding:9px 13px;border-radius:999px;
+  cursor:pointer;color:var(--ice);opacity:0.55;background:transparent;border:none;
+  white-space:nowrap;transition:all .18s ease}
+.hb.on{opacity:1;color:var(--teal);
+  background:linear-gradient(135deg,rgba(0,200,255,0.22),rgba(0,200,255,0.08));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.25), 0 2px 10px rgba(0,200,255,0.2)}
+.hb.alt{opacity:1;color:var(--gold);
+  background:linear-gradient(135deg,rgba(200,169,110,0.2),rgba(200,169,110,0.07));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.22)}
+.hb:active{transform:scale(0.94)}
+
+/* Cinematic playback overlays */
+#cineYear{position:absolute;top:18px;left:50%;transform:translateX(-50%);
+  font-family:'Bebas Neue';font-size:58px;letter-spacing:0.1em;color:var(--gold);
+  text-shadow:0 0 36px rgba(200,169,110,0.45), 0 2px 8px rgba(0,0,0,0.55);
+  opacity:0;transition:opacity .6s ease;pointer-events:none}
+body.playing #cineYear{opacity:0.95}
+.hud-metrics{transition:opacity .5s ease}
+body.playing .hud-metrics{opacity:0.3}
+@media (max-width:760px){
+  #cineYear{font-size:40px;top:calc(14px + env(safe-area-inset-top))}
+}
 
 /* ---------- Mobile bottom sheet for the inspection card ---------- */
 #sheetHost{display:none}
 body.sheet-open #sheetHost{display:block;position:fixed;left:0;right:0;bottom:0;z-index:66;
-  max-height:62vh;overflow-y:auto;background:rgba(8,12,24,0.96);
-  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  border-top:1px solid rgba(0,200,255,0.3);border-radius:14px 14px 0 0;
-  box-shadow:0 -10px 34px rgba(0,0,0,0.55);
+  max-height:62vh;overflow-y:auto;
+  background:linear-gradient(180deg,rgba(255,255,255,0.1),rgba(255,255,255,0.02) 12%,rgba(8,12,24,0.72));
+  backdrop-filter:blur(28px) saturate(170%);-webkit-backdrop-filter:blur(28px) saturate(170%);
+  border-top:1px solid rgba(255,255,255,0.2);border-radius:24px 24px 0 0;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.24), 0 -14px 44px rgba(0,0,0,0.55);
   padding:8px 18px calc(16px + env(safe-area-inset-bottom));
   animation:sheetup .28s ease}
 @keyframes sheetup{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
@@ -432,12 +465,14 @@ body.sheet-open .hud-bar{display:none}
 
     <!-- On-globe HUD: live metrics + quick controls, no drawer needed -->
     <div id="hud">
+      <div id="cineYear">1944</div>
       <div class="hud-metrics">
         <div class="hm"><b id="h-total">—</b><span>CASES</span></div>
         <div class="hm"><b id="h-shape">—</b><span>TOP SHAPE</span></div>
         <div class="hm"><b id="h-hot">—</b><span>HOTSPOT</span></div>
       </div>
       <div class="hud-bar">
+        <button class="hb alt" id="hud-play" title="Play the timeline">▶</button>
         <button class="hb on" id="hud-inc" title="Verified Incidents">◆ CASES</button>
         <button class="hb on" id="hud-sig" title="Live Sightings">· SIGHTINGS</button>
         <button class="hb on" id="hud-hot" title="Activity Hotspots">◎ HOTSPOTS</button>
@@ -628,10 +663,18 @@ const viewer = new Cesium.Viewer('globe',{
 
 const scene = viewer.scene, camera = viewer.camera;
 
-/* Crisp rendering: render at device-pixel resolution + anti-aliasing */
-viewer.resolutionScale = Math.min(window.devicePixelRatio || 1, 2);
+/* Crisp rendering, scaled to the device's GPU budget.
+   iOS Safari hard-kills tabs that exceed WebGL memory ("A problem repeatedly
+   occurred") — phones get 1.5x + FXAA (sharp, safe); desktops get 2x + 4x MSAA. */
+const IS_MOBILE_GPU = /iPhone|iPad|iPod|Android/.test(navigator.userAgent) || matchMedia('(max-width:760px)').matches;
+viewer.resolutionScale = Math.min(window.devicePixelRatio || 1, IS_MOBILE_GPU ? 1.5 : 2);
 scene.postProcessStages.fxaa.enabled = true;
-if (scene.msaaSupported) scene.msaaSamples = 4;
+if (scene.msaaSupported && !IS_MOBILE_GPU) scene.msaaSamples = 4;
+
+/* Last-resort: if the GPU still overloads, degrade instead of crash-looping */
+viewer.canvas.addEventListener('webglcontextlost', () => {
+  try { viewer.resolutionScale = 1; scene.msaaSamples = 1; scene.postProcessStages.fxaa.enabled = false; } catch(e){}
+}, false);
 
 /* Depth: real atmosphere glow around the limb + on the ground */
 scene.globe.baseColor = Cesium.Color.fromCssColorString('#050a12');
@@ -766,14 +809,14 @@ function passesFilters(inc){
 
 /* ---------- Entering-point tween manager ---------- */
 const tweens = new Map(); // id -> {from,to,start,dur}
-function startTween(id, from, to, dur){ tweens.set(id, {from,to,start:performance.now(),dur}); }
+function startTween(id, from, to, dur, burst){ tweens.set(id, {from,to,start:performance.now(),dur,burst}); }
 
 function applyState(){
   incState.forEach((st)=>{
     const shouldShow = passesFilters(st.inc) && st.inc.year <= cursor;
     if(shouldShow && !st.active){
       st.active = true; st.ent.show = true;
-      startTween(st.inc.id, 0.0, 0.55, 600); // grow + fade in
+      startTween(st.inc.id, 0.0, 0.55, playing?1500:600, playing); // playback: slow overshoot "ping"
     }else if(!shouldShow && st.active){
       st.active = false; tweens.delete(st.inc.id);
       st.ent.show = false;
@@ -878,7 +921,22 @@ const slider = document.getElementById('slider');
 const yearOut = document.getElementById('yearOut');
 const playBtn = document.getElementById('playBtn');
 let playing=false, playAcc=0, lastTs=0;
-const PLAY_MS_PER_YEAR = 300;
+const PLAY_MS_PER_YEAR = 800;          // slow, cinematic — full 1944→2026 run ≈ 66s
+
+/* Cinematic playback: slow orbital drift + gentle flights toward new activity */
+const CINE_ALT = 13.5e6;               // drift altitude (m) — whole hemisphere in view
+const CINE_ROT = (2*Math.PI)/140000;   // rad/ms — one full lap ≈ 140s
+let flightActive=false;
+function cineFly(lon,lat,dur){
+  flightActive=true;
+  camera.flyTo({
+    destination:Cesium.Cartesian3.fromDegrees(lon,lat,CINE_ALT),
+    duration:dur||3.2,
+    easingFunction:Cesium.EasingFunction.QUADRATIC_IN_OUT,
+    complete:()=>{flightActive=false;},
+    cancel:()=>{flightActive=false;}
+  });
+}
 
 function setSliderFill(){
   const p=(cursor-1944)/(2026-1944)*100;
@@ -896,8 +954,22 @@ function startPlay(){
     applyState();
   }
   playing=true; playAcc=0; playBtn.textContent='⏸';
+  document.body.classList.add('playing');
+  const cy=document.getElementById('cineYear'); if(cy) cy.textContent=cursor;
+  const hp=document.getElementById('hud-play'); if(hp) hp.textContent='⏸';
+  closeCardUI(); setNav(false);          // clear the stage — the globe is the show
+  // settle into a good cinematic vantage if the camera is too close or too far
+  const h=camera.positionCartographic.height;
+  if(h<6e6 || h>3e7) cineFly(Cesium.Math.toDegrees(camera.positionCartographic.longitude),
+                             20, 2.6);
 }
-function stopPlay(){ playing=false; playBtn.textContent='▶'; }
+function stopPlay(){
+  playing=false; playBtn.textContent='▶';
+  document.body.classList.remove('playing');
+  const hp=document.getElementById('hud-play'); if(hp) hp.textContent='▶';
+}
+/* Interacting with the globe ends the show, like a screensaver */
+scene.canvas.addEventListener('pointerdown', ()=>{ if(playing) stopPlay(); });
 playBtn.addEventListener('click',()=> playing?stopPlay():startPlay());
 setSliderFill();
 
@@ -1418,21 +1490,30 @@ function tick(ts){
     playAcc+=dt;
     while(playAcc>=PLAY_MS_PER_YEAR){
       playAcc-=PLAY_MS_PER_YEAR;
-      if(cursor<2026){ cursor++; slider.value=cursor; yearOut.textContent=cursor; setSliderFill(); applyState(); }
+      if(cursor<2026){
+        cursor++; slider.value=cursor; yearOut.textContent=cursor; setSliderFill(); applyState();
+        const cy=document.getElementById('cineYear'); if(cy) cy.textContent=cursor;
+        const entered=incidents.filter(i=>i.year===cursor && passesFilters(i));
+        if(entered.length) cineFly(entered[0].lon, entered[0].lat);
+      }
       else { stopPlay(); break; }
     }
+    if(playing && !flightActive) camera.rotate(Cesium.Cartesian3.UNIT_Z, -CINE_ROT*dt);
+    need=true;
   }
 
   // entering tweens (scale + fade)
   if(tweens.size){
     tweens.forEach((tw,id)=>{
       const k=Math.min(1,(ts-tw.start)/tw.dur);
-      const e=1-Math.pow(1-k,3);
+      let e;
+      if(tw.burst){ const c1=1.70158, c3=c1+1; e=1 + c3*Math.pow(k-1,3) + c1*Math.pow(k-1,2); } // back-out: overshoot then settle
+      else e=1-Math.pow(1-k,3);
       const st=incState.get(id);
       if(st){
-        const sc=tw.from+(tw.to-tw.from)*e;
+        const sc=Math.max(0, tw.from+(tw.to-tw.from)*e);
         st.ent.billboard.scale=sc;
-        st.ent.billboard.color=Cesium.Color.WHITE.withAlpha(e);
+        st.ent.billboard.color=Cesium.Color.WHITE.withAlpha(Math.min(1,k*2));
       }
       if(k>=1) tweens.delete(id);
     });
@@ -1474,6 +1555,8 @@ window.addEventListener('orientationchange', ()=>setTimeout(onResize, 250));
     c.addEventListener('change', sync);
     sync();
   });
+  const hp=document.getElementById('hud-play');
+  if(hp) hp.addEventListener('click', ()=>document.getElementById('playBtn').click());
   const bb=document.getElementById('hud-base');
   if(bb) bb.addEventListener('click', ()=>{
     const next=BASEMAP_ORDER[(BASEMAP_ORDER.indexOf(currentBasemap)+1)%BASEMAP_ORDER.length];
