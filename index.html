@@ -325,8 +325,26 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;
 body.playing #cineYear{opacity:0.95}
 .hud-metrics{transition:opacity .5s ease}
 body.playing .hud-metrics{opacity:0.3}
+
+/* Event-scene story caption (tap → open the case file) */
+#cineCap{position:absolute;top:88px;left:50%;transform:translateX(-50%) translateY(8px);
+  text-align:center;max-width:min(460px,86vw);opacity:0;pointer-events:none;cursor:pointer;
+  transition:opacity .5s ease, transform .5s ease}
+#cineCap.on{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:auto}
+.cc-name{font-family:'Bebas Neue';font-size:27px;letter-spacing:0.08em;color:var(--ice);line-height:1;
+  text-shadow:0 0 20px rgba(168,216,240,0.35), 0 2px 6px rgba(0,0,0,0.65)}
+.cc-meta{font-family:'DM Mono';font-size:8.5px;letter-spacing:0.24em;color:var(--gold);margin-top:5px;
+  text-shadow:0 1px 4px rgba(0,0,0,0.7)}
+.cc-hook{font-family:'Crimson Pro',serif;font-size:15.5px;line-height:1.42;color:#e8f1f8;margin-top:8px;
+  text-shadow:0 1px 5px rgba(0,0,0,0.75)}
+.cc-cta{font-family:'DM Mono';font-size:8px;letter-spacing:0.26em;color:var(--teal);margin-top:9px;
+  text-shadow:0 0 12px rgba(0,200,255,0.4);animation:ctapulse 1.6s ease-in-out infinite}
+@keyframes ctapulse{0%,100%{opacity:0.5}50%{opacity:1}}
 @media (max-width:760px){
   #cineYear{font-size:40px;top:calc(14px + env(safe-area-inset-top))}
+  #cineCap{top:calc(64px + env(safe-area-inset-top))}
+  .cc-name{font-size:21px}
+  .cc-hook{font-size:13.5px}
 }
 
 /* ---------- Mobile bottom sheet for the inspection card ---------- */
@@ -466,6 +484,12 @@ body.sheet-open .hud-bar{display:none}
     <!-- On-globe HUD: live metrics + quick controls, no drawer needed -->
     <div id="hud">
       <div id="cineYear">1944</div>
+      <div id="cineCap">
+        <div class="cc-name"></div>
+        <div class="cc-meta"></div>
+        <div class="cc-hook"></div>
+        <div class="cc-cta">▸ TAP TO OPEN CASE FILE</div>
+      </div>
       <div class="hud-metrics">
         <div class="hm"><b id="h-total">—</b><span>CASES</span></div>
         <div class="hm"><b id="h-shape">—</b><span>TOP SHAPE</span></div>
@@ -685,6 +709,53 @@ scene.skyAtmosphere.brightnessShift = -0.08;
 scene.skyAtmosphere.saturationShift = 0.12;
 scene.globe.atmosphereBrightnessShift = -0.1;
 scene.globe.atmosphereSaturationShift = 0.12;
+
+/* ---------- Deep space: crisp procedural starfield skybox ----------
+   Replaces the hazy low-res default with a spaceship-window view: pin-sharp
+   stars (a few bright ones with glow + cross spikes, warm/cool tints) and
+   very faint nebula wisps over near-black. Plus the real Moon and Sun. */
+function starFace(seed){
+  const S=1024, c=document.createElement('canvas'); c.width=c.height=S;
+  const g=c.getContext('2d');
+  g.fillStyle='#000208'; g.fillRect(0,0,S,S);
+  let rnd=seed;
+  const rand=()=>{ rnd=(rnd*1103515245+12345)&0x7fffffff; return rnd/0x7fffffff; };
+  for(let i=0;i<3;i++){                       // restrained nebula wisps, inset from face edges
+    const r=200+rand()*280, x=r+rand()*(S-2*r), y=r+rand()*(S-2*r);
+    const grd=g.createRadialGradient(x,y,0,x,y,r);
+    const hue=rand()<0.5?'70,110,190':'115,80,170';
+    grd.addColorStop(0,`rgba(${hue},0.05)`); grd.addColorStop(1,'rgba(0,0,0,0)');
+    g.fillStyle=grd; g.fillRect(x-r,y-r,r*2,r*2);
+  }
+  for(let i=0;i<1100;i++){
+    const x=rand()*S, y=rand()*S, t=rand();
+    let r,a;
+    if(t<0.82){ r=0.6; a=0.25+rand()*0.4; }
+    else if(t<0.96){ r=1.0; a=0.5+rand()*0.4; }
+    else { r=1.6+rand()*0.9; a=0.9; }
+    const tint=rand();
+    const col= tint<0.12?'185,205,255' : tint<0.2?'255,224,185' : '236,240,255';
+    g.fillStyle=`rgba(${col},${a})`;
+    g.beginPath(); g.arc(x,y,r,0,Math.PI*2); g.fill();
+    if(r>1.6){
+      const grd=g.createRadialGradient(x,y,0,x,y,r*6);
+      grd.addColorStop(0,`rgba(${col},0.35)`); grd.addColorStop(1,'rgba(0,0,0,0)');
+      g.fillStyle=grd; g.beginPath(); g.arc(x,y,r*6,0,Math.PI*2); g.fill();
+      g.strokeStyle=`rgba(${col},0.28)`; g.lineWidth=0.8;
+      g.beginPath(); g.moveTo(x-r*5,y); g.lineTo(x+r*5,y); g.moveTo(x,y-r*5); g.lineTo(x,y+r*5); g.stroke();
+    }
+  }
+  return c;
+}
+try{
+  scene.skyBox = new Cesium.SkyBox({ sources:{
+    positiveX:starFace(11), negativeX:starFace(22),
+    positiveY:starFace(33), negativeY:starFace(44),
+    positiveZ:starFace(55), negativeZ:starFace(66) } });
+}catch(e){ console.warn('[PARALLAX] custom skybox unavailable, keeping default:', e); }
+if(!scene.moon) scene.moon = new Cesium.Moon();
+scene.moon.show = true;
+if(scene.sun) scene.sun.show = true;
 scene.backgroundColor = Cesium.Color.fromCssColorString('#030608');
 scene.globe.enableLighting = false;
 scene.fog.enabled = false;
@@ -988,21 +1059,42 @@ function spawnEventBurst(inc){
   setTimeout(()=>{ viewer.entities.remove(flare); rings.forEach(r=>viewer.entities.remove(r)); scene.requestRender(); }, LIFE+150);
 }
 
+/* one-line hook for the caption: first punchy sentence of the summary */
+function hookLine(inc){
+  const s=inc.summary||inc.what||'';
+  const m=s.match(/^[^.]{20,160}\./);
+  return m ? m[0] : s.slice(0,140);
+}
+let sceneInc=null;
 function startEventScene(list){
   eventHold=true;
-  const tgt=list[0];
+  const tgt=list[0]; sceneInc=tgt;
+  const cap=document.getElementById('cineCap');
+  if(cap){
+    cap.querySelector('.cc-name').textContent=tgt.name;
+    cap.querySelector('.cc-meta').textContent=
+      `CLASS ${tgt.class} · ${(tgt.location||'').toUpperCase()}`+(list.length>1?` · +${list.length-1} MORE THIS YEAR`:'');
+    cap.querySelector('.cc-hook').textContent=hookLine(tgt);
+    cap.classList.add('on');
+  }
   cineFly(tgt.lon, tgt.lat, EVENT_ALT, 1.9, ()=>{
     if(!playing){ eventHold=false; return; }
     list.forEach(spawnEventBurst);
     clearTimeout(holdTimer);
     holdTimer=setTimeout(()=>{
       eventHold=false; playAcc=0;
+      if(cap) cap.classList.remove('on');
       if(playing) cineFly(Cesium.Math.toDegrees(camera.positionCartographic.longitude),
                           Cesium.Math.toDegrees(camera.positionCartographic.latitude),
                           CRUISE_ALT, 3.0);
     }, EVENT_HOLD + 1200);
   });
 }
+/* Tapping the caption pauses the show and opens the case file */
+document.getElementById('cineCap').addEventListener('click', ()=>{
+  if(!sceneInc) return;
+  const inc=sceneInc; stopPlay(); populateCard(inc);
+});
 
 function setSliderFill(){
   const p=(cursor-1944)/(2026-1944)*100;
@@ -1033,6 +1125,7 @@ function stopPlay(){
   playing=false; playBtn.textContent='▶';
   eventHold=false; clearTimeout(holdTimer);
   document.body.classList.remove('playing');
+  const cap=document.getElementById('cineCap'); if(cap) cap.classList.remove('on');
   const hp=document.getElementById('hud-play'); if(hp) hp.textContent='▶';
 }
 /* Interacting with the globe ends the show, like a screensaver */
