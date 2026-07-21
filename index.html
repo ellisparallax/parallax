@@ -680,6 +680,11 @@ viewer.canvas.addEventListener('webglcontextlost', () => {
 scene.globe.baseColor = Cesium.Color.fromCssColorString('#050a12');
 scene.globe.showGroundAtmosphere = true;
 scene.skyAtmosphere.show = true;
+/* Color science: cut atmospheric haze, deepen the palette */
+scene.skyAtmosphere.brightnessShift = -0.08;
+scene.skyAtmosphere.saturationShift = 0.12;
+scene.globe.atmosphereBrightnessShift = -0.1;
+scene.globe.atmosphereSaturationShift = 0.12;
 scene.backgroundColor = Cesium.Color.fromCssColorString('#030608');
 scene.globe.enableLighting = false;
 scene.fog.enabled = false;
@@ -693,9 +698,13 @@ function setBasemap(key){
   try{ localStorage.setItem('parallax_basemap', key); }catch(e){}
   viewer.imageryLayers.removeAll();
   const b = BASEMAPS[key];
-  viewer.imageryLayers.addImageryProvider(new Cesium.UrlTemplateImageryProvider({
+  const layer = viewer.imageryLayers.addImageryProvider(new Cesium.UrlTemplateImageryProvider({
     url:b.url, credit:b.credit, maximumLevel:b.max
   }));
+  // per-basemap color grade — richer contrast/saturation, less washed-out
+  if(key==='sat'){ layer.contrast=1.18; layer.saturation=1.3; layer.brightness=0.92; layer.gamma=1.02; }
+  else if(key==='night'){ layer.contrast=1.28; layer.brightness=1.12; layer.saturation=1.18; }
+  else { layer.contrast=1.08; }
   const btn=document.getElementById('hud-base');
   if(btn) btn.textContent='◐ '+b.label;
   scene.requestRender();
@@ -921,20 +930,77 @@ const slider = document.getElementById('slider');
 const yearOut = document.getElementById('yearOut');
 const playBtn = document.getElementById('playBtn');
 let playing=false, playAcc=0, lastTs=0;
-const PLAY_MS_PER_YEAR = 800;          // slow, cinematic — full 1944→2026 run ≈ 66s
+const PLAY_MS_PER_YEAR = 500;          // years roll at 2/s between event scenes
 
-/* Cinematic playback: slow orbital drift + gentle flights toward new activity */
-const CINE_ALT = 13.5e6;               // drift altitude (m) — whole hemisphere in view
-const CINE_ROT = (2*Math.PI)/140000;   // rad/ms — one full lap ≈ 140s
-let flightActive=false;
-function cineFly(lon,lat,dur){
+/* Cinematic playback: orbital drift between years; each incident year pauses
+   the clock and becomes a SCENE — dive to the region, detonate a shockwave
+   burst at the new point, hold, then pull back out and resume history. */
+const CINE_ALT  = 13.5e6;              // drift altitude (m) — hemisphere view
+const EVENT_ALT = 3.2e6;               // scene altitude (m) — region scale, the new point is unmistakable
+const CRUISE_ALT= 8.5e6;               // pull-back altitude between scenes
+const EVENT_HOLD= 1200;                // ms to linger on the burst
+const CINE_ROT  = (2*Math.PI)/140000;  // rad/ms — one lap ≈ 140s
+let flightActive=false, eventHold=false, holdTimer=null;
+
+function cineFly(lon,lat,alt,dur,onDone){
   flightActive=true;
   camera.flyTo({
-    destination:Cesium.Cartesian3.fromDegrees(lon,lat,CINE_ALT),
+    destination:Cesium.Cartesian3.fromDegrees(lon,lat,alt||CINE_ALT),
     duration:dur||3.2,
     easingFunction:Cesium.EasingFunction.QUADRATIC_IN_OUT,
-    complete:()=>{flightActive=false;},
+    complete:()=>{flightActive=false; if(onDone) onDone();},
     cancel:()=>{flightActive=false;}
+  });
+}
+
+/* The arrival spectacle: a white-hot flare that blooms + two expanding
+   shockwave rings in the incident's category color. */
+function spawnEventBurst(inc){
+  const col=COL[sourceCat(inc)];
+  const t0=performance.now(), LIFE=2600;
+  const flare=viewer.entities.add({
+    position:Cesium.Cartesian3.fromDegrees(inc.lon, inc.lat, 9000),
+    billboard:{
+      image:glowSprite('#ffffff'), verticalOrigin:Cesium.VerticalOrigin.CENTER,
+      scale:new Cesium.CallbackProperty(()=>{
+        const k=Math.min(1,(performance.now()-t0)/LIFE);
+        return 0.4 + 2.8*Math.sin(Math.min(1,k*1.6)*Math.PI); }, false),
+      color:new Cesium.CallbackProperty(()=>{
+        const k=Math.min(1,(performance.now()-t0)/LIFE);
+        return Cesium.Color.WHITE.withAlpha(Math.max(0,1-k*k)); }, false)
+    }
+  });
+  const rings=[0,450].map(delay=>viewer.entities.add({
+    polyline:{
+      positions:new Cesium.CallbackProperty(()=>{
+        const k=Math.max(0,Math.min(1,(performance.now()-t0-delay)/(LIFE-delay)));
+        const r=30000 + 1500000*(1-Math.pow(1-k,2.2));
+        return ringPositions(inc.lat, inc.lon, r, 96); }, false),
+      width:3,
+      material:new Cesium.PolylineGlowMaterialProperty({
+        color:new Cesium.CallbackProperty(()=>{
+          const k=Math.max(0,Math.min(1,(performance.now()-t0-delay)/(LIFE-delay)));
+          return Cesium.Color.fromCssColorString(col).withAlpha(0.95*(1-k)); }, false),
+        glowPower:0.3
+      })
+    }
+  }));
+  setTimeout(()=>{ viewer.entities.remove(flare); rings.forEach(r=>viewer.entities.remove(r)); scene.requestRender(); }, LIFE+150);
+}
+
+function startEventScene(list){
+  eventHold=true;
+  const tgt=list[0];
+  cineFly(tgt.lon, tgt.lat, EVENT_ALT, 1.9, ()=>{
+    if(!playing){ eventHold=false; return; }
+    list.forEach(spawnEventBurst);
+    clearTimeout(holdTimer);
+    holdTimer=setTimeout(()=>{
+      eventHold=false; playAcc=0;
+      if(playing) cineFly(Cesium.Math.toDegrees(camera.positionCartographic.longitude),
+                          Cesium.Math.toDegrees(camera.positionCartographic.latitude),
+                          CRUISE_ALT, 3.0);
+    }, EVENT_HOLD + 1200);
   });
 }
 
@@ -961,10 +1027,11 @@ function startPlay(){
   // settle into a good cinematic vantage if the camera is too close or too far
   const h=camera.positionCartographic.height;
   if(h<6e6 || h>3e7) cineFly(Cesium.Math.toDegrees(camera.positionCartographic.longitude),
-                             20, 2.6);
+                             20, CINE_ALT, 2.6);
 }
 function stopPlay(){
   playing=false; playBtn.textContent='▶';
+  eventHold=false; clearTimeout(holdTimer);
   document.body.classList.remove('playing');
   const hp=document.getElementById('hud-play'); if(hp) hp.textContent='▶';
 }
@@ -1487,16 +1554,18 @@ function tick(ts){
 
   // playback
   if(playing){
-    playAcc+=dt;
-    while(playAcc>=PLAY_MS_PER_YEAR){
-      playAcc-=PLAY_MS_PER_YEAR;
-      if(cursor<2026){
-        cursor++; slider.value=cursor; yearOut.textContent=cursor; setSliderFill(); applyState();
-        const cy=document.getElementById('cineYear'); if(cy) cy.textContent=cursor;
-        const entered=incidents.filter(i=>i.year===cursor && passesFilters(i));
-        if(entered.length) cineFly(entered[0].lon, entered[0].lat);
+    if(!eventHold){
+      playAcc+=dt;
+      while(playAcc>=PLAY_MS_PER_YEAR){
+        playAcc-=PLAY_MS_PER_YEAR;
+        if(cursor<2026){
+          cursor++; slider.value=cursor; yearOut.textContent=cursor; setSliderFill(); applyState();
+          const cy=document.getElementById('cineYear'); if(cy) cy.textContent=cursor;
+          const entered=incidents.filter(i=>i.year===cursor && passesFilters(i));
+          if(entered.length){ startEventScene(entered); break; } // clock pauses — this year is a scene
+        }
+        else { stopPlay(); break; }
       }
-      else { stopPlay(); break; }
     }
     if(playing && !flightActive) camera.rotate(Cesium.Cartesian3.UNIT_Z, -CINE_ROT*dt);
     need=true;
