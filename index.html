@@ -297,15 +297,16 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;
 .hm b{display:block;font-family:'Bebas Neue';font-size:19px;letter-spacing:0.05em;color:var(--ice);
   font-weight:400;line-height:1;text-shadow:0 1px 2px rgba(0,0,0,0.4)}
 .hm span{display:block;font-size:6.5px;letter-spacing:0.22em;color:var(--gold);opacity:0.85;margin-top:3px}
+/* Two stacked capsules — every control visible, nothing hidden behind a scroll */
 .hud-bar{position:absolute;left:50%;transform:translateX(-50%);bottom:16px;
-  display:flex;gap:3px;align-items:center;pointer-events:auto;
-  max-width:94%;overflow-x:auto;scrollbar-width:none;
+  display:flex;flex-direction:column;align-items:center;gap:7px;
+  pointer-events:auto;max-width:96%}
+.hud-row{display:flex;gap:3px;align-items:center;justify-content:center;flex-wrap:wrap;
   padding:5px;border-radius:999px;
   background:linear-gradient(135deg,rgba(255,255,255,0.11),rgba(255,255,255,0.03) 45%,rgba(10,16,32,0.42));
   backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);
   border:1px solid rgba(255,255,255,0.18);
   box-shadow:inset 0 1px 0 rgba(255,255,255,0.26), inset 0 -1px 0 rgba(0,0,0,0.22), 0 10px 30px rgba(0,0,0,0.42)}
-.hud-bar::-webkit-scrollbar{display:none}
 .hb{font-family:'DM Mono';font-size:9px;letter-spacing:0.12em;padding:9px 13px;border-radius:999px;
   cursor:pointer;color:var(--ice);opacity:0.55;background:transparent;border:none;
   white-space:nowrap;transition:all .18s ease}
@@ -439,6 +440,16 @@ body.playing .hud-metrics{opacity:0;pointer-events:none} /* clear the stage — 
   border:1px dashed rgba(255,46,136,0.4);border-radius:6px;padding:9px 11px}
 #x-media img,#x-media video{width:100%;border-radius:10px;display:block;margin-bottom:10px;
   border:1px solid rgba(0,200,255,0.2)}
+
+/* Shape reference cards */
+.sw-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:2px 10px}
+.sw-card{border:1px solid rgba(168,216,240,0.16);border-radius:12px;padding:12px 12px 11px;
+  background:rgba(10,16,32,0.5);cursor:pointer;transition:.15s;text-align:center}
+.sw-card:hover,.sw-card:active{border-color:rgba(0,200,255,0.5);background:rgba(0,200,255,0.06)}
+.sw-card svg{width:84px;height:52px;display:block;margin:0 auto 6px}
+.sw-name{font-family:'Bebas Neue';font-size:17px;letter-spacing:0.06em;color:var(--ice)}
+.sw-count{font-family:'DM Mono';font-size:8px;letter-spacing:0.16em;color:var(--gold);margin:2px 0 5px}
+.sw-desc{font-family:'Crimson Pro',serif;font-size:12.5px;line-height:1.4;color:#cfe0ec;opacity:0.85}
 @media (max-width:760px){
   #libModal{align-items:flex-end}
   .lib-card{width:100vw;max-width:none;max-height:92vh;border-radius:22px 22px 0 0;
@@ -470,7 +481,10 @@ body.sheet-open .hud-bar{display:none}
   .hud-metrics{top:calc(10px + env(safe-area-inset-top));right:calc(10px + env(safe-area-inset-right))}
   .hm{padding:5px 8px}
   .hm b{font-size:16px}
-  .hud-bar{bottom:calc(12px + env(safe-area-inset-bottom))}
+  .hud-bar{bottom:calc(12px + env(safe-area-inset-bottom));gap:6px}
+  /* tighter pills so each capsule stays a single line on phones */
+  .hb{padding:8px 9px;font-size:8.5px;letter-spacing:0.08em}
+  .hud-row{flex-wrap:nowrap;padding:4px}
 }
 </style>
 </head>
@@ -602,14 +616,18 @@ body.sheet-open .hud-bar{display:none}
         <div class="hm"><b id="h-hot">—</b><span>HOTSPOT</span></div>
       </div>
       <div class="hud-bar">
-        <button class="hb alt" id="hud-play" title="Play the timeline">▶</button>
-        <button class="hb on" id="hud-inc" title="Verified Incidents">◆ CASES</button>
-        <button class="hb on" id="hud-sig" title="Live Sightings">· SIGHTINGS</button>
-        <button class="hb on" id="hud-hot" title="Activity Hotspots">◎ HOTSPOTS</button>
-        <button class="hb on" id="hud-rep" title="My Reports">⌖ MINE</button>
-        <button class="hb alt" id="hud-vault" title="Evidence Vault">▣ VAULT</button>
-        <button class="hb alt" id="hud-base" title="Switch basemap">◐ SAT</button>
-        <button class="hb" id="hud-about" title="About Project Parallax">ⓘ</button>
+        <div class="hud-row">
+          <button class="hb on" id="hud-inc" title="Verified Incidents">◆ CASES</button>
+          <button class="hb on" id="hud-sig" title="Live Sightings">· SIGHTINGS</button>
+          <button class="hb on" id="hud-hot" title="Activity Hotspots">◎ HOTSPOTS</button>
+          <button class="hb on" id="hud-rep" title="My Reports">⌖ MINE</button>
+        </div>
+        <div class="hud-row">
+          <button class="hb alt" id="hud-play" title="Play the timeline">▶</button>
+          <button class="hb alt" id="hud-vault" title="Evidence Vault">▣ VAULT</button>
+          <button class="hb alt" id="hud-base" title="Switch basemap">◐ SAT</button>
+          <button class="hb" id="hud-about" title="About Project Parallax">ⓘ</button>
+        </div>
       </div>
     </div>
   </div>
@@ -651,6 +669,26 @@ body.sheet-open .hud-bar{display:none}
       <div id="x-comp" style="display:none"><div class="ab-sec" style="padding-left:0;border:none">COMPETING ANALYSES</div><p class="ab-p" id="x-comptext" style="margin-top:0"></p></div>
       <div id="x-acq" class="x-acq" style="display:none"></div>
       <div class="modal-actions" id="x-actions" style="padding:6px 10px 14px"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ Shape Reference (tap the TOP SHAPE metric) ============ -->
+<div id="shapesModal" class="modal">
+  <div class="modal-card lib-card">
+    <div class="lib-grab"></div>
+    <div class="lib-top">
+      <div>
+        <div class="modal-title">REPORTED SHAPES</div>
+        <div class="lib-sub">FIELD RECOGNITION REFERENCE · SCHEMATICS, NOT SIGHTINGS</div>
+      </div>
+      <button class="lib-done" id="shapes-done">Done</button>
+    </div>
+    <div class="lib-list">
+      <div class="sw-grid" id="sw-grid"></div>
+      <div class="modal-actions" style="padding:8px 10px 14px">
+        <button id="sw-all">SHOW ALL SHAPES ON MAP</button>
+      </div>
     </div>
   </div>
 </div>
@@ -972,6 +1010,14 @@ function setBasemap(key){
 }
 setBasemap(currentBasemap);
 
+/* Tile pipeline: keep more tiles warm and fetch harder — pinch-zoom sharpens
+   noticeably faster, especially on phones */
+scene.globe.tileCacheSize = 384;              // default 100
+scene.globe.preloadSiblings = true;           // fetch neighbors before you pan to them
+Cesium.RequestScheduler.requestsByServer['server.arcgisonline.com:443'] = 18;
+Cesium.RequestScheduler.requestsByServer['basemaps.cartocdn.com:443'] = 18;
+Cesium.RequestScheduler.requestsByServer['gibs.earthdata.nasa.gov:443'] = 18;
+
 /* ============ Incidents layer ============ */
 const incState = new Map(); // id -> {inc, ent, active, scale}
 const incidents = window.INCIDENTS;
@@ -1123,9 +1169,9 @@ const LABEL_OUTLINE = Cesium.Color.fromCssColorString('#030608').withAlpha(0.85)
   geoLabels.add({
     position: Cesium.Cartesian3.fromDegrees(L.lon, L.lat),
     text: L.t,
-    font: (big ? '500 16px' : '500 13px') + ' "DM Mono", monospace',
-    fillColor: L.k==='ocean' ? Cesium.Color.fromCssColorString('#00c8ff').withAlpha(0.4)
-             : big           ? Cesium.Color.fromCssColorString('#a8d8f0').withAlpha(0.55)
+    font: (big ? '500 13px' : '500 13px') + ' "DM Mono", monospace',
+    fillColor: L.k==='ocean' ? Cesium.Color.fromCssColorString('#00c8ff').withAlpha(0.32)
+             : big           ? Cesium.Color.fromCssColorString('#a8d8f0').withAlpha(0.5)
              :                 Cesium.Color.fromCssColorString('#c8a96e').withAlpha(0.9),
     style: Cesium.LabelStyle.FILL_AND_OUTLINE,
     outlineColor: LABEL_OUTLINE, outlineWidth: 3,
@@ -1134,7 +1180,9 @@ const LABEL_OUTLINE = Cesium.Color.fromCssColorString('#030608').withAlpha(0.85)
     // continents/oceans read from orbit; country names appear as you descend
     distanceDisplayCondition: big ? new Cesium.DistanceDisplayCondition(4.0e6, 5.0e7)
                                   : new Cesium.DistanceDisplayCondition(2.0e5, 8.5e6),
-    scaleByDistance: big ? undefined : new Cesium.NearFarScalar(5.0e5, 1.15, 8.5e6, 0.75)
+    // shrink orbit-level labels with altitude so they sit in scale with the continents
+    scaleByDistance: big ? new Cesium.NearFarScalar(5.0e6, 1.0, 4.5e7, 0.5)
+                         : new Cesium.NearFarScalar(5.0e5, 1.15, 8.5e6, 0.75)
   });
 });
 
@@ -2034,6 +2082,65 @@ function openLibrary(){
   if(card){ card.style.cursor='pointer'; card.addEventListener('click', openLibrary); }
 }
 
+/* ============ Shape reference wiki (tap the TOP SHAPE metric) ============ */
+const SHAPE_WIKI = [
+ {s:'Tic-Tac',  d:'Smooth white ellipsoid — no wings, no exhaust, instant acceleration. The 2004 Nimitz object defined the class.'},
+ {s:'Disk',     d:'The classic saucer: flat ellipse, often domed. On the record since 1947.'},
+ {s:'Triangle', d:'Large, silent, black. Corner lights, slow hover, instant departure. Belgium 1989, Phoenix 1997.'},
+ {s:'Diamond',  d:'Faceted rhomboid. The daylight diamond over Pantex is the canonical modern report.'},
+ {s:'Sphere',   d:'Metallic ball, small and fast — the most common shape in military FLIR captures.'},
+ {s:'Orb',      d:'Self-luminous ball of light with no visible structure. Foo Fighters to the 2023 orb waves.'},
+ {s:'Lights',   d:'Lights or formations with no discernible body — the most-reported class at night.'},
+ {s:'Unknown',  d:'Sensor-only contacts and unresolved returns. The honest bucket: no confident geometry.'}
+];
+function shapeGlyph(s){
+  const T='#00c8ff', G='#c8a96e', W='0.32';
+  const svg=b=>`<svg viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg">${b}</svg>`;
+  switch(s){
+    case 'Tic-Tac':  return svg(`<rect x="22" y="21" width="56" height="18" rx="9" stroke="${T}" stroke-width="2" fill="rgba(0,200,255,0.08)"/>`);
+    case 'Disk':     return svg(`<ellipse cx="50" cy="34" rx="30" ry="8" stroke="${T}" stroke-width="2" fill="rgba(0,200,255,0.08)"/><path d="M36 30 Q50 16 64 30" stroke="${T}" stroke-width="2"/>`);
+    case 'Triangle': return svg(`<path d="M50 12 L82 47 L18 47 Z" stroke="${T}" stroke-width="2" fill="rgba(0,200,255,0.06)"/><circle cx="50" cy="20" r="2.6" fill="${G}"/><circle cx="74" cy="43" r="2.6" fill="${G}"/><circle cx="26" cy="43" r="2.6" fill="${G}"/>`);
+    case 'Diamond':  return svg(`<path d="M50 9 L79 30 L50 51 L21 30 Z" stroke="${T}" stroke-width="2" fill="rgba(0,200,255,0.07)"/><path d="M21 30 H79" stroke="${T}" stroke-width="1" opacity="${W}"/>`);
+    case 'Sphere':   return svg(`<circle cx="50" cy="30" r="17" stroke="${T}" stroke-width="2" fill="rgba(0,200,255,0.08)"/><ellipse cx="50" cy="30" rx="17" ry="6" stroke="${T}" stroke-width="1" opacity="${W}"/>`);
+    case 'Orb':      return svg(`<circle cx="50" cy="30" r="18" stroke="${G}" stroke-width="1" opacity="0.25"/><circle cx="50" cy="30" r="12" stroke="${G}" stroke-width="1" opacity="0.5"/><circle cx="50" cy="30" r="6" fill="${G}"/>`);
+    case 'Lights':   return svg(`<circle cx="26" cy="30" r="4" fill="${G}"/><circle cx="42" cy="30" r="4" fill="${G}"/><circle cx="58" cy="30" r="4" fill="${G}"/><circle cx="74" cy="30" r="4" fill="${G}"/>`);
+    default:         return svg(`<circle cx="50" cy="30" r="18" stroke="${T}" stroke-width="2" stroke-dasharray="5 5" opacity="0.6"/><text x="50" y="37" text-anchor="middle" fill="${T}" font-family="monospace" font-size="20">?</text>`);
+  }
+}
+function openShapes(){
+  if(playing) stopPlay();
+  const grid=document.getElementById('sw-grid');
+  grid.innerHTML=SHAPE_WIKI.map(w=>{
+    const n=incidents.filter(i=>i.shape===w.s).length;
+    return `<div class="sw-card" data-s="${w.s}">${shapeGlyph(w.s)}
+      <div class="sw-name">${w.s}</div>
+      <div class="sw-count">${n} CASE${n===1?'':'S'} ON RECORD</div>
+      <div class="sw-desc">${w.d}</div></div>`;
+  }).join('');
+  grid.querySelectorAll('.sw-card').forEach(c=>c.addEventListener('click',()=>{
+    document.querySelectorAll('#shapeFilters input').forEach(cb=>{
+      const want = cb.dataset.shape===c.dataset.s;
+      if(cb.checked!==want){ cb.checked=want; cb.dispatchEvent(new Event('change')); }
+    });
+    document.getElementById('shapesModal').classList.remove('on');
+  }));
+  document.getElementById('shapesModal').classList.add('on');
+}
+{
+  const sm=document.getElementById('shapesModal');
+  document.getElementById('shapes-done').addEventListener('click', ()=>sm.classList.remove('on'));
+  sm.addEventListener('click', e=>{ if(e.target===sm) sm.classList.remove('on'); });
+  document.getElementById('sw-all').addEventListener('click', ()=>{
+    document.querySelectorAll('#shapeFilters input').forEach(cb=>{
+      if(!cb.checked){ cb.checked=true; cb.dispatchEvent(new Event('change')); }});
+    sm.classList.remove('on');
+  });
+  const hs=document.getElementById('h-shape'); const hm2=hs && hs.closest('.hm');
+  if(hm2){ hm2.style.cursor='pointer'; hm2.addEventListener('click', openShapes); }
+  const ms=document.getElementById('m-shape'); const mcard=ms && ms.closest('.metric');
+  if(mcard){ mcard.style.cursor='pointer'; mcard.addEventListener('click', openShapes); }
+}
+
 /* ============ Evidence Vault ("The Wall") ============ */
 const VAULT_STATUS = {
   'OFFICIAL RELEASE':        '#00c8ff',
@@ -2048,6 +2155,7 @@ const VAULT_MEDIA = {
   g05:[{type:'video',file:'FLIR1 Official UAP Footage from the USG for Public Release.webm',credit:'U.S. Dept. of Defense · public domain'},
        {type:'video',file:'Gimbal The First Official UAP Footage from the USG for Public Release.webm',credit:'U.S. Dept. of Defense · public domain'}],
   g07:[{type:'image',file:'Cote ufo.jpg',credit:'Costa Rica National Geographic Institute survey frame · public record'}],
+  g13:[{type:'image',file:'1997.3.13VUFO1.JPG',credit:'Civilian video frame, March 13 1997 · public record'}],
   g14:[{type:'image',file:'UFO picture taken by Paul Trent in McMinnville, Oregon.jpg',credit:'Paul Trent, 1950 · public domain'}]
 };
 const GALLERY = window.GALLERY||[];
