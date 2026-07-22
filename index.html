@@ -365,6 +365,18 @@ body.playing .hud-metrics{opacity:0;pointer-events:none} /* clear the stage — 
 .lr-loc{display:block;font-family:'DM Mono';font-size:9px;letter-spacing:0.06em;color:var(--ice);opacity:0.55;
   margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .lr-chev{color:var(--ice);opacity:0.3;font-size:16px;flex:0 0 auto}
+
+/* About / Primary Directive */
+.ab-p{font-family:'Crimson Pro',serif;font-size:16.5px;line-height:1.55;color:#e8f1f8;
+  margin:2px 10px 6px;text-shadow:0 1px 3px rgba(0,0,0,0.4)}
+.ab-sec{font-family:'DM Mono';font-size:9px;letter-spacing:0.26em;color:var(--gold);opacity:0.85;
+  padding:16px 10px 8px;border-bottom:1px solid rgba(200,169,110,0.15);margin-bottom:4px}
+.ab-li{font-family:'Crimson Pro',serif;font-size:14.5px;line-height:1.45;color:#cfe0ec;
+  padding:8px 10px}
+.ab-li .ab-k{display:block;font-family:'DM Mono';font-size:10px;letter-spacing:0.14em;
+  color:var(--teal);margin-bottom:3px}
+.ab-foot{font-family:'DM Mono';font-size:9px;letter-spacing:0.1em;line-height:1.7;color:var(--ice);
+  opacity:0.5;text-align:center;margin:18px 10px 8px}
 @media (max-width:760px){
   #libModal{align-items:flex-end}
   .lib-card{width:100vw;max-width:none;max-height:92vh;border-radius:22px 22px 0 0;
@@ -502,6 +514,7 @@ body.sheet-open .hud-bar{display:none}
     <!-- footer / attribution -->
     <div class="mod foot">
       <div class="coverage">⚠ Coverage note: records are drawn largely from Western / English-language open sources. China, Russia and other closed-archive regions are under-represented — absence of data here is not absence of events.</div>
+      <a href="#" id="aboutLink" style="color:var(--teal);text-decoration:none;letter-spacing:0.1em">ⓘ ABOUT PROJECT PARALLAX</a><br><br>
       Imagery: Esri / Maxar · NASA GIBS · © OpenStreetMap / CARTO · CesiumJS<br>
       PROJECT PARALLAX — UAP OSINT · No Ion token · Self-contained
     </div>
@@ -532,7 +545,41 @@ body.sheet-open .hud-bar{display:none}
         <button class="hb on" id="hud-hot" title="Activity Hotspots">◎ HOTSPOTS</button>
         <button class="hb on" id="hud-rep" title="My Reports">⌖ MINE</button>
         <button class="hb alt" id="hud-base" title="Switch basemap">◐ SAT</button>
+        <button class="hb" id="hud-about" title="About Project Parallax">ⓘ</button>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ About / Primary Directive ============ -->
+<div id="aboutModal" class="modal">
+  <div class="modal-card lib-card">
+    <div class="lib-grab"></div>
+    <div class="lib-top">
+      <div>
+        <div class="modal-title">PROJECT PARALLAX</div>
+        <div class="lib-sub">PRIMARY DIRECTIVE</div>
+      </div>
+      <button class="lib-done" id="about-done">Done</button>
+    </div>
+    <div class="lib-list">
+      <p class="ab-p">Map the global UAP record — every verified incident, every credible sighting — on one globe, with the evidence attached. Filter the noise. Follow the signal. Let the data speak for itself.</p>
+
+      <div class="ab-sec">WHY TRUST THIS DATA</div>
+      <div class="ab-li"><span class="ab-k">PROVENANCE ON EVERYTHING</span>Every case carries a class rating (A / B / H), named sources, and links to the primary record where one exists.</div>
+      <div class="ab-li"><span class="ab-k">WE SHOW THE MISSES</span>The Sensor Differential on each case records what detected the object — and what failed, was jammed, or disappeared into custody. Negative evidence is evidence.</div>
+      <div class="ab-li"><span class="ab-k">BIAS DISCLOSED</span>Records skew toward Western, English-language open sources. Absence of data is not absence of events — the map says so itself.</div>
+      <div class="ab-li"><span class="ab-k">NOTHING QUIETLY DELETED</span>Contested material is labeled contested. Debunked material stays on file as calibration. Unknown means unknown — never more, never less.</div>
+
+      <div class="ab-sec">FIELD GUIDE</div>
+      <div class="ab-li"><span class="ab-k">TAP ANY POINT</span>Open its full case file — briefing, sensors, media, sources.</div>
+      <div class="ab-li"><span class="ab-k">▶ PLAY</span>Watch 80 years of the record unfold, event by event.</div>
+      <div class="ab-li"><span class="ab-k">CASES</span>The complete chronological library.</div>
+      <div class="ab-li"><span class="ab-k">＋ REPORT A SIGHTING</span>Log what you saw with GPS, photo, and compass heading.</div>
+      <div class="ab-li"><span class="ab-k">🔔 WATCH AN AREA</span>Get alerted when new activity is reported near you.</div>
+      <div class="ab-li"><span class="ab-k">◐ BASEMAP</span>Switch satellite / night-lights / dark cartography.</div>
+
+      <p class="ab-foot">Independent civilian OSINT initiative · Not affiliated with any government<br>The archive grows — report what you see.</p>
     </div>
   </div>
 </div>
@@ -1871,6 +1918,16 @@ function openLibrary(){
   if(hm){ hm.style.cursor='pointer'; hm.addEventListener('click', openLibrary); }
   const mc=document.getElementById('m-total'); const card=mc && mc.closest('.metric');
   if(card){ card.style.cursor='pointer'; card.addEventListener('click', openLibrary); }
+}
+
+/* ============ About / Primary Directive ============ */
+{
+  const am=document.getElementById('aboutModal');
+  const openAbout=e=>{ if(e) e.preventDefault(); if(playing) stopPlay(); am.classList.add('on'); };
+  document.getElementById('hud-about').addEventListener('click', openAbout);
+  document.getElementById('aboutLink').addEventListener('click', openAbout);
+  document.getElementById('about-done').addEventListener('click', ()=>am.classList.remove('on'));
+  am.addEventListener('click', e=>{ if(e.target===am) am.classList.remove('on'); });
 }
 
 /* ============ Live UTC clock ============ */
