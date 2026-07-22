@@ -633,24 +633,7 @@ body.sheet-open .hud-bar{display:none}
   </div>
 </div>
 
-<!-- ============ Evidence Vault ("The Wall") ============ -->
-<div id="vault">
-  <div class="v-top">
-    <div>
-      <div class="modal-title">EVIDENCE VAULT</div>
-      <div class="lib-sub" id="v-sub"></div>
-    </div>
-    <button class="lib-done" id="vault-done">Done</button>
-  </div>
-  <div class="v-filters" id="v-filters"></div>
-  <div class="v-scroll">
-    <div class="v-hero" id="v-hero"></div>
-    <div class="v-grid" id="v-grid"></div>
-    <div class="ab-foot">Every exhibit wears its provenance. Redacted frames are acquisition targets — the archive of what we are not yet allowed to see.</div>
-  </div>
-</div>
-
-<!-- Exhibit lightbox -->
+<!-- Exhibit lightbox (opened from the Evidence shelf in the Case Library) -->
 <div id="exhibitModal" class="modal">
   <div class="modal-card lib-card">
     <div class="lib-grab"></div>
@@ -717,7 +700,7 @@ body.sheet-open .hud-bar{display:none}
       <div class="ab-li"><span class="ab-k">TAP ANY POINT</span>Open its full case file — briefing, sensors, media, sources.</div>
       <div class="ab-li"><span class="ab-k">▶ PLAY</span>Watch 80 years of the record unfold, event by event.</div>
       <div class="ab-li"><span class="ab-k">CASES</span>The complete chronological library.</div>
-      <div class="ab-li"><span class="ab-k">▣ VAULT</span>The evidence wall — every exhibit wearing its provenance, including what's still withheld.</div>
+      <div class="ab-li"><span class="ab-k">▣ VAULT</span>Jumps to the evidence shelf inside the Case Library — every exhibit wearing its provenance placard, including what's still withheld.</div>
       <div class="ab-li"><span class="ab-k">＋ REPORT A SIGHTING</span>Log what you saw with GPS, photo, and compass heading.</div>
       <div class="ab-li"><span class="ab-k">🔔 WATCH AN AREA</span>Get alerted when new activity is reported near you.</div>
       <div class="ab-li"><span class="ab-k">◐ BASEMAP</span>Switch satellite / night-lights / dark cartography.</div>
@@ -1553,7 +1536,7 @@ function populateCard(inc){
     _kvV.style.display='';
     const a=document.getElementById('c-vault-link');
     a.textContent=`▣ Evidence Vault — ${_gl.length} exhibit${_gl.length>1?'s':''} on file`;
-    a.onclick=e=>{ e.preventDefault(); closeCardUI(); openVault(_gl[0].id); };
+    a.onclick=e=>{ e.preventDefault(); closeCardUI(); openExhibit(_gl[0].id); };
   } else _kvV.style.display='none';
   openCardUI();
 }
@@ -2060,8 +2043,25 @@ function openLibrary(){
       <span class="lr-main"><span class="lr-name">${esc(i.name)}</span><span class="lr-loc">${esc(i.location)} · ${esc(i.country)} · CLASS ${i.class}</span></span>
       <span class="lr-chev">›</span></div>`;
   });
+  /* ---- Evidence shelf (the Vault lives here) ---- */
+  html+=`<div class="lib-dec" id="lib-evidence">▣ EVIDENCE VAULT · ${GALLERY.length} EXHIBITS · PROVENANCE FIRST</div>`;
+  const hg=GALLERY.find(g=>g.id==='g07');
+  if(hg) html+=`<div class="lib-row" data-x="g07" style="display:block;padding:0;overflow:hidden">
+      <img src="${COMMONS('Cote ufo.jpg')}?width=800" alt="" onerror="this.remove()"
+           style="width:100%;height:110px;object-fit:cover;display:block">
+      <div style="padding:9px 12px">${vChip(hg.status)}
+        <span class="lr-name" style="display:block">EXHIBIT A — ${esc(hg.title)}</span></div></div>`;
+  GALLERY.forEach(g=>{ if(g.id==='g07') return;
+    const c=VAULT_STATUS[g.status]||'#a8d8f0';
+    html+=`<div class="lib-row" data-x="${g.id}">
+      <span class="lr-year">${g.year}</span>
+      <span class="lr-dot" style="background:${c};color:${c}"></span>
+      <span class="lr-main"><span class="lr-name">${esc(g.title)}</span><span class="lr-loc">${esc(g.status)} · ${esc(g.country)}</span></span>
+      <span class="lr-chev">›</span></div>`;
+  });
   list.innerHTML=html;
   list.querySelectorAll('.lib-row').forEach(r=>r.addEventListener('click',()=>{
+    if(r.dataset.x){ openExhibit(r.dataset.x); return; }   // exhibit lightbox opens above the library
     const inc=incidents.find(x=>x.id==r.dataset.id); if(!inc) return;
     document.getElementById('libModal').classList.remove('on');
     camera.flyTo({ destination:Cesium.Cartesian3.fromDegrees(inc.lon, inc.lat, 900000),
@@ -2069,7 +2069,7 @@ function openLibrary(){
     populateCard(inc);
   }));
   const sub=document.getElementById('lib-sub');
-  if(sub) sub.textContent=`${sorted.length} VERIFIED INCIDENTS · ${sorted[0].year}–${sorted[sorted.length-1].year}`;
+  if(sub) sub.textContent=`${sorted.length} VERIFIED INCIDENTS · ${GALLERY.length} EXHIBITS · ${sorted[0].year}–${sorted[sorted.length-1].year}`;
   document.getElementById('libModal').classList.add('on');
 }
 {
@@ -2155,12 +2155,10 @@ const VAULT_MEDIA = {
   g05:[{type:'video',file:'FLIR1 Official UAP Footage from the USG for Public Release.webm',credit:'U.S. Dept. of Defense · public domain'},
        {type:'video',file:'Gimbal The First Official UAP Footage from the USG for Public Release.webm',credit:'U.S. Dept. of Defense · public domain'}],
   g07:[{type:'image',file:'Cote ufo.jpg',credit:'Costa Rica National Geographic Institute survey frame · public record'}],
-  g13:[{type:'image',file:'1997.3.13VUFO1.JPG',credit:'Civilian video frame, March 13 1997 · public record'}],
   g14:[{type:'image',file:'UFO picture taken by Paul Trent in McMinnville, Oregon.jpg',credit:'Paul Trent, 1950 · public domain'}]
 };
 const GALLERY = window.GALLERY||[];
 function galleryFor(incId){ return GALLERY.filter(g=>g.related_incident_id===incId); }
-let vaultFilter='ALL';
 function vChip(status){ const c=VAULT_STATUS[status]||'#a8d8f0';
   return `<span class="v-chip" style="color:${c};border-color:${c}">${esc(status)}</span>`; }
 function tilePlaceholder(g, tall){
@@ -2168,41 +2166,6 @@ function tilePlaceholder(g, tall){
   const h = (tall?160:120) + (parseInt(g.id.slice(1),10)*37)%110;
   if(red) return `<div class="vt-ph redacted" style="height:${h+40}px"><div class="ph-bars"><i></i><i></i><i></i></div><div class="ph-t">IMAGERY WITHHELD</div></div>`;
   return `<div class="vt-ph" style="height:${h+30}px"><div class="ph-i">⌭</div><div class="ph-t">NO PUBLIC IMAGE ON FILE</div></div>`;
-}
-function tileMedia(g){
-  const m=(VAULT_MEDIA[g.id]||[])[0];
-  if(!m) return tilePlaceholder(g);
-  if(m.type==='image') return `<img loading="lazy" src="${COMMONS(m.file)}?width=480" alt="" onerror="this.remove()">`;
-  return `<div class="vt-ph" style="height:150px"><div class="ph-i">▶</div><div class="ph-t">OFFICIAL FOOTAGE ON FILE</div></div>`;
-}
-function openVault(gid){
-  if(playing) stopPlay();
-  document.getElementById('vault').classList.add('on');
-  renderVault();
-  if(gid) openExhibit(gid);
-}
-function closeVault(){ document.getElementById('vault').classList.remove('on'); }
-function renderVault(){
-  const grid=document.getElementById('v-grid');
-  const items=GALLERY.filter(g=> vaultFilter==='ALL' || g.status===vaultFilter);
-  document.getElementById('v-sub').textContent=`${GALLERY.length} EXHIBITS · PROVENANCE FIRST`;
-  const hero=document.getElementById('v-hero');
-  const hg=GALLERY.find(g=>g.id==='g07');
-  if(vaultFilter==='ALL' && hg){
-    hero.style.display='';
-    hero.innerHTML=`<img src="${COMMONS('Cote ufo.jpg')}?width=1200" alt="">
-      <div class="vh-tag">EXHIBIT A</div>
-      <div class="vh-cap">${vChip(hg.status)}<div class="vh-name">${esc(hg.title)}</div>
-      <div class="vt-meta">${hg.year} · ${esc(hg.country)} · ${esc(hg.sensor)}</div></div>`;
-    hero.onclick=()=>openExhibit('g07');
-  } else hero.style.display='none';
-  grid.innerHTML=items.filter(g=>!(g.id==='g07'&&vaultFilter==='ALL')).map(g=>`
-    <div class="vt" data-g="${g.id}">${tileMedia(g)}
-      <div class="vt-plac">${vChip(g.status)}
-        <div class="vt-name">${esc(g.title)}</div>
-        <div class="vt-meta">${g.year} · ${esc(g.country)}${g.related_incident_id!=null?' · CASE-LINKED':''}</div>
-      </div></div>`).join('');
-  grid.querySelectorAll('.vt').forEach(t=>t.addEventListener('click',()=>openExhibit(t.dataset.g)));
 }
 function closeExhibit(){
   document.getElementById('exhibitModal').classList.remove('on');
@@ -2234,7 +2197,8 @@ function openExhibit(gid){
   const inc = g.related_incident_id!=null ? incidents.find(i=>i.id===g.related_incident_id) : null;
   act.innerHTML = inc ? `<button class="primary" id="x-case">OPEN CASE FILE — ${esc(inc.name.toUpperCase())}</button>` : '';
   if(inc) document.getElementById('x-case').addEventListener('click',()=>{
-    closeExhibit(); closeVault();
+    closeExhibit();
+    document.getElementById('libModal').classList.remove('on');
     camera.flyTo({ destination:Cesium.Cartesian3.fromDegrees(inc.lon, inc.lat, 900000),
       duration:2.2, easingFunction:Cesium.EasingFunction.QUADRATIC_OUT });
     populateCard(inc);
@@ -2245,16 +2209,12 @@ function openExhibit(gid){
   const xm=document.getElementById('exhibitModal');
   document.getElementById('x-done').addEventListener('click', closeExhibit);
   xm.addEventListener('click', e=>{ if(e.target===xm) closeExhibit(); });
-  document.getElementById('vault-done').addEventListener('click', closeVault);
-  document.getElementById('hud-vault').addEventListener('click', ()=>openVault());
-  const FLT=['ALL','OFFICIAL RELEASE','LEAKED — AUTHENTICATED','CIVILIAN — VETTED','CONTESTED','DEBUNKED','REFERENCED — UNRELEASED'];
-  const vf=document.getElementById('v-filters');
-  vf.innerHTML=FLT.map(f=>`<button class="vf${f==='ALL'?' on':''}" data-f="${f}">${f==='ALL'?'ALL EXHIBITS':f}</button>`).join('');
-  vf.querySelectorAll('.vf').forEach(b=>b.addEventListener('click', ()=>{
-    vaultFilter=b.dataset.f;
-    vf.querySelectorAll('.vf').forEach(x=>x.classList.toggle('on', x===b));
-    renderVault();
-  }));
+  /* VAULT jumps to the Evidence shelf inside the Case Library */
+  document.getElementById('hud-vault').addEventListener('click', ()=>{
+    openLibrary();
+    setTimeout(()=>{ const a=document.getElementById('lib-evidence');
+      if(a) a.scrollIntoView({block:'start'}); }, 60);
+  });
 }
 
 /* ============ About / Primary Directive ============ */
