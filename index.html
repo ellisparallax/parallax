@@ -484,6 +484,38 @@ body.playing .hud-metrics{opacity:0;pointer-events:none} /* clear the stage — 
 .adv summary::before{content:'▸ '}
 .adv[open] summary::before{content:'▾ '}
 
+/* SkyCheck aiming viewfinder */
+#finder{position:fixed;inset:0;z-index:80;display:none;flex-direction:column;
+  background:radial-gradient(ellipse at 50% 40%, #0a1424 0%, #030608 75%)}
+#finder.on{display:flex}
+.vf-top{display:flex;justify-content:space-between;align-items:center;gap:10px;
+  padding:calc(14px + env(safe-area-inset-top)) 18px 8px}
+.vf-title{font-family:'DM Mono';font-size:9.5px;letter-spacing:0.24em;color:var(--gold)}
+.vf-stage{flex:1;position:relative;overflow:hidden}
+#vf-horizon{position:absolute;left:8%;right:8%;top:50%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(0,200,255,0.55),transparent);
+  transition:transform .12s linear}
+#vf-horizon::after{content:'HORIZON';position:absolute;right:0;top:4px;
+  font-family:'DM Mono';font-size:7px;letter-spacing:0.2em;color:rgba(0,200,255,0.5)}
+.vf-reticle{position:absolute;left:50%;top:50%;width:124px;height:124px;
+  transform:translate(-50%,-50%);border:1px solid rgba(0,200,255,0.55);border-radius:50%;
+  box-shadow:0 0 26px rgba(0,200,255,0.2), inset 0 0 26px rgba(0,200,255,0.08)}
+.vf-reticle i{position:absolute;background:rgba(0,200,255,0.7)}
+.vf-reticle i:first-child{left:50%;top:-14px;bottom:-14px;width:1px}
+.vf-reticle i:last-child{top:50%;left:-14px;right:-14px;height:1px}
+.vf-hint{position:absolute;left:0;right:0;top:calc(50% + 82px);text-align:center;
+  font-family:'DM Mono';font-size:10px;letter-spacing:0.16em;color:var(--teal);
+  text-shadow:0 0 14px rgba(0,200,255,0.5)}
+.vf-read{display:flex;justify-content:center;gap:38px;padding:6px 0 10px}
+.vf-read b{display:block;font-family:'Bebas Neue';font-size:46px;color:var(--ice);
+  line-height:1;text-align:center;font-weight:400}
+.vf-read span{display:block;font-family:'DM Mono';font-size:8px;letter-spacing:0.22em;
+  color:var(--gold);text-align:center;margin-top:5px}
+.vf-cap{margin:8px 18px calc(18px + env(safe-area-inset-bottom));padding:16px;border-radius:12px;
+  border:none;cursor:pointer;font-family:'DM Mono';font-size:13px;letter-spacing:0.18em;
+  color:var(--void);background:var(--teal);box-shadow:0 0 26px rgba(0,200,255,0.4)}
+.vf-cap:active{transform:scale(0.98)}
+
 /* SkyCheck verdict */
 .skv{border-radius:12px;padding:14px;margin:6px 0 12px;border:1px solid}
 .skv .skv-cls{font-family:'DM Mono';font-size:9px;letter-spacing:0.24em;margin-bottom:6px}
@@ -850,6 +882,25 @@ body.sheet-open .hud-bar{display:none}
   </div>
 </div>
 
+<!-- SkyCheck aiming viewfinder: live compass + artificial horizon, no camera -->
+<div id="finder">
+  <div class="vf-top">
+    <div class="vf-title">AIM THE CROSSHAIR AT WHERE IT WAS</div>
+    <button class="lib-done" id="vf-cancel">Cancel</button>
+  </div>
+  <div class="vf-stage">
+    <div id="vf-horizon"></div>
+    <div class="vf-reticle"><i></i><i></i></div>
+    <div class="vf-hint" id="vf-hint"></div>
+  </div>
+  <div class="vf-read">
+    <div><b id="vf-bear">--</b><span id="vf-card">BEARING</span></div>
+    <div><b id="vf-elev">--</b><span>ABOVE HORIZON</span></div>
+  </div>
+  <div id="vf-nosensor" class="geostat err" style="display:none;text-align:center;padding:0 20px">No motion sensors detected — cancel and use "Set by hand".</div>
+  <button class="vf-cap" id="vf-capture">CAPTURE</button>
+</div>
+
 <!-- Mobile bottom sheet: hosts the inspection card so the globe stays visible -->
 <div id="sheetHost"></div>
 
@@ -1103,13 +1154,20 @@ scene.highDynamicRange = false;
 viewer.scene.globe.maximumScreenSpaceError = 1.6; // sharper tile LOD selection when zooming
 camera.setView({ destination: Cesium.Cartesian3.fromDegrees(-30, 22, 24000000) });
 
+let basemapSwapToken=0;
 function setBasemap(key){
   if(!BASEMAPS[key]) return;
   currentBasemap = key;
   try{ localStorage.setItem('parallax_basemap', key); }catch(e){}
-  viewer.imageryLayers.removeAll();
+  const token=++basemapSwapToken;
+  const layers=viewer.imageryLayers;
+  /* Crossfade swap: keep the old basemap visible UNDERNEATH while the new
+     one streams in on top — never show the void — then drop the old layer
+     once the tile queue drains (or after 8s). Instant removeAll() left the
+     globe dark until the user sat still long enough for tiles to land. */
+  const old=[]; for(let i=0;i<layers.length;i++) old.push(layers.get(i));
   const b = BASEMAPS[key];
-  viewer.imageryLayers.addImageryProvider(new Cesium.UrlTemplateImageryProvider({
+  layers.addImageryProvider(new Cesium.UrlTemplateImageryProvider({
     url:b.url, credit:b.credit, maximumLevel:b.max
   }));
   /* NOTE: do NOT set layer.brightness/contrast/saturation/gamma — the APPLY_*
@@ -1117,6 +1175,21 @@ function setBasemap(key){
      surface. Color depth comes from the scene-level atmosphere shifts. */
   const btn=document.getElementById('hud-base');
   if(btn) btn.textContent='◐ '+b.label;
+  let done=false;
+  const cleanup=()=>{
+    if(done) return; done=true;
+    try{ unsub(); }catch(e){}
+    if(token===basemapSwapToken)
+      old.forEach(l=>{ if(layers.contains(l)) layers.remove(l,true); });
+    scene.requestRender();
+  };
+  const unsub=scene.globe.tileLoadProgressEvent.addEventListener(q=>{ if(q===0) cleanup(); });
+  setTimeout(cleanup, 8000);
+  /* render burst so the tile queue drains NOW instead of on the next idle frame */
+  let n=0; const burst=setInterval(()=>{
+    scene.requestRender();
+    if(++n>24 || token!==basemapSwapToken) clearInterval(burst);
+  }, 250);
   scene.requestRender();
 }
 setBasemap(currentBasemap);
@@ -2413,22 +2486,78 @@ function openSkyCheck(){
       $('sk-geoout').textContent=`✓ ${la.toFixed(3)}, ${lo.toFixed(3)} (picked on globe)`; $('stp2').classList.add('done'); }, reopen:sm };
     sm.classList.remove('on'); document.body.classList.remove('nav-open'); $('pickBanner').classList.add('on');
   });
-  $('sk-compass').addEventListener('click',()=>{
-    const out=$('sk-compout');
-    const go=()=>{ out.textContent='Hold still — reading sensors…';
-      readOrientationOnce((h,t)=>{
-        if(h==null&&t==null){ out.textContent='No motion sensors on this device — set the sliders by hand.'; return; }
-        if(h!=null){ $('sk-bear').value=h; $('sk-bearout').textContent=h+'°'; }
-        if(t!=null){ const e=Math.max(0,Math.min(90,t)); $('sk-elev').value=e; $('sk-elevout').textContent=e+'°'; }
-        out.textContent=`✓ Captured — bearing ${h==null?'—':h+'°'} · height ${t==null?'—':Math.max(0,Math.min(90,t))+'°'}`;
-        $('stp3').classList.add('done');
-      }); };
+  /* ---- Aiming viewfinder: live compass + artificial horizon + object hints ---- */
+  const finder={on:false,h:null,t:null,timer:null,handler:null};
+  const CARD16=['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'];
+  function finderUpdate(){
+    if(!finder.on) return;
+    const h=finder.h, tv=finder.t==null?null:Math.max(-30,Math.min(90,Math.round(finder.t)));
+    $('vf-bear').textContent = h==null?'--':Math.round(h)+'°';
+    $('vf-card').textContent = h==null?'BEARING':CARD16[Math.round(((h%360)+360)%360/22.5)%16];
+    $('vf-elev').textContent = tv==null?'--':tv+'°';
+    $('vf-horizon').style.transform='translateY('+(tv==null?0:tv*3)+'px)';
+    /* live hint: nearest bright object to the crosshair (engine already loaded) */
+    const A=window.Astronomy, lat=parseFloat($('sk-lat').value), lon=parseFloat($('sk-lon').value);
+    const hint=$('vf-hint');
+    if(A && isFinite(lat) && isFinite(lon) && h!=null && tv!=null){
+      try{
+        const now=new Date(), obs=new A.Observer(lat,lon,0);
+        let best=null;
+        [['Sun',A.Body.Sun],['Moon',A.Body.Moon],['Venus',A.Body.Venus],['Mars',A.Body.Mars],
+         ['Jupiter',A.Body.Jupiter],['Saturn',A.Body.Saturn]].forEach(([n,b])=>{
+          const eq=A.Equator(b,now,obs,true,true), hz=A.Horizon(now,obs,eq.ra,eq.dec,'normal');
+          if(hz.altitude>0){ const s=angSep(tv,h,hz.altitude,hz.azimuth); if(!best||s<best.s) best={n,s}; }
+        });
+        const lst=(A.SiderealTime(now)*15+lon+720)%360, latR=lat*D2R;
+        (window.SKY_STARS||[]).forEach(st=>{
+          if(st[2]>2.0 || !st[3]) return;   // named naked-eye-bright stars only
+          const dec=st[1]*D2R, H=(((lst-((st[0]+360)%360))+540)%360-180)*D2R;
+          const sa=Math.sin(dec)*Math.sin(latR)+Math.cos(dec)*Math.cos(latR)*Math.cos(H);
+          const alt=Math.asin(sa)*R2D; if(alt<=0) return;
+          const az=(Math.atan2(-Math.sin(H)*Math.cos(dec),(Math.sin(dec)-sa*Math.sin(latR))/Math.cos(latR))*R2D+360)%360;
+          const s=angSep(tv,h,alt,az); if(!best||s<best.s) best={n:st[3],s};
+        });
+        hint.textContent = (best && best.s<25) ? '✦ NEAR CROSSHAIR: '+best.n.toUpperCase()+' · '+best.s.toFixed(1)+'°' : '';
+      }catch(e){ hint.textContent=''; }
+    } else hint.textContent='';
+  }
+  function openFinder(){
+    const start=()=>{
+      finder.on=true; finder.h=null; finder.t=null;
+      $('finder').classList.add('on'); $('skyModal').classList.remove('on');
+      $('vf-nosensor').style.display='none';
+      finder.handler=ev=>{
+        if(typeof ev.webkitCompassHeading==='number') finder.h=ev.webkitCompassHeading;
+        else if(typeof ev.alpha==='number') finder.h=(360-ev.alpha)%360;
+        if(typeof ev.beta==='number') finder.t=ev.beta;
+      };
+      window.addEventListener('deviceorientation',finder.handler);
+      finder.timer=setInterval(finderUpdate,120);
+      setTimeout(()=>{ if(finder.on && finder.h==null && finder.t==null) $('vf-nosensor').style.display='block'; },2000);
+    };
     const DOE=window.DeviceOrientationEvent;
     if(DOE && typeof DOE.requestPermission==='function'){
-      DOE.requestPermission().then(s=>{ if(s==='granted') go(); else out.textContent='Motion access denied.'; })
-        .catch(()=>out.textContent='Motion access unavailable.');
-    } else go();
-  });
+      DOE.requestPermission().then(s=>{ if(s==='granted') start();
+        else $('sk-compout').textContent='Motion access denied — use "Set by hand".'; })
+        .catch(()=>$('sk-compout').textContent='Motion access unavailable — use "Set by hand".');
+    } else start();
+  }
+  function closeFinder(capture){
+    if(capture && (finder.h!=null || finder.t!=null)){
+      if(finder.h!=null){ const h=Math.round(finder.h); $('sk-bear').value=h; $('sk-bearout').textContent=h+'°'; }
+      if(finder.t!=null){ const e=Math.max(0,Math.min(90,Math.round(finder.t))); $('sk-elev').value=e; $('sk-elevout').textContent=e+'°'; }
+      $('sk-compout').textContent='✓ Captured — bearing '+$('sk-bear').value+'° · height '+$('sk-elev').value+'°';
+      $('stp3').classList.add('done');
+    }
+    finder.on=false;
+    if(finder.handler) window.removeEventListener('deviceorientation',finder.handler);
+    clearInterval(finder.timer);
+    $('finder').classList.remove('on');
+    $('skyModal').classList.add('on');
+  }
+  $('sk-compass').addEventListener('click', openFinder);
+  $('vf-capture').addEventListener('click', ()=>closeFinder(true));
+  $('vf-cancel').addEventListener('click', ()=>closeFinder(false));
   $('sk-photo').addEventListener('change',async e=>{
     const f=e.target.files && e.target.files[0]; const out=$('sk-exifout');
     if(!f) return;
