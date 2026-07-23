@@ -290,7 +290,6 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;
     font-size:18px; cursor:pointer;
   }
   .fld input,.fld textarea,.fld select{font-size:16px}   /* prevent iOS zoom-on-focus */
-  .modal-card{max-height:calc(86vh - env(safe-area-inset-bottom))}
 }
 
 /* ---------- On-globe HUD (Liquid Glass) ---------- */
@@ -458,6 +457,33 @@ body.playing .hud-metrics{opacity:0;pointer-events:none} /* clear the stage — 
 .sw-count{font-family:'DM Mono';font-size:8px;letter-spacing:0.16em;color:var(--gold);margin:2px 0 5px}
 .sw-desc{font-family:'Crimson Pro',serif;font-size:12.5px;line-height:1.4;color:#cfe0ec;opacity:0.85}
 
+/* SkyCheck step flow */
+.stp{border:1px solid rgba(168,216,240,0.12);border-radius:14px;padding:13px 14px;
+  margin-bottom:10px;background:rgba(10,16,32,0.35);transition:border-color .3s}
+.stp-h{font-family:'DM Mono';font-size:9px;letter-spacing:0.22em;color:var(--gold);
+  margin-bottom:10px;display:flex;align-items:center;gap:9px}
+.stp-num{display:inline-flex;align-items:center;justify-content:center;width:19px;height:19px;
+  border-radius:50%;background:rgba(200,169,110,0.15);border:1px solid rgba(200,169,110,0.45);
+  color:var(--gold);font-size:9.5px;flex:0 0 auto;transition:.3s}
+.stp.done{border-color:rgba(0,200,255,0.45)}
+.stp.done .stp-num{background:var(--teal);border-color:var(--teal);color:var(--void)}
+.seg{display:flex;gap:6px}
+.segbtn{flex:1;padding:12px;border-radius:10px;font-family:'DM Mono';font-size:11.5px;
+  color:var(--ice);opacity:0.6;background:rgba(255,255,255,0.05);
+  border:1px solid rgba(168,216,240,0.2);cursor:pointer;transition:.15s}
+.segbtn.on{opacity:1;color:var(--teal);background:rgba(0,200,255,0.12);border-color:rgba(0,200,255,0.5)}
+.bigbtn{width:100%;padding:14px;border-radius:10px;cursor:pointer;
+  font-family:'DM Mono';font-size:12px;letter-spacing:0.06em;color:var(--teal);
+  background:rgba(0,200,255,0.08);border:1px solid rgba(0,200,255,0.35);transition:.15s}
+.bigbtn:active{transform:scale(0.98)}
+.fld-solo{width:100%;background:rgba(0,0,0,0.35);border:1px solid rgba(168,216,240,0.25);
+  border-radius:8px;color:var(--ice);font-family:'DM Mono';font-size:16px;padding:10px}
+.adv summary{font-family:'DM Mono';font-size:9px;letter-spacing:0.14em;color:var(--ice);
+  opacity:0.55;cursor:pointer;list-style:none;padding:4px 0}
+.adv summary::-webkit-details-marker{display:none}
+.adv summary::before{content:'▸ '}
+.adv[open] summary::before{content:'▾ '}
+
 /* SkyCheck verdict */
 .skv{border-radius:12px;padding:14px;margin:6px 0 12px;border:1px solid}
 .skv .skv-cls{font-family:'DM Mono';font-size:9px;letter-spacing:0.24em;margin-bottom:6px}
@@ -474,9 +500,12 @@ body.playing .hud-metrics{opacity:0;pointer-events:none} /* clear the stage — 
 .sk-cand .c-sep{color:var(--teal);width:52px;flex:0 0 auto}
 .sk-cand .c-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .sk-cand .c-type{opacity:0.5;font-size:8.5px;letter-spacing:0.12em}
+/* Phones: every modal is a true bottom sheet, hard-capped below the iOS
+   status area so the Done button can never ride under the clock/island */
 @media (max-width:760px){
-  #libModal{align-items:flex-end}
-  .lib-card{width:100vw;max-width:none;max-height:92vh;border-radius:22px 22px 0 0;
+  .modal{align-items:flex-end}
+  .modal-card{width:100vw;max-width:none;border-radius:22px 22px 0 0;
+    max-height:calc(100dvh - env(safe-area-inset-top) - 44px);
     padding-bottom:env(safe-area-inset-bottom)}
 }
 @media (max-width:760px){
@@ -694,27 +723,52 @@ body.sheet-open .hud-bar{display:none}
     </div>
     <div class="lib-list" style="padding:0 20px 18px">
       <div id="sk-libstat" class="geostat"></div>
-      <label class="fld"><span>When did you see it? *</span><input id="sk-when" type="datetime-local"></label>
-      <div class="fld-row">
-        <label class="fld"><span>Latitude *</span><input id="sk-lat" type="number" step="0.0001"></label>
-        <label class="fld"><span>Longitude *</span><input id="sk-lon" type="number" step="0.0001"></label>
+
+      <div class="stp" id="stp1">
+        <div class="stp-h"><span class="stp-num">1</span>WHEN</div>
+        <div class="seg">
+          <button class="segbtn on" id="sk-now">Just now</button>
+          <button class="segbtn" id="sk-earlier">Earlier…</button>
+        </div>
+        <input id="sk-when" type="datetime-local" style="display:none;margin-top:10px" class="fld-solo">
       </div>
-      <button class="pickbtn" id="sk-geo">📡 Use my current location</button>
-      <button class="pickbtn" id="sk-pick">📍 Or pick the spot on the globe</button>
-      <div class="fld-row">
-        <label class="fld"><span>Compass bearing: <b id="sk-bearout">180°</b></span><input id="sk-bear" type="range" min="0" max="359" value="180"></label>
-        <label class="fld"><span>Elevation angle: <b id="sk-elevout">30°</b></span><input id="sk-elev" type="range" min="0" max="90" value="30"></label>
+
+      <div class="stp" id="stp2">
+        <div class="stp-h"><span class="stp-num">2</span>WHERE WERE YOU</div>
+        <button class="bigbtn" id="sk-geo">📡 Use my location</button>
+        <div class="geostat" id="sk-geoout"></div>
+        <details class="adv"><summary>Somewhere else</summary>
+          <button class="pickbtn" id="sk-pick" style="margin-top:8px">📍 Pick the spot on the globe</button>
+          <div class="fld-row" style="margin-top:6px">
+            <label class="fld"><span>Latitude</span><input id="sk-lat" type="number" step="0.0001"></label>
+            <label class="fld"><span>Longitude</span><input id="sk-lon" type="number" step="0.0001"></label>
+          </div>
+        </details>
       </div>
-      <button class="pickbtn" id="sk-compass">🧭 Point your phone at where it was</button>
-      <div class="geostat" id="sk-compout"></div>
-      <label class="fld"><span>Match cone</span><select id="sk-cone">
-        <option value="10">±10° — I'm confident of the position</option>
-        <option value="15" selected>±15° — normal memory uncertainty</option>
-        <option value="25">±25° — rough recollection</option>
-      </select></label>
-      <label class="fld"><span>Or analyze a photo (reads time + GPS from EXIF)</span><input id="sk-photo" type="file" accept="image/*"></label>
-      <div class="geostat" id="sk-exifout"></div>
-      <div class="modal-actions"><button class="primary" id="sk-run">RUN SKYCHECK</button></div>
+
+      <div class="stp" id="stp3">
+        <div class="stp-h"><span class="stp-num">3</span>WHERE WAS IT</div>
+        <button class="bigbtn" id="sk-compass">🧭 Point your phone at the spot</button>
+        <div class="geostat" id="sk-compout"></div>
+        <details class="adv"><summary>Set by hand</summary>
+          <div class="fld-row" style="margin-top:8px">
+            <label class="fld"><span>Compass bearing: <b id="sk-bearout">180°</b></span><input id="sk-bear" type="range" min="0" max="359" value="180"></label>
+            <label class="fld"><span>Height in sky: <b id="sk-elevout">30°</b></span><input id="sk-elev" type="range" min="0" max="90" value="30"></label>
+          </div>
+        </details>
+      </div>
+
+      <div class="modal-actions"><button class="primary" id="sk-run" style="padding:14px;font-size:13px;letter-spacing:0.14em">CHECK THE SKY</button></div>
+
+      <details class="adv" style="margin:2px 0 8px"><summary>Advanced — photo EXIF · match cone</summary>
+        <label class="fld" style="margin-top:10px"><span>Analyze a photo (reads time + GPS)</span><input id="sk-photo" type="file" accept="image/*"></label>
+        <div class="geostat" id="sk-exifout"></div>
+        <label class="fld"><span>Match cone</span><select id="sk-cone">
+          <option value="10">±10° — I'm confident of the position</option>
+          <option value="15" selected>±15° — normal memory uncertainty</option>
+          <option value="25">±25° — rough recollection</option>
+        </select></label>
+      </details>
       <div id="sk-result" style="display:none">
         <div id="sk-verdict"></div>
         <div id="sk-cands"></div>
@@ -2284,11 +2338,13 @@ function skyVerdict(res,p){
         :`Nothing in the checked catalogs sits within ±${p.coneDeg}° of that position at that instant. `)+
         `Manual checks before filing: aircraft strobe red/green/white at ~1 Hz; lanterns flicker orange and drift with the wind; drones hover then relocate instantly. If none fit — file it.`};
 }
-let lastSky=null;
+let lastSky=null, skNowMode=true;
 function runSkyCheck(){
   const st=$('sk-libstat');
+  if(skNowMode){ const n=new Date(); n.setMinutes(n.getMinutes()-n.getTimezoneOffset());
+    $('sk-when').value=n.toISOString().slice(0,16); }
   const when=$('sk-when').value, lat=parseFloat($('sk-lat').value), lon=parseFloat($('sk-lon').value);
-  if(!when || isNaN(lat) || isNaN(lon)){ alert('SkyCheck needs the time and the location.'); return; }
+  if(!when || isNaN(lat) || isNaN(lon)){ alert('Step 2 first — tap "Use my location" (or pick a spot).'); return; }
   const p={date:new Date(when), lat, lon, bearing:+$('sk-bear').value, elev:+$('sk-elev').value, coneDeg:+$('sk-cone').value};
   st.textContent='Computing the sky…';
   loadSkyLibs().then(()=>{
@@ -2335,12 +2391,26 @@ function openSkyCheck(){
   $('sky-done').addEventListener('click',()=>sm.classList.remove('on'));
   sm.addEventListener('click',e=>{ if(e.target===sm) sm.classList.remove('on'); });
   $('sk-run').addEventListener('click',runSkyCheck);
-  $('sk-bear').addEventListener('input',()=>$('sk-bearout').textContent=$('sk-bear').value+'°');
-  $('sk-elev').addEventListener('input',()=>$('sk-elevout').textContent=$('sk-elev').value+'°');
-  $('sk-geo').addEventListener('click',()=>getMyLocation((la,lo)=>{ $('sk-lat').value=la.toFixed(4); $('sk-lon').value=lo.toFixed(4); },
-    m=>{ $('sk-libstat').textContent=m; $('sk-libstat').classList.add('err'); }));
+  $('sk-bear').addEventListener('input',()=>{ $('sk-bearout').textContent=$('sk-bear').value+'°'; $('stp3').classList.add('done'); });
+  $('sk-elev').addEventListener('input',()=>{ $('sk-elevout').textContent=$('sk-elev').value+'°'; $('stp3').classList.add('done'); });
+  /* step 1: Just now vs Earlier */
+  $('sk-now').addEventListener('click',()=>{ skNowMode=true;
+    $('sk-now').classList.add('on'); $('sk-earlier').classList.remove('on');
+    $('sk-when').style.display='none'; $('stp1').classList.add('done'); });
+  $('sk-earlier').addEventListener('click',()=>{ skNowMode=false;
+    $('sk-earlier').classList.add('on'); $('sk-now').classList.remove('on');
+    $('sk-when').style.display='block'; });
+  $('sk-when').addEventListener('change',()=>{ if(!skNowMode) $('stp1').classList.add('done'); });
+  /* step 2: location */
+  $('sk-geo').addEventListener('click',()=>{ $('sk-geoout').textContent='Locating…'; $('sk-geoout').classList.remove('err');
+    getMyLocation((la,lo,acc)=>{ $('sk-lat').value=la.toFixed(4); $('sk-lon').value=lo.toFixed(4);
+      $('sk-geoout').textContent=`✓ ${la.toFixed(3)}, ${lo.toFixed(3)}`; $('stp2').classList.add('done'); },
+    m=>{ $('sk-geoout').textContent=m+' Use "Somewhere else" below.'; $('sk-geoout').classList.add('err'); }); });
+  ['sk-lat','sk-lon'].forEach(id=>$(id).addEventListener('change',()=>{
+    if($('sk-lat').value && $('sk-lon').value) $('stp2').classList.add('done'); }));
   $('sk-pick').addEventListener('click',()=>{
-    pendingPick={ fill:(la,lo)=>{ $('sk-lat').value=la.toFixed(4); $('sk-lon').value=lo.toFixed(4); }, reopen:sm };
+    pendingPick={ fill:(la,lo)=>{ $('sk-lat').value=la.toFixed(4); $('sk-lon').value=lo.toFixed(4);
+      $('sk-geoout').textContent=`✓ ${la.toFixed(3)}, ${lo.toFixed(3)} (picked on globe)`; $('stp2').classList.add('done'); }, reopen:sm };
     sm.classList.remove('on'); document.body.classList.remove('nav-open'); $('pickBanner').classList.add('on');
   });
   $('sk-compass').addEventListener('click',()=>{
@@ -2350,7 +2420,8 @@ function openSkyCheck(){
         if(h==null&&t==null){ out.textContent='No motion sensors on this device — set the sliders by hand.'; return; }
         if(h!=null){ $('sk-bear').value=h; $('sk-bearout').textContent=h+'°'; }
         if(t!=null){ const e=Math.max(0,Math.min(90,t)); $('sk-elev').value=e; $('sk-elevout').textContent=e+'°'; }
-        out.textContent=`Captured — bearing ${h==null?'—':h+'°'} · elevation ${t==null?'—':Math.max(0,Math.min(90,t))+'°'}`;
+        out.textContent=`✓ Captured — bearing ${h==null?'—':h+'°'} · height ${t==null?'—':Math.max(0,Math.min(90,t))+'°'}`;
+        $('stp3').classList.add('done');
       }); };
     const DOE=window.DeviceOrientationEvent;
     if(DOE && typeof DOE.requestPermission==='function'){
