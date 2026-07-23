@@ -1609,5 +1609,45 @@
         "url": "https://en.wikipedia.org/wiki/UFO_sightings_in_China"
       }
     ]
+  },
+  {
+    "id": 42,
+    "name": "Ukraine Front-Line Drone Object",
+    "year": 2025,
+    "lat": 48.0,
+    "lon": 37.8,
+    "location": "Eastern front (position undisclosed)",
+    "country": "Ukraine",
+    "class": "B",
+    "cat": "military",
+    "shape": "Orb",
+    "sigs": [
+      "🛩️",
+      "⚪",
+      "💡",
+      "📹",
+      "⚔️"
+    ],
+    "summary": "A Ukrainian war drone filmed a round object with six lighted cones at ~800 m over the front line (May 2025). A senior Defence Ministry advisor published the footage in May 2026 — a rare official-adjacent wartime release.",
+    "what": "During front-line drone operations in May 2025, a Ukrainian reconnaissance drone captured close-range video of a round object showing six lighted cones around a central illumination, at a reported altitude of about 800 meters. Serhiy Beskrestnov, senior advisor to Ukraine's Ministry of Defence on UAVs and electronic warfare, published the footage publicly in May 2026. The exact position remains undisclosed; the map point marks the approximate front sector.",
+    "why": "An active war zone saturated with drones, EW sensors and constant optical coverage is a uniquely instrumented environment — and this release came through an official-adjacent military channel rather than a civilian leak. It also landed the same month as the first US PURSUE-era tranche, suggesting release pressure is now international.",
+    "witnesses": "Ukrainian drone operators; footage reviewed and published by a senior MoD advisor.",
+    "evidence": "Drone electro-optical video (close approach). Single-sensor: no radar, IR, or multi-platform corroboration has been published.",
+    "response": "Published by the MoD advisor without official identification. Independent analysts have proposed prosaic explanations, including an out-of-focus optical artifact of a point light source; the interpretation remains contested. CAVEAT: single-sensor capture — treat as unresolved, not anomalous.",
+    "links": [
+      {
+        "label": "Kyiv Post — Armed Forces sighted UFO, video published",
+        "url": "https://www.kyivpost.com/post/75962"
+      }
+    ],
+    "sensors": {
+      "VIS": "NP",
+      "PHOTO": "DET",
+      "IR": "NP",
+      "RADAR": "NP",
+      "SYS": "NP",
+      "TRACE": "NP",
+      "note": "Drone EO camera capture at ~800 m. Single-sensor; optical-artifact explanations proposed and unrefuted."
+    }
   }
 ]
