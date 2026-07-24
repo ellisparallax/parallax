@@ -13,13 +13,21 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const { id, action } = await req.json(); // action: 'approve' | 'reject'
-    const status = action === 'approve' ? 'approved' : 'rejected';
-
+    const { id, action } = await req.json(); // action: 'approve' | 'reject' | 'list'
     const admin = createClient(
       Deno.env.get('SUPABASE_URL')!,
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!,
     );
+
+    if (action === 'list') {
+      const { data, error } = await admin.from('sightings')
+        .select('id,location,lat,lon,shape,year,description,status,created_at')
+        .eq('status', 'pending').order('created_at', { ascending: false }).limit(50);
+      if (error) return json({ error: error.message }, 400);
+      return json({ ok: true, pending: data });
+    }
+
+    const status = action === 'approve' ? 'approved' : 'rejected';
 
     const { data: s, error } = await admin.from('sightings')
       .update({ status, moderated_at: new Date().toISOString() })

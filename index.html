@@ -913,25 +913,43 @@ body.sheet-open .hud-bar{display:none}
     </div>
 
     <div id="rm-form">
-      <a href="#" id="rm-skylink" style="display:block;font-family:'DM Mono';font-size:9.5px;letter-spacing:0.12em;color:var(--teal);text-decoration:none;margin:-4px 0 12px">✦ NOT SURE WHAT YOU SAW? RUN SKYCHECK FIRST</a>
-      <label class="fld"><span>Location name *</span><input id="rm-loc" placeholder="e.g. Sedona, Arizona"></label>
-      <div class="fld-row">
-        <label class="fld"><span>Latitude *</span><input id="rm-lat" type="number" step="0.0001" placeholder="34.8697"></label>
-        <label class="fld"><span>Longitude *</span><input id="rm-lon" type="number" step="0.0001" placeholder="-111.7610"></label>
+      <a href="#" id="rm-skylink" style="display:block;font-family:'DM Mono';font-size:9.5px;letter-spacing:0.12em;color:var(--teal);text-decoration:none;margin:-4px 0 12px">✦ NOT SURE WHAT IT WAS? RUN SKYCHECK</a>
+
+      <div class="stp" id="rstp1">
+        <div class="stp-h"><span class="stp-num">1</span>WHERE</div>
+        <button class="bigbtn" id="rm-geo">📡 Use my location</button>
+        <div class="geostat" id="rm-geoout"></div>
+        <label class="fld" style="margin-top:10px"><span>Place name *</span><input id="rm-loc" placeholder="Sedona, Arizona"></label>
+        <details class="adv"><summary>Somewhere else</summary>
+          <button class="pickbtn" id="rm-pick" style="margin-top:8px">📍 Pick the spot on the globe</button>
+          <div class="fld-row" style="margin-top:6px">
+            <label class="fld"><span>Latitude</span><input id="rm-lat" type="number" step="0.0001"></label>
+            <label class="fld"><span>Longitude</span><input id="rm-lon" type="number" step="0.0001"></label>
+          </div>
+        </details>
       </div>
-      <button class="pickbtn" id="rm-geo">📡 Use my current location (GPS)</button>
-      <button class="pickbtn" id="rm-pick">📍 Or pick the spot on the globe</button>
-      <div class="fld-row">
-        <label class="fld"><span>Year</span><input id="rm-year" type="number" min="1900" max="2026" placeholder="2026"></label>
-        <label class="fld"><span>Shape</span><select id="rm-shape"></select></label>
+
+      <div class="stp" id="rstp2">
+        <div class="stp-h"><span class="stp-num">2</span>WHAT</div>
+        <label class="fld"><span>What did you see? *</span><textarea id="rm-desc" rows="3" placeholder="Shape, motion, duration, witnesses…"></textarea></label>
+        <div class="fld-row">
+          <label class="fld"><span>Shape</span><select id="rm-shape"></select></label>
+          <label class="fld"><span>Photo</span><input id="rm-photo" type="file" accept="image/*"></label>
+        </div>
+        <div id="rm-preview" class="rm-preview"></div>
+        <details class="adv"><summary>Happened earlier?</summary>
+          <label class="fld" style="margin-top:8px"><span>Year</span><input id="rm-year" type="number" min="1900" max="2026"></label>
+        </details>
       </div>
-      <button class="pickbtn" id="rm-heading">🧭 Capture heading &amp; tilt (point your phone at it)</button>
-      <div class="geostat" id="rm-headout"></div>
-      <label class="fld"><span>What did you see? *</span><textarea id="rm-desc" rows="4" placeholder="Describe the object, its movement, duration, and any witnesses…"></textarea></label>
-      <label class="fld"><span>Take or upload a photo (optional)</span><input id="rm-photo" type="file" accept="image/*"></label>
-      <div id="rm-preview" class="rm-preview"></div>
-      <div class="modal-actions"><button class="primary" id="rm-submit">Add to my map</button></div>
-      <p class="rm-note">Saved to your device only. After adding, use “Send for review” to submit it to the Parallax team for possible inclusion in the public database.</p>
+
+      <div class="stp" id="rstp3">
+        <div class="stp-h"><span class="stp-num">3</span>WHICH WAY <span style="opacity:0.5">· OPTIONAL</span></div>
+        <button class="bigbtn" id="rm-heading">🧭 Aim the viewfinder at the spot</button>
+        <div class="geostat" id="rm-headout"></div>
+      </div>
+
+      <div class="modal-actions"><button class="primary" id="rm-submit" style="padding:14px;font-size:13px;letter-spacing:0.14em">ADD TO THE MAP</button></div>
+      <p class="rm-note">Appears on your map instantly. Goes to review before appearing on everyone's.</p>
     </div>
 
     <div id="rm-success" style="display:none">
@@ -1092,7 +1110,9 @@ const scene = viewer.scene, camera = viewer.camera;
    iOS Safari hard-kills tabs that exceed WebGL memory ("A problem repeatedly
    occurred") — phones get 1.5x + FXAA (sharp, safe); desktops get 2x + 4x MSAA. */
 const IS_MOBILE_GPU = /iPhone|iPad|iPod|Android/.test(navigator.userAgent) || matchMedia('(max-width:760px)').matches;
-viewer.resolutionScale = Math.min(window.devicePixelRatio || 1, IS_MOBILE_GPU ? 1.5 : 2);
+/* low-RAM phones (budget Androids) get a lighter render target */
+const MOBILE_SCALE = (navigator.deviceMemory || 6) <= 4 ? 1.2 : 1.5;
+viewer.resolutionScale = Math.min(window.devicePixelRatio || 1, IS_MOBILE_GPU ? MOBILE_SCALE : 2);
 scene.postProcessStages.fxaa.enabled = true;
 if (scene.msaaSupported && !IS_MOBILE_GPU) scene.msaaSamples = 4;
 
@@ -1853,7 +1873,8 @@ $('rm-photo').addEventListener('change', e=>{
   downscaleImage(f, 900, d=>{ pendingPhoto=d; $('rm-preview').innerHTML = d?`<img src="${d}" alt="preview">`:''; });
 });
 $('rm-pick').addEventListener('click', ()=>{
-  pendingPick={ fill:(la,lo)=>{ $('rm-lat').value=la.toFixed(4); $('rm-lon').value=lo.toFixed(4); }, reopen:reportModal };
+  pendingPick={ fill:(la,lo)=>{ $('rm-lat').value=la.toFixed(4); $('rm-lon').value=lo.toFixed(4);
+    $('rm-geoout').textContent=`✓ ${la.toFixed(3)}, ${lo.toFixed(3)} (picked on globe)`; $('rstp1').classList.add('done'); }, reopen:reportModal };
   closeReport(); document.body.classList.remove('nav-open'); $('pickBanner').classList.add('on');
 });
 
@@ -1947,12 +1968,17 @@ $('nearBtn').addEventListener('click', ()=>{
   }, msg=>geoStat(msg,true));
 });
 $('rm-geo').addEventListener('click', ()=>{
-  geoStat('Locating…');
+  $('rm-geoout').textContent='Locating…'; $('rm-geoout').classList.remove('err');
   getMyLocation((lat,lon,acc)=>{
     $('rm-lat').value=lat.toFixed(4); $('rm-lon').value=lon.toFixed(4);
-    setUserLocation(lat,lon); geoStat(`Location set (±${Math.round(acc)} m).`);
-  }, msg=>{ geoStat(msg,true); alert(msg); });
+    setUserLocation(lat,lon);
+    $('rm-geoout').textContent=`✓ ${lat.toFixed(3)}, ${lon.toFixed(3)} (±${Math.round(acc)} m)`;
+    $('rstp1').classList.add('done');
+  }, msg=>{ $('rm-geoout').textContent=msg+' Use "Somewhere else" below.'; $('rm-geoout').classList.add('err'); });
 });
+['rm-lat','rm-lon'].forEach(id=>$(id).addEventListener('change',()=>{
+  if($('rm-lat').value && $('rm-lon').value) $('rstp1').classList.add('done'); }));
+$('rm-desc').addEventListener('input',()=>{ if($('rm-desc').value.trim()) $('rstp2').classList.add('done'); });
 
 /* compass heading + tilt — iOS 13+ requires an explicit permission request on a user gesture */
 function readOrientationOnce(cb){
@@ -1962,29 +1988,14 @@ function readOrientationOnce(cb){
     let heading=null;
     if(typeof ev.webkitCompassHeading==='number') heading=ev.webkitCompassHeading;   // iOS true heading
     else if(typeof ev.alpha==='number') heading=(360-ev.alpha)%360;                    // others
-    const tilt = typeof ev.beta==='number' ? Math.round(ev.beta) : null;               // front/back tilt
+    const tilt = typeof ev.beta==='number' ? Math.round(ev.beta-90) : null;            // camera-aim elevation (upright = horizon)
     window.removeEventListener('deviceorientation',handler);
     cb(heading==null?null:Math.round(heading), tilt);
   };
   window.addEventListener('deviceorientation',handler);
   setTimeout(()=>{ if(!done){ done=true; window.removeEventListener('deviceorientation',handler); cb(null,null); } }, 3000);
 }
-$('rm-heading').addEventListener('click', ()=>{
-  const out=$('rm-headout');
-  const go=()=>{ out.textContent='Hold still — reading sensors…'; out.classList.remove('err');
-    readOrientationOnce((h,t)=>{
-      if(h==null && t==null){ out.textContent='No motion sensors available on this device.'; out.classList.add('err'); pendingHeading=null; return; }
-      pendingHeading={heading:h, tilt:t};
-      out.textContent=`Captured — heading ${h==null?'—':h+'°'} · tilt ${t==null?'—':t+'°'}`;
-    });
-  };
-  const DOE=window.DeviceOrientationEvent;
-  if(DOE && typeof DOE.requestPermission==='function'){
-    DOE.requestPermission().then(s=>{ if(s==='granted') go();
-      else { out.textContent='Motion access denied.'; out.classList.add('err'); } })
-      .catch(()=>{ out.textContent='Motion access unavailable.'; out.classList.add('err'); });
-  } else go();
-});
+/* rm-heading is wired to the shared aiming viewfinder (see SkyCheck block) */
 
 /* ============ Sighting alerts: watch zones + notifications ============ */
 /* Flip PUSH.enabled and set a VAPID public key + subscribe endpoint once a
@@ -2215,10 +2226,11 @@ function tick(ts){
     need=true;
   }
 
-  // hotspot pulse (only while visible)
+  // hotspot pulse (only while visible) — ~30fps is plenty for a slow glow;
+  // halving the steady-state render load matters on weaker phones
   if(layers.hot){
     pulse=(Math.sin(ts/900)+1)/2;
-    need=true;
+    if((ts%66)<33) need=true;
   }
 
   if(need) scene.requestRender();
@@ -2519,7 +2531,7 @@ function openSkyCheck(){
   const CARD16=['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'];
   function finderUpdate(){
     if(!finder.on) return;
-    const h=finder.h, tv=finder.t==null?null:Math.max(-30,Math.min(90,Math.round(finder.t)));
+    const h=finder.h, tv=finder.t==null?null:Math.max(-30,Math.min(90,Math.round(finder.t-90))); // camera-aim: upright = horizon
     $('vf-bear').textContent = h==null?'--':Math.round(h)+'°';
     $('vf-card').textContent = h==null?'BEARING':CARD16[Math.round(((h%360)+360)%360/22.5)%16];
     $('vf-elev').textContent = tv==null?'--':tv+'°';
@@ -2549,10 +2561,12 @@ function openSkyCheck(){
       }catch(e){ hint.textContent=''; }
     } else hint.textContent='';
   }
-  function openFinder(){
+  /* The viewfinder serves both SkyCheck and the report form via a context:
+     { modal, out(msg), write(bearing, elevation) } */
+  function openFinderFor(ctx){
     const start=()=>{
-      finder.on=true; finder.h=null; finder.t=null;
-      $('finder').classList.add('on'); $('skyModal').classList.remove('on');
+      finder.on=true; finder.h=null; finder.t=null; finder.ctx=ctx;
+      $('finder').classList.add('on'); ctx.modal.classList.remove('on');
       $('vf-nosensor').style.display='none';
       finder.handler=ev=>{
         if(typeof ev.webkitCompassHeading==='number') finder.h=ev.webkitCompassHeading;
@@ -2566,24 +2580,41 @@ function openSkyCheck(){
     const DOE=window.DeviceOrientationEvent;
     if(DOE && typeof DOE.requestPermission==='function'){
       DOE.requestPermission().then(s=>{ if(s==='granted') start();
-        else $('sk-compout').textContent='Motion access denied — use "Set by hand".'; })
-        .catch(()=>$('sk-compout').textContent='Motion access unavailable — use "Set by hand".');
+        else ctx.out('Motion access denied — set it by hand.'); })
+        .catch(()=>ctx.out('Motion access unavailable — set it by hand.'));
     } else start();
   }
   function closeFinder(capture){
-    if(capture && (finder.h!=null || finder.t!=null)){
-      if(finder.h!=null){ const h=Math.round(finder.h); $('sk-bear').value=h; $('sk-bearout').textContent=h+'°'; }
-      if(finder.t!=null){ const e=Math.max(0,Math.min(90,Math.round(finder.t))); $('sk-elev').value=e; $('sk-elevout').textContent=e+'°'; }
-      $('sk-compout').textContent='✓ Captured — bearing '+$('sk-bear').value+'° · height '+$('sk-elev').value+'°';
-      $('stp3').classList.add('done');
+    const ctx=finder.ctx;
+    if(capture && ctx && (finder.h!=null || finder.t!=null)){
+      const h=finder.h!=null ? Math.round(finder.h) : null;
+      /* camera-aim geometry: phone upright = horizon → elevation is tilt − 90° */
+      const e=finder.t!=null ? Math.max(0,Math.min(90,Math.round(finder.t-90))) : null;
+      ctx.write(h,e);
     }
     finder.on=false;
     if(finder.handler) window.removeEventListener('deviceorientation',finder.handler);
     clearInterval(finder.timer);
     $('finder').classList.remove('on');
-    $('skyModal').classList.add('on');
+    if(ctx) ctx.modal.classList.add('on');
   }
-  $('sk-compass').addEventListener('click', openFinder);
+  const skyFinderCtx={ modal:$('skyModal'),
+    out:m=>{ $('sk-compout').textContent=m; },
+    write:(h,e)=>{
+      if(h!=null){ $('sk-bear').value=h; $('sk-bearout').textContent=h+'°'; }
+      if(e!=null){ $('sk-elev').value=e; $('sk-elevout').textContent=e+'°'; }
+      $('sk-compout').textContent='✓ Captured — bearing '+$('sk-bear').value+'° · height '+$('sk-elev').value+'°';
+      $('stp3').classList.add('done');
+    } };
+  const repFinderCtx={ modal:$('reportModal'),
+    out:m=>{ $('rm-headout').textContent=m; },
+    write:(h,e)=>{
+      pendingHeading={heading:h, tilt:e};
+      $('rm-headout').textContent='✓ Captured — bearing '+(h==null?'—':h+'°')+' · height '+(e==null?'—':e+'°');
+      $('rstp3').classList.add('done');
+    } };
+  $('sk-compass').addEventListener('click', ()=>openFinderFor(skyFinderCtx));
+  $('rm-heading').addEventListener('click', ()=>openFinderFor(repFinderCtx));
   $('vf-capture').addEventListener('click', ()=>closeFinder(true));
   $('vf-cancel').addEventListener('click', ()=>closeFinder(false));
   $('sk-photo').addEventListener('change',async e=>{
