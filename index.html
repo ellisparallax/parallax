@@ -484,6 +484,14 @@ body.playing .hud-metrics{opacity:0;pointer-events:none} /* clear the stage — 
 .adv summary::before{content:'▸ '}
 .adv[open] summary::before{content:'▾ '}
 
+/* Globe-engine recovery screen */
+.glfail{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:14px;padding:30px;text-align:center;background:var(--void)}
+.glf-t{font-family:'Bebas Neue';font-size:26px;letter-spacing:0.1em;color:var(--gold)}
+.glf-p{font-family:'Crimson Pro',serif;font-size:15px;line-height:1.5;color:#cfe0ec;max-width:320px}
+.glf-s{font-family:'DM Mono';font-size:9.5px;letter-spacing:0.06em;line-height:1.7;color:var(--ice);
+  opacity:0.55;max-width:340px}
+
 /* SkyCheck aiming viewfinder */
 #finder{position:fixed;inset:0;z-index:80;display:none;flex-direction:column;
   background:radial-gradient(ellipse at 50% 40%, #0a1424 0%, #030608 75%)}
@@ -1094,15 +1102,42 @@ const BASEMAP_ORDER = ['sat','night','dark'];
 let currentBasemap = (function(){ try{ return localStorage.getItem('parallax_basemap')||'sat'; }catch(e){ return 'sat'; } })();
 if(!BASEMAPS[currentBasemap]) currentBasemap='sat';
 
-const viewer = new Cesium.Viewer('globe',{
-  baseLayer: false,
-  baseLayerPicker:false, geocoder:false, timeline:false, animation:false,
-  homeButton:false, sceneModePicker:false, navigationHelpButton:false,
-  fullscreenButton:false, infoBox:false, selectionIndicator:false,
-  requestRenderMode:true, maximumRenderTimeChange:Infinity,
-  useBrowserRecommendedResolution:false,
-  creditContainer: document.getElementById('credits')
-});
+/* Globe engine start — guarded. On some Androids the GPU process refuses a
+   WebGL2 context (transient after memory pressure, or hw-accel disabled).
+   antialias:false lightens the context request (we do FXAA/MSAA ourselves);
+   on failure: auto-retry once, then an on-brand recovery screen. */
+let viewer;
+try{
+  viewer = new Cesium.Viewer('globe',{
+    baseLayer: false,
+    baseLayerPicker:false, geocoder:false, timeline:false, animation:false,
+    homeButton:false, sceneModePicker:false, navigationHelpButton:false,
+    fullscreenButton:false, infoBox:false, selectionIndicator:false,
+    requestRenderMode:true, maximumRenderTimeChange:Infinity,
+    useBrowserRecommendedResolution:false,
+    contextOptions:{ webgl:{ antialias:false, powerPreference:'default' } },
+    creditContainer: document.getElementById('credits')
+  });
+  try{ sessionStorage.removeItem('parallax_glretry'); }catch(e){}
+}catch(glErr){
+  console.error('[PARALLAX] globe engine failed:', glErr);
+  const g=document.getElementById('globe');
+  let retried=false; try{ retried=!!sessionStorage.getItem('parallax_glretry'); }catch(e){}
+  if(!retried){
+    try{ sessionStorage.setItem('parallax_glretry','1'); }catch(e){}
+    g.innerHTML='<div class="glfail"><div class="glf-t">RESTARTING GLOBE ENGINE…</div><div class="glf-p">One moment.</div></div>';
+    setTimeout(()=>location.reload(), 1400);
+  }else{
+    g.innerHTML=`<div class="glfail">
+      <div class="glf-t">GLOBE ENGINE COULDN'T START</div>
+      <div class="glf-p">Your phone's graphics layer refused a 3D context. This is usually temporary.</div>
+      <button class="bigbtn" style="max-width:280px" onclick="location.reload()">TRY AGAIN</button>
+      <div class="glf-s">If it keeps happening: in Chrome go to Settings → System and turn on
+      "Use hardware acceleration", update Chrome, close other tabs — then retry.</div>
+    </div>`;
+  }
+  return;
+}
 
 const scene = viewer.scene, camera = viewer.camera;
 
