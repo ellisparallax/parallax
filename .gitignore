@@ -11,3 +11,4 @@ node_modules/
 
 # Redundant distribution archive (source lives in this repo)
 parallax-map-handoff.zip
+supabase/.secrets/

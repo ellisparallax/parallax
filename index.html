@@ -1643,7 +1643,7 @@ handler.setInputAction(mv=>{
     tooltip.style.left=mv.endPosition.x+'px'; tooltip.style.top=mv.endPosition.y+'px';
   }else if(picked && picked.id && picked.id.parallaxReport){
     const r=picked.id.parallaxReport;
-    tooltip.innerHTML=`<span class="tl">${esc(r.location)}</span><br><span class="ty">Your report${r.year?' · '+r.year:''}${r.photo?' · 📷':''}</span>`;
+    tooltip.innerHTML=`<span class="tl">${esc(r.location)}</span><br><span class="ty">${r._community?'Community report':'Your report'}${r.year?' · '+r.year:''}${r.photo?' · 📷':''}</span>`;
     tooltip.style.display='block';
     tooltip.style.left=mv.endPosition.x+'px'; tooltip.style.top=mv.endPosition.y+'px';
   }else{
@@ -1786,7 +1786,7 @@ const $ = id => document.getElementById(id);
 /* Backend (Supabase) — set submitUrl to your submit-sighting Edge Function and
    flip enabled:true to send reports to the shared moderation queue. When off,
    the app stays fully local (saves + export-for-review). See supabase/BACKEND.md. */
-const API = { enabled:false, submitUrl:'' };
+const API = { enabled:true, submitUrl:'https://znuykgebbrdnwwasxebr.supabase.co/functions/v1/submit-sighting' };
 
 function addReportEntity(r){
   const ent = reportsDS.entities.add({
@@ -1819,7 +1819,7 @@ function downscaleImage(file, maxDim, cb){
 /* report inspection card (reuses the incident card shell) */
 function populateReportCard(r){
   $('c-name').textContent = r.name || r.location || 'My Sighting';
-  $('c-badges').innerHTML = `<span class="badge USER">MY REPORT</span>`
+  $('c-badges').innerHTML = `<span class="badge USER">${r._community?'COMMUNITY REPORT · VETTED':'MY REPORT'}</span>`
     + (r.year?`<span class="badge year">${r.year}</span>`:'')
     + (r.shape?`<span class="badge year">${esc(r.shape)}</span>`:'');
   $('c-coord').textContent = `${(+r.lat).toFixed(4)}, ${(+r.lon).toFixed(4)}`;
@@ -1991,7 +1991,9 @@ $('rm-heading').addEventListener('click', ()=>{
    backend is live to get true background push (delivered even when the app is
    closed). Until then, alerts fire in-app while Parallax is open. On iOS, web
    push requires the app be installed to the home screen. See README. */
-const PUSH = { enabled:false, vapidPublicKey:'', subscribeUrl:'' };
+const PUSH = { enabled:true,
+  vapidPublicKey:'BBtDoL-MEhS--80LXUgj_rkY3mRpj1TMT5LJIIcQZ73jOu8iUsvC2Y_e2SFUEeDOoHG9WwUMH9CzJYBCJOAfGP0',
+  subscribeUrl:'https://znuykgebbrdnwwasxebr.supabase.co/functions/v1/subscribe' };
 const ZKEY = 'parallax_watchzones';
 const zonesDS = new Cesium.CustomDataSource('zones');
 viewer.dataSources.add(zonesDS);
@@ -2143,6 +2145,32 @@ function loadZones(){
 loadZones();
 
 loadReports();
+
+/* ============ Community sightings — approved through moderation, shown to everyone ============ */
+const SUPA_URL='https://znuykgebbrdnwwasxebr.supabase.co';
+const SUPA_KEY='sb_publishable_oGjrdMAzc8Sw2rEwGkVB0A_ftdGSBMN';   // publishable key — public by design
+const communityDS=new Cesium.CustomDataSource('community');
+viewer.dataSources.add(communityDS);
+fetch(SUPA_URL+'/rest/v1/sightings?status=eq.approved&select=id,location,lat,lon,year,shape,description,heading,tilt,photo_url,created_at&order=created_at.desc&limit=500',
+  { headers:{ apikey:SUPA_KEY } })
+ .then(r=>r.ok?r.json():[])
+ .then(rows=>{
+   rows.forEach(s=>{
+     if(!isFinite(s.lat)||!isFinite(s.lon)) return;
+     const r={ id:'com-'+s.id, name:s.location, location:s.location, lat:s.lat, lon:s.lon,
+       year:s.year, shape:s.shape, desc:s.description, heading:s.heading, tilt:s.tilt,
+       photo:s.photo_url||null, _community:true };
+     const ent=communityDS.entities.add({
+       position:Cesium.Cartesian3.fromDegrees(r.lon, r.lat, 6000),
+       billboard:{ image:glowSprite('#a8d8f0'), scale:0.5, color:Cesium.Color.WHITE,
+         verticalOrigin:Cesium.VerticalOrigin.CENTER,
+         scaleByDistance:new Cesium.NearFarScalar(2.0e6,1.0,3.2e7,0.45) }
+     });
+     ent.parallaxReport=r;
+   });
+   if(rows.length){ console.log('[PARALLAX] community sightings:', rows.length); scene.requestRender(); }
+ })
+ .catch(()=>{ /* offline or backend not yet deployed — app works without it */ });
 
 /* ============ Master animation loop ============ */
 function tick(ts){

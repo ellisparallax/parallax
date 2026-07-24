@@ -1,0 +1,20 @@
+name: Supabase keep-alive
+
+# Free-tier Supabase pauses after 7 days of zero API activity.
+# Ping the REST endpoint twice a week so the backend never sleeps.
+on:
+  schedule:
+    - cron: '17 9 * * 1,4'   # Mon + Thu 09:17 UTC
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase REST
+        run: |
+          code=$(curl -s -o /dev/null -w "%{http_code}" \
+            "https://znuykgebbrdnwwasxebr.supabase.co/rest/v1/sightings?select=id&limit=1" \
+            -H "apikey: sb_publishable_oGjrdMAzc8Sw2rEwGkVB0A_ftdGSBMN")
+          echo "REST responded: $code"
+          [ "$code" = "200" ] || exit 1
